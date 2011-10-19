@@ -1,0 +1,391 @@
+* {
+font-family: "Helvetica Neue", Helvetica, sans-serif, Arial;
+}
+
+#navi {
+	display: block;
+	position: fixed;
+	background: #111;
+	height: 60px;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+#logo_cin {
+	display: block;
+	position: absolute;
+	background-image: url("../img/logo_cin.png");
+	height: 50px;
+	width: 50px;
+	left: -60px;
+	top: 5px;
+}
+
+#navi_shadow {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	background: #666;
+	bottom: -4px;
+}
+
+#navi_options {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+
+	display: block;
+	position: absolute;
+	width: 800px;
+	height: 100%;
+	left: 50%;
+	margin-left: -400px;
+	//background: #ddd;
+
+}
+
+#navi_options li {
+	display: block;
+	position: relative;
+	float: left;
+	width: 120px;
+	margin-right: 4px;
+	height: 100%;
+	line-height: 60px;
+	//background: #22A;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+#navi_options li:hover {
+	background: #A22;
+}
+
+#navi_options .selected {
+	background: #666;
+}
+
+#content {
+	display: block;
+	position: absolute;
+	width: 800px;
+	left: 50%;
+	margin-left: -400px;
+	//background: #A22;
+	top: 90px;
+}
+
+#browse {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 20px;
+	top: 0px;
+	left: 0px;
+	//background: #111;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#browse li {
+	display: block;
+	position: relative;
+	float: left;
+	margin-right: 2px;
+	top: -20px;
+	width: 120px;
+	height: 18px;
+	//background: #111;
+	//border-radius: 4px;
+	//-moz-border-radius: 4px;
+	line-height: 18px;
+	font-size: 12px;
+	color: #888;
+	text-align: center;
+	font-weight: bold;
+	overflow: hidden;
+	text-transform: uppercase;
+	border-bottom: solid 1px #ddd;
+	border-left: solid 1px #eee;
+	border-right: solid 1px #ccc;
+}
+
+#browse li:hover {
+	color: #111;
+	border-bottom: solid 1px #111;
+	border-left: solid 1px #111;
+	border-right: solid 1px #111;
+	cursor: pointer;
+}
+
+#login_button {
+	display: block;
+	position: absolute;
+	right: 0px;
+	bottom: 4px;
+	background: #A22;
+	width: 120px;
+	height: 30px;
+	//border-radius: 10px 10px 0px 0px;
+	border-radius: 10px;
+	border: solid 4px #A22;
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fff;
+	cursor: pointer;
+}
+
+#login_button:hover {
+	background: #B33;
+}
+
+#perfil_button {
+	display: block;
+	position: absolute;
+	right: 0px;
+	bottom: 4px;
+	background: #2A2;
+	width: 120px;
+	height: 30px;
+	//border-radius: 10px 10px 0px 0px;
+	border-radius: 10px;
+	border: solid 4px #2A2;
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fff;
+	cursor: pointer;
+}
+
+#perfil_button:hover {
+	background: #3B3;
+}
+
+#logout_button {
+	display: block;
+	position: absolute;
+	right: 0px;
+	bottom: -38px;
+	background: #666;
+	width: 120px;
+	height: 30px;
+	border-radius: 0px 0px 10px 10px;
+	border: solid 4px #666;
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fff;
+	cursor: pointer;
+}
+
+#logout_button:hover {
+	background: #888;
+}
+
+
+h1, h2 {
+	width: 780px;
+	//ackground: #111;
+	border-bottom: solid 1px #ccc;
+	font-size: 20px;
+	color: #111;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 4px;
+}
+
+h2 {
+	color: #666;
+	font-size: 16px;
+}
+
+pre {
+	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	padding: 0px;
+	margin: 0px;
+}
+
+p, ul, li, pre {
+	font-size: 14px;
+}
+
+strong, a, a:hover, a:visited {
+	font-weight: bold;
+	color: #A22;
+}
+
+a, a:hover, a:visited {
+	text-decoration: none;
+	border-bottom: solid 2px #A22;
+}
+
+
+#login_block {
+	display: block;
+	position: relative;
+	width: 300px;
+	height: 72px;
+	line-height: 22px;
+}
+
+#register_block {
+	display: block;
+	position: relative;
+	width: 300px;
+	height: 114px;
+	line-height: 22px;
+}
+
+#login_div {
+	opacity: 1;
+}
+
+.lista_menu {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 24px;
+	top: -12px;
+	left: 0px;
+	//background: #111;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+.lista_menu li {
+	float: left;
+	display: block;
+	position: relative;
+	height: 100%;
+	background: #666;
+	list-style: none;
+	padding-left: 6px;
+	padding-right: 6px;
+	color: #fff;
+	line-height: 24px;
+	border-radius: 4px;
+	margin-right: 2px;
+	cursor: pointer;
+}
+
+.lista_menu strong {
+	font-weight: bold;
+	color: #fff;
+}
+
+.lista_questao_block {
+	display: block;
+	position: relative;
+	height: 30px;
+	margin-bottom: 2px;
+}
+
+.lista_questao_filename {
+	float: left;
+	display: block;
+	position: relative;
+	width: 60px;
+	height: 100%;
+	border-radius: 10px;
+	background: #A22;	
+	color: #fff;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.lista_questao_name {
+	float: left;
+	display: block;
+	position: relative;
+	height: 100%;
+	color: #A22;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 4px;
+	cursor: pointer;
+}
+
+.questao_ex_in_out {
+	display: block;
+	position: relative;
+	width: 100%;
+	background: #111;
+}
+
+.questao_input {
+	float: left;
+	display: block;
+	position: relative;
+	width: 360px;
+	//background: #A11;
+	border-left: solid 2px #ccc;
+	padding-left: 6px;
+}
+
+.questao_output {
+	float: right;
+	display: block;
+	position: relative;
+	width: 360px;
+	//background: #1A1;
+	border-left: solid 2px #ccc;
+	padding-left: 6px;
+}
+
+#notice_box, #error_box {
+	display: block;
+	position: fixed;
+	background: #111;
+	height: 40px;
+	width: 400px;
+	bottom: 2px;
+	left: 50%;
+	margin-left: -200px;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+#notice_box { border: solid 5px #2A2; }
+#error_box { border: solid 5px #A22; }
+
+.warning_content {
+	display: table-cell;
+    vertical-align: middle;
+	height: 40px;
+	width: 400px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+

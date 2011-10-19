@@ -1,0 +1,87 @@
+
+.login {
+	width: 240px;
+	font-weight: bold;
+	font: 12px 'DejaVuSansBook', Arial, sans-serif;
+	color: #111;
+	text-decoration: none;
+	font-weight: bold;
+	overflow: hidden;
+}
+ 
+.login a, .login a:hover, .login a:visited {
+	color: #111;
+	text-decoration: none;
+	font-weight: bold;
+}
+ 
+.score, .campos {
+	border: solid 2px #fff;
+	margin: 2px;
+	font: 12px 'DejaVuSansBook', Arial, sans-serif;
+}
+ 
+.campos {
+	height: 20px;
+	font: 12px 'DejaVuSansBook', Arial, sans-serif;
+}
+ 
+.score:hover {
+	border-color: #ddd;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	color: #777;
+}
+ 
+.campo {
+	background: #111;
+	width: 74px;
+	height: 20px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font: 12px 'DejaVuSansBook', Arial, sans-serif;
+}
+ 
+.nota {
+	background: #eee;
+	border: solid 2px #ddd;
+	width: 70px;
+	height: 30px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	text-align: center;
+	color: #111;
+	font: 12px 'DejaVuSansBook', Arial, sans-serif;
+	cursor: pointer;
+}
+
+.nota:hover {
+	background: #333;
+	border: solid 2px #111;
+	color: #fff;
+}
+ 
+.good {
+	background: #72E57C;
+	border-color: #58A75F;
+}
+ 
+.acc {
+	background: #58A75F;
+	border-color: #175D1D;
+	color: #fff;
+	font-weight: bold;
+}
+ 
+.avg {
+	background: #FFF09E;
+	border-color: #EFBB05;
+}
+ 
+.bad {
+	background: #FFB0AC;
+	border-color: #FF827C;
+}
