@@ -10,6 +10,7 @@ class Monitor extends CI_Controller {
 		$this->load->helper(array('url','form'));
 		$this->load->library(array('datahandler','session','input'));
 		$this->load->model('user','', TRUE);
+		$this->load->model('lists','', TRUE);
 		
 		
 		$this->logged = $this->session->userdata('logged');
@@ -183,6 +184,59 @@ class Monitor extends CI_Controller {
 		$this->session->set_flashdata('notice',"Usuário (login: $login) foi excluido com sucesso!");
 		redirect(base_url('/index.php/monitor'), 'location');
 	}
+	
+	function lists()
+	{
+		$notice = $this->session->flashdata('notice');
+		$error = $this->session->flashdata('error');
+	
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'error'=>$error));
+		$this->load->view('v_admin_lists');
+		$this->load->view('v_footer');
+	}
+	
+	function add_list()
+	{
+		$listprefix = $this->input->post('listprefix');
+		$timebegin = $this->input->post('timebegin');
+		$timeend = $this->input->post('timeend');
+		
+		if (!$listprefix && !$timebegin && !$timeend) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_add_list');
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		if (!$listprefix)
+			$error = 'Você precisa especificar o prefixo da lista.';
+		else if ($timebegin && $timebegin != '' && !$this->datahandler->validate_date_format($timebegin))
+			$error = 'O formato da data de inicio deve ser DD/MM HH:mm. Veja o exemplo para esclarecimento.';
+		else if ($timeend && $timeend != '' && !$this->datahandler->validate_date_format($timeend))
+			$error = 'O formato da data de término deve ser DD/MM HH:mm. Veja o exemplo para esclarecimento.';
+		
+		if ($error == '') {
+			$_timebegin = $this->datahandler->convert_date_format($timebegin);
+			$_timeend = $this->datahandler->convert_date_format($timeend);
+			
+			if ($_timebegin != '' && $_timeend != '' && strtotime($_timebegin) > strtotime($_timeend))
+				$error = 'O inicio da lista deve acontecer antes do fim da mesma.';
+			else if ($this->lists->create_list($listprefix, $_timebegin, $_timeend) == 0)
+				$error = 'O prefixo escolhido para a lista já existe. Escolha outro.';
+		}
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_admin_add_list', array('listprefix' => $listprefix, 'timebegin'=>$timebegin, 'timeend'=>$timeend));
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->session->set_flashdata('notice',"Lista '$listprefix' adicionada com sucesso.");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+	}
+	
 	
 	
 	

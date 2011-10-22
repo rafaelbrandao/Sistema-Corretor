@@ -7,7 +7,7 @@
 
 <h1>Administrador</h1>Você tem privilégios de administrador neste sistema.
 
-<a href="oi">Listas de Exercícios</a> - criar, editar ou remover listas e suas respectivas questões.
+<a href="<?=base_url('/index.php/monitor/lists')?>">Listas de Exercícios</a> - criar, editar ou remover listas e suas respectivas questões.
 
 <a href="oi">Clarifications</a> - listar clarifications pendentes e respondê-los.
 
