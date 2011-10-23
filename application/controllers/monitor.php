@@ -299,6 +299,34 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
+	function rem_list($list_id=0, $confirm='')
+	{
+		if (!$list_id || !$this->lists->has_list_id($list_id)) {
+			redirect(base_url('/index.php/monitor/lists'), 'location');
+			return;
+		}
+		
+		$listprefix = $this->lists->get_list_name($list_id);
+		
+		if ($confirm == '') {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_rem_list', array('listprefix'=>$listprefix, 'list_id'=>$list_id));
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$confirm_pwd = $this->input->post('confirm_pwd');
+		if (!$this->user->is_pwd_correct($this->logged, $confirm_pwd)) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>'Senha incorreta. Lista não foi removida.'));
+			$this->load->view('v_admin_rem_list', array('listprefix'=>$listprefix, 'list_id'=>$list_id));
+			$this->load->view('v_footer');
+			return;
+		}
+		$this->lists->delete_list($list_id);
+		$this->session->set_flashdata('notice', "Lista '$listprefix' foi removida com sucesso.");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+	}
+	
 	
 	
 	

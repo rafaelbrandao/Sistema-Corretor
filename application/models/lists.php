@@ -14,6 +14,12 @@ class Lists extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row()->id_lista : 0;
     }
     
+    function get_list_name($id=0)
+    {
+    	$query = $this->db->query("SELECT nome_lista FROM Lista_Exercicios WHERE id_lista='$id'");
+    	return $query->num_rows() > 0 ? $query->row()->nome_lista : '';
+    }
+    
     function has_list_id($id=0)
     {
     	if (!$id) return FALSE;
@@ -68,6 +74,12 @@ class Lists extends CI_Model {
     	$this->db->update('Lista_Exercicios', $data);
     	
     	return TRUE;
+    }
+    
+    function delete_list($id=0)
+    {
+    	if (!$id) return;
+    	$this->db->delete('Lista_Exercicios', array('id_lista' => $id)); 
     }
     
 }
