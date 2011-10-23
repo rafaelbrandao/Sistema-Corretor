@@ -238,6 +238,67 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
+	function edit_list($list_id=0)
+	{
+		if (!$list_id || !$this->lists->has_list_id($list_id)) {
+			redirect(base_url('/index.php/monitor/lists'), 'location');
+			return;
+		}
+		
+		$form['list_id'] = $list_id;
+		$form['listprefix'] = $this->input->post('listprefix');
+		$form['liststate'] = $this->input->post('liststate');
+		$form['timebegin'] = $this->input->post('timebegin');
+		$form['timeend'] = $this->input->post('timeend');
+		$form['rev_timebegin'] = $this->input->post('rev_timebegin');
+		$form['rev_timeend'] = $this->input->post('rev_timeend');
+		if (!$form['listprefix'] & !$form['liststate'] && !$form['timebegin']
+			&& !$form['timeend'] && !$form['rev_timebegin'] && !$form['rev_timeend']) {
+			$data = $this->lists->get_list_data($list_id);
+			$form['listprefix'] = $data['nome_lista'];
+			$form['liststate'] = $data['estado_lista'];
+			$form['timebegin'] = $this->datahandler->translate_date_format($data['data_lancamento']);
+			$form['timeend'] = $this->datahandler->translate_date_format($data['data_finalizacao']);
+			$form['rev_timebegin'] = $this->datahandler->translate_date_format($data['data_inicio_revisao']);
+			$form['rev_timeend'] = $this->datahandler->translate_date_format($data['data_fim_revisao']);
+			
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_edit_list', $form);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		$other_id = $this->lists->get_list_id($form['listprefix']);
+		$timebegin = '';
+		$timeend = '';
+		$rev_timebegin = '';
+		$rev_timeend = '';
+		
+		if ($other_id && $other_id != $list_id) $error = 'Você escolheu um prefixo que já está sendo usado em outra lista.';
+		else if (!$form['liststate']) $error = 'Você deveria selecionar um estado válido da lista.';
+		if (!$error) {
+			$timebegin = $this->datahandler->convert_date_format($form['timebegin']);
+			$timeend = $this->datahandler->convert_date_format($form['timeend']);
+			$rev_timebegin = $this->datahandler->convert_date_format($form['rev_timebegin']);
+			$rev_timeend = $this->datahandler->convert_date_format($form['rev_timeend']);
+			if ($timebegin != '' && $timeend != '' && strtotime($timebegin) > strtotime($timeend))
+				$error = 'A data de inicio da lista deveria ser antes da data de término da mesma.';
+			else if ($rev_timebegin != '' && $rev_timeend != '' && strtotime($rev_timebegin) > strtotime($rev_timeend))
+				$error = 'A data de inicio da revisão deveria ser antes da data de término da mesma.';
+			else if (!$this->lists->edit_list($list_id, $form['listprefix'], $form['liststate'], $timebegin, $timeend, $rev_timebegin, $rev_timeend))
+				$error = 'Erro desconhecido.';
+		}
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_admin_edit_list', $form);
+			$this->load->view('v_footer');
+			return;
+		}
+		$this->session->set_flashdata('notice',"Lista '".$form['listprefix']."' modificada com sucesso.");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+	}
+	
 	
 	
 	

@@ -14,6 +14,13 @@ class Lists extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row()->id_lista : 0;
     }
     
+    function has_list_id($id=0)
+    {
+    	if (!$id) return FALSE;
+    	$query = $this->db->query("SELECT nome_lista FROM Lista_Exercicios WHERE id_lista='$id'");
+    	return $query->num_rows() > 0;
+    }
+    
     function create_list($listprefix='', $timebegin='', $timeend='')
     {
     	if ($listprefix == '')
@@ -37,6 +44,30 @@ class Lists extends CI_Model {
     {
     	$query = $this->db->query("SELECT * FROM Lista_Exercicios");
     	return $query->result_array();
+    }
+    
+    function get_list_data($id=0)
+    {
+    	if (!$id) return array();
+    	$query = $this->db->query("SELECT * FROM Lista_Exercicios WHERE id_lista='$id'");
+    	return $query->row_array();    	
+    }
+    
+    function edit_list($id=0, $listprefix='', $liststate='', $timebegin='', $timeend='', $rev_timebegin='', $rev_timeend='')
+    {
+    	if (!$id) return FALSE;
+    	$data = array(
+    		'nome_lista'=>$listprefix,
+    		'estado_lista'=>$liststate,
+    		'data_lancamento'=>$timebegin == '' ? NULL : $timebegin,
+    		'data_finalizacao'=>$timeend == '' ? NULL : $timeend,
+    		'data_inicio_revisao'=>$rev_timebegin == '' ? NULL : $rev_timebegin,
+    		'data_fim_revisao'=>$rev_timeend == '' ? NULL : $rev_timeend
+    		);
+    	$this->db->where('id_lista', $id);
+    	$this->db->update('Lista_Exercicios', $data);
+    	
+    	return TRUE;
     }
     
 }
