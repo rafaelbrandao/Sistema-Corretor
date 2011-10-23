@@ -20,7 +20,7 @@ class DataHandler {
     	$words = explode(' ', $format);
     	if (count($words) == 2) {
 			$date = explode('-', $words[0]);
-			$time = explode('-', $words[1]);
+			$time = explode(':', $words[1]);
 			if (count($date) == 3 && count($time) == 3)
 				return $date[2].'/'.$date[1].' '.$time[0].':'.$time[1];
     	}

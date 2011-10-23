@@ -33,4 +33,10 @@ class Lists extends CI_Model {
     	return $this->db->insert_id();
     }
     
+    function get_all_lists_data()
+    {
+    	$query = $this->db->query("SELECT * FROM Lista_Exercicios");
+    	return $query->result_array();
+    }
+    
 }

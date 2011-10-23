@@ -11,7 +11,7 @@ class Monitor extends CI_Controller {
 		$this->load->library(array('datahandler','session','input'));
 		$this->load->model('user','', TRUE);
 		$this->load->model('lists','', TRUE);
-		
+		$this->load->model('problems','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -189,9 +189,10 @@ class Monitor extends CI_Controller {
 	{
 		$notice = $this->session->flashdata('notice');
 		$error = $this->session->flashdata('error');
+		$lists_data = $this->lists->get_all_lists_data();
 	
 		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'error'=>$error));
-		$this->load->view('v_admin_lists');
+		$this->load->view('v_admin_lists', array('lists_data'=>$lists_data));
 		$this->load->view('v_footer');
 	}
 	
