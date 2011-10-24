@@ -38,16 +38,16 @@ Senha:   <input name='pwd' type="password" name="senha" style="width: 200px;" />
 $last = $this->submissions->last_submission($problem_id, $logged);
 if ($last) {
 ?>
-<h2>Última Submissão</h2>
+<h2>Última Submissão</h2><pre>
 <? if ($last['compilacao_erro']) { ?>
-<pre>Houve um <strong>erro de compilação</strong> no seu último código enviado:
+Houve um <strong>erro de compilação</strong> no seu último código enviado:
 
 <div style="border-left: solid 2px #ddd; padding-left: 10px; font-weight: bold;"><?=$last['compilacao_erro']?>
 </div>
 
 
 <? } ?>
-A seguir, o código fonte (em <strong><?=$last['linguagem']?></strong>) da sua última submissão, enviada por você em <strong><?=$last['data_submissao']?></strong>:
+A seguir, o código fonte (em <strong><?=$last['linguagem']?></strong>) da sua última submissão, enviada por você em <strong><?=$this->datahandler->translate_date_format($last['data_submissao'])?></strong>:
 
 <div style="border-left: solid 2px #ddd; padding-left: 10px;"><?=$last['codigo_fonte']?>
 </div>

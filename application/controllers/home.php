@@ -15,6 +15,7 @@ class Home extends CI_Controller {
 		$this->load->model('judge','', TRUE);
 		$this->load->model('clarifications','', TRUE);
 		$this->load->model('submissions','', TRUE);
+		$this->load->model('reviews','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -129,8 +130,9 @@ class Home extends CI_Controller {
 			return;			
 		}
 		$problem = $this->problems->get_data_for_problem($problem_id);
+		$error = $this->session->flashdata('error');
 		
-		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
 		$this->load->view('v_problem', array('list'=>$list, 'problem'=>$problem, 'problem_id'=>$problem_id, 'list_id'=>$list_id));
 		$this->load->view('v_footer');
 	}
@@ -218,7 +220,53 @@ class Home extends CI_Controller {
 		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], '');
 		$this->session->set_flashdata('notice', "Submissão realizada com sucesso.");
 		redirect(base_url('/index.php/home/submit/'.$problem_id), 'location');
-		return;
+	}
+	
+	function review($problem_id=0)
+	{
+		if (!$problem_id || !$this->logged) {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		
+		$data['last'] = $this->submissions->last_submission($problem_id, $this->logged);
+		if (!$data['last']) {
+			$this->session->set_flashdata('error','Você não pode pedir revisão porque não efetuou submissão para essa questão.');
+			redirect(base_url('/index.php/home/problem/'.$problem_id), 'location');
+			return;
+		}
+		
+		$notice = $this->session->flashdata('notice');
+		$data['request'] = $this->input->post('request');
+		$data['problem_id'] = $problem_id;
+		$data['logged'] = $this->logged;
+		$confirm_pwd = $this->input->post('confirm_pwd');
+		
+		if (!$data['request'] && !$confirm_pwd) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+			$this->load->view('v_review', $data);
+			$this->load->view('v_footer');
+			return;			
+		}
+		
+		$error = '';
+		if (!$this->user->is_pwd_correct($this->logged, $confirm_pwd))
+			$error = 'Senha incorreta.';
+		else if (!$data['request'])
+			$error = 'Pedido não especificado. Verifique o formato e mande uma nova solicitação com o seu pedido preenchido.';
+		else if ($this->reviews->request_state($problem_id, $this->logged) != NULL)
+			$error = 'Você já solicitou um pedido de revisão para essa questão. Não é possível submeter um novo pedido.';
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_review', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->reviews->create_request($problem_id, $this->logged, $data['request']);
+		$this->session->set_flashdata('notice', "Pedido de revisão realizado com sucesso.");
+		redirect(base_url('/index.php/home/review/'.$problem_id), 'location');
 	}
 	
 	

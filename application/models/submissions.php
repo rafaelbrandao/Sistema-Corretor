@@ -25,7 +25,7 @@ class Submissions extends CI_Model {
     }
     
     function last_submission($problem_id=0, $login='') {
-    	$query = $this->db->query("SELECT * FROM Submissao WHERE login='$login' ORDER BY data_submissao DESC LIMIT 1");
+    	$query = $this->db->query("SELECT * FROM Submissao WHERE login='$login' AND id_questao='$problem_id' ORDER BY data_submissao DESC LIMIT 1");
     	return $query->num_rows() > 0 ? $query->row_array() : array();
     }
     

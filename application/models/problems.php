@@ -60,10 +60,10 @@ class Problems extends CI_Model {
     
     function update_problem_specs($id=0, $title='', $specs='', $in_format='', $out_format='') {
     	if (!$id) return FALSE;
-    	$data['nome'] = $title ? $title : NULL;
-    	$data['enunciado'] = $specs ? $specs : NULL;
-    	$data['descricao_entrada'] = $in_format ? $in_format : NULL;
-    	$data['descricao_saida'] = $out_format ? $out_format : NULL;
+    	$data['nome'] = $title != '' ? $title : NULL;
+    	$data['enunciado'] = $specs != '' ? $specs : NULL;
+    	$data['descricao_entrada'] = $in_format != '' ? $in_format : NULL;
+    	$data['descricao_saida'] = $out_format != '' ? $out_format : NULL;
     	$this->db->where('id_questao', $id);
     	$this->db->update('Questao', $data);
     	return TRUE;
@@ -71,8 +71,8 @@ class Problems extends CI_Model {
     
     function update_problem_samples($id=0, $in_sample='', $out_sample='') {
     	if (!$id) return FALSE;
-    	$data['entrada_exemplo'] = $in_sample ? $in_sample : NULL;
-    	$data['saida_exemplo'] = $out_sample ? $out_sample : NULL;
+    	$data['entrada_exemplo'] = $in_sample != '' ? $in_sample : NULL;
+    	$data['saida_exemplo'] = $out_sample != '' ? $out_sample : NULL;
     	$this->db->where('id_questao', $id);
     	$this->db->update('Questao', $data);
     	return TRUE;

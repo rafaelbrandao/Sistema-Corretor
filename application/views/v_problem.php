@@ -12,8 +12,13 @@ $question = $list['nome_lista'].'Q'.$problem['numero'];
 	<!--<li>Código fonte: <strong><?=$question?>.c</strong>, <strong><?=$question?>.cpp</strong> ou <strong><?=$question?>.java</strong></li>-->
 	<li>Entrada: <strong><?=$question?>.in</strong></li>
 	<li>Saída: <strong><?=$question?>.out</strong></li>
+	<? if ($list['estado_lista'] == 'andamento' && $this->datahandler->is_now_between_time($list['data_lancamento'], $list['data_finalizacao'])) { ?>
 	<li style="background: #A22; top: -28px; float: right;"
 	onclick="window.location='<?=base_url('/index.php/home/submit/'.$problem_id)?>'"><strong>Submissão</strong></li>
+	<? } else if ($list['estado_lista'] == 'revisao' && $this->datahandler->is_now_between_time($list['data_inicio_revisao'], $list['data_fim_revisao'])) { ?>
+	<li style="background: #2A2; top: -28px; float: right;"
+	onclick="window.location='<?=base_url('/index.php/home/review/'.$problem_id)?>'"><strong>Revisão</strong></li>	
+	<? } ?>
 	<li style="background: #A22; top: -28px; float: right;"
 	onclick="window.location='<?=base_url('/index.php/home/clarifications/'.$problem_id)?>'"><strong>Clarifications</strong></li>
 </ul>
