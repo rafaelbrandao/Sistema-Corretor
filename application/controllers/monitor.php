@@ -12,6 +12,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('user','', TRUE);
 		$this->load->model('lists','', TRUE);
 		$this->load->model('problems','', TRUE);
+		$this->load->model('judge','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -396,7 +397,34 @@ class Monitor extends CI_Controller {
 		$question = $data['listprefix'].'Q'.$data['problem_num'];
 		
 		if ($step == 'add_answer') {
+			$data['new_input'] = $this->input->post('new_input');
+			$data['new_output'] = $this->input->post('new_output');
+			$data['timelimit'] = $this->input->post('timelimit');
+			$data['weight'] = $this->input->post('weight');
+			$timelimit = 0;
+			$weight = 0;
+			if (!$data['new_input'])
+				$error = 'Você precisa especificar alguma entrada para o corretor.';
+			else if (!$data['timelimit'])
+				$error = 'Você precisa especificar tempo limite para o corretor.';
+			else if (!$data['weight'])
+				$error = 'Você precisa especificar o peso para uma nova entrada.';
+			else if (!is_numeric($data['timelimit']))
+				$error = 'Você deve passar um número inteiro positivo como tempo limite.';
+			else if (($timelimit = intval($data['timelimit'])) <= 0)
+				$error = 'Você deve passar um número inteiro positivo como tempo limite. Zero ou números negativos são inválidos.';
+			else if (!is_numeric($data['weight']))
+				$error = 'Você deve passar um número inteiro positivo como peso.';
+			else if (($weight = intval($data['weight'])) <= 0)
+				$error = 'Você deve passar um número inteiro positivo como peso. Zero ou números negativos são inválidos.';
 			
+			if ($error) {
+				$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+				$this->load->view('v_admin_edit_problem', $data);
+				$this->load->view('v_footer');
+				return;
+			}
+			$this->judge->add_input_for_problem($problem_id, $data['new_input'], $data['new_output'], $timelimit, $weight);
 		}
 		else if ($step == 'specs') {
 			$this->problems->update_problem_specs($problem_id, $data['title'], $data['specs'], $data['in_format'], $data['out_format']);

@@ -8,6 +8,10 @@ if (!isset($in_format)) $in_format = '';
 if (!isset($out_format)) $out_format = '';
 if (!isset($in_sample)) $in_sample = '';
 if (!isset($out_sample)) $out_sample = '';
+if (!isset($new_input)) $new_input = '';
+if (!isset($new_output)) $new_output = '';
+if (!isset($weight)) $weight = 1;
+if (!isset($timelimit)) $timelimit = 1;
 ?>
 <ul id="browse">
 	<li>Administrador</li>
@@ -46,22 +50,30 @@ Saída para download (opcional): <input type="file" name="out_sample_file" style
 -->
 <input type="submit" value="Salvar alterações" /></form>
 
-<?=form_open_multipart(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/add_answer'))?>
+<?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/add_answer'))?>
 <h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Entradas e saídas para o corretor</h1>Nesta seção, você vê a lista de entradas e saídas já criadas.
-<!--
-	<?=$listprefix.'Q'.$problem_num?>E<strong>1</strong> [ <a href="oi">excluir</a> ]:
-	
-		Peso: <strong>1</strong>
-		Tempo: <strong>4</strong> segundo(s)
-		Entrada: <a href="oi">download</a>
-		Saida: <a href="oi">download</a>
--->
+
+<?
+$inputs = $this->judge->get_inputs_for_problem($problem_id);
+$it = 0;
+foreach ($inputs as $input) { ++$it;
+?>
+	<?=$listprefix.'Q'.$problem_num?>E<strong><?=$it?></strong> [ <a href="<?=base_url('/index.php/monitor/rem_answer/'.$input['id_correcao'])?>">excluir</a> ]:
+		Peso: <strong><?=$input["peso_correcao"]?></strong>
+		Tempo: <strong><?=$input["max_tempo_execucao"]?></strong> segundo(s)
+		Entrada: <a href="<?=base_url('/index.php/monitor/download_input/'.$input['id_correcao'])?>">download</a>
+		Saida: <a href="<?=base_url('/index.php/monitor/download_output/'.$input['id_correcao'])?>">download</a>
 		
-<h2>Enviar nova entrada e saída para o corretor</h2>Entrada #: <input type="text" style="width: 20px;" />
-Peso (para média): <input type="text" style="width: 30px;" value="1" />
-Tempo (em segundos): <input type="text" style="width: 30px;" value="1" />
-Arquivo de entrada: <input type="file" name="solucao" style="width: 200px;" text="selecionar" />
-Arquivo de saída: <input type="file" name="solucao" style="width: 200px;" text="selecionar" />
+<? } ?>
+		
+<h2>Enviar nova entrada e saída para o corretor</h2><!--Entrada #: <input type="text" style="width: 20px;" />-->
+Peso (para média): <input name="weight" value="<?=$weight?>" type="text" style="width: 30px;" />
+Tempo (em segundos): <input name="timelimit" value="<?=$timelimit?>" type="text" style="width: 30px;" />
+Entrada:
+<textarea name="new_input" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$new_input?></textarea>
+Saída:
+<textarea name="new_output" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$new_output?></textarea>
+
 <input type="submit" value="Adicionar" /></form>
 
 
