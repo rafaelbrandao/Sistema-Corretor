@@ -27,7 +27,7 @@ if (!isset($is_admin)) $is_admin = FALSE;
 		<li <?=($tab == 'home' ? 'class="selected"' : '')?> onclick="window.location = '<?=base_url('/')?>';">Home</li>
 		<li>Avisos</li>
 		<li>Cronograma</li>
-		<li>Listas</li>
+		<li onclick="window.location = '<?=base_url('/index.php/home/lists')?>';">Listas</li>
 		<li>Material</li>
 		<? if ($logged) { ?>
 			<div id="perfil_button" onclick="window.location = '<?=base_url('/index.php/home/perfil')?>';">perfil</div>

@@ -31,25 +31,4 @@ foreach ($lists as $list) {
 
 <? } ?>
 
-<h1>Lista 1</h1>
-<ul class="lista_menu">
-	<li>Prazo: <strong>encerrado</strong></li>
-	<li>Clarifications</li>
-	<li>Notas</li>
-</ul>
-<div class="lista_questao_block">
-	<div class="lista_questao_filename">L1Q1</div>
-	<div class="lista_questao_name">Pilha ou Fila?</div>
-</div>
-<div class="lista_questao_block">
-	<div class="lista_questao_filename">L1Q2</div>
-	<div class="lista_questao_name">Jogo de Cartas.</div>
-</div>
-<div class="lista_questao_block">
-	<div class="lista_questao_filename">L1Q3</div>
-	<div class="lista_questao_name">Validando Sentenças.</div>
-</div>
-<div class="lista_questao_block">
-	<div class="lista_questao_filename">L1Q4</div>
-	<div class="lista_questao_name">Braço robótico.</div>
-</div>
+

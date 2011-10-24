@@ -10,7 +10,9 @@ class Home extends CI_Controller {
 		$this->load->helper(array('url','form'));
 		$this->load->library(array('datahandler','session','input'));
 		$this->load->model('user','', TRUE);
-		
+		$this->load->model('lists','', TRUE);
+		$this->load->model('problems','', TRUE);
+		$this->load->model('judge','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -116,12 +118,33 @@ class Home extends CI_Controller {
 		
 		$this->session->set_flashdata('notice','Cadastro solicitado com sucesso. Seu pedido será analisado pelos monitores. Por favor, aguarde confirmação por email.');
 		redirect(base_url('/'), 'location');
-		
-		
-		
-		
-		
 	}
+
+	function lists()
+	{
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_lists');
+		$this->load->view('v_footer');
+	}	
+
+	function problem($problem_id=0) {
+		$list_id = $this->problems->get_list_id_for_problem($problem_id);
+		if (!$list_id)  {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		$list = $this->lists->get_list_data($list_id);
+		if ($list['estado_lista'] == 'preparacao') {
+			redirect(base_url('/'), 'location');
+			return;			
+		}
+		$problem = $this->problems->get_data_for_problem($problem_id);
+		
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_problem', array('list'=>$list, 'problem'=>$problem, 'problem_id'=>$problem_id, 'list_id'=>$list_id));
+		$this->load->view('v_footer');
+	}
+	
 	
 	
 	public function cadastro() {

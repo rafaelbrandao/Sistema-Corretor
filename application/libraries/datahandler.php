@@ -69,6 +69,14 @@ class DataHandler {
     	
     	return $states[2];
     }
+    
+    function is_now_between_time($timebegin='', $timeend='')
+    {
+    	if (!$timebegin || !$timeend)
+    		return FALSE;
+    	$now = time();
+    	return $now >= strtotime($timebegin) && $now <= strtotime($timeend);
+    }
 }
 
 /* End of file Someclass.php */
