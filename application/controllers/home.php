@@ -13,6 +13,7 @@ class Home extends CI_Controller {
 		$this->load->model('lists','', TRUE);
 		$this->load->model('problems','', TRUE);
 		$this->load->model('judge','', TRUE);
+		$this->load->model('clarifications','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -151,6 +152,36 @@ class Home extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
+	function clarifications($problem_id=0, $task='') {
+		$list_id = $this->problems->get_list_id_for_problem($problem_id);
+		if (!$list_id)  {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		$list = $this->lists->get_list_data($list_id);
+		if ($list['estado_lista'] == 'preparacao') {
+			redirect(base_url('/'), 'location');
+			return;			
+		}
+		$problem = $this->problems->get_data_for_problem($problem_id);
+		
+		$confirmed = $this->clarifications->get_confirmed_for_problem($problem_id);
+		$pending = $this->clarifications->get_pending_for_problem($problem_id);
+		$ask = $this->input->post('ask');
+		$notice = $this->session->flashdata('notice');
+		
+		if (!$task || !$ask || !$this->logged) {
+			$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+			$this->load->view('v_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'pending'=>$pending, 'problem'=>$problem, 'list'=>$list, 'problem_id'=>$problem_id) );
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->clarifications->create($problem_id, $this->logged, $ask);
+		$this->session->set_flashdata('notice', "Clarification enviado com sucesso.");
+		redirect(base_url('/index.php/home/clarifications/'.$problem_id), 'location');
+		return;		
+	}
 	
 	
 	
