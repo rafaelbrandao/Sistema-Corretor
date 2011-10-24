@@ -17,38 +17,26 @@ class Home extends CI_Controller {
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
 			$this->is_admin = $this->user->is_user_admin($this->logged);
-		
-		//$this->user->init_default_user();
-		//$this->datahandler->bla();
 	}
 	
-	public function logout() {
+	function logout() {
 		$this->session->sess_destroy();
 		redirect(base_url('/'), 'location');
 	}
 	
-	public function teste() {
+	function teste() {
 		$this->session->set_userdata('logged', 'admin');
 	}
 
-	public function index()
+	function index()
 	{
-//		$this->load->helper('url');
-		
-		//if ($this->user->is_user_confirmed('admin')) echo 'SUCCESS!';
-		//else echo 'FAILURE!';
-		
-		//echo $this->logged;
-		//if ($this->is_admin) echo 'wooot!';
 		$notice = $this->session->flashdata('notice');
 		$this->load->view('v_header', array('tab'=>'home', 'logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 		$this->load->view('v_index');
 		$this->load->view('v_footer');
 	}
 	
-	public function login() {
-		//$this->load->view('view_login');	
-		
+	function login() {
 		if ($this->logged) {
 			redirect(base_url('/'), 'location');
 			return;
@@ -83,7 +71,7 @@ class Home extends CI_Controller {
 		
 	}
 	
-	public function register() {
+	function register() {
 		if ($this->logged) {
 			redirect(base_url('/'), 'location');
 			return;
@@ -145,13 +133,7 @@ class Home extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
-	
-	
-	public function cadastro() {
-		$this->load->view('view_cadastro');
-	}
-	
-	public function perfil() {
+	function perfil() {
 		if ($this->is_admin) {
 			redirect(base_url('/index.php/monitor'), 'location');
 			return;
@@ -167,9 +149,14 @@ class Home extends CI_Controller {
 		$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
 		$this->load->view('v_profile', array('login'=>$this->logged, 'nome'=>$user['nome'], 'email'=>$user['email']));
 		$this->load->view('v_footer');
-		
-//		$this->load->helper('url');
-		//$this->load->view('view_perfil');	
+	}
+	
+	
+	
+	
+	
+	public function cadastro() {
+		$this->load->view('view_cadastro');
 	}
 
 	public function listas() {
@@ -184,7 +171,7 @@ class Home extends CI_Controller {
 		$this->load->view('view_questao_clarifications');
 	}
 	
-	public function clarifications() {
+	public function _clarifications() {
 		$this->load->view('view_clarifications');
 	}
 	
