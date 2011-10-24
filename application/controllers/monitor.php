@@ -365,6 +365,51 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
+	function edit_problem($problem_id=0, $step='')
+	{
+		$list_id = 0;
+		if (!$problem_id || !($list_id = $this->problems->get_list_id_for_problem($problem_id))) {
+			redirect(base_url('/index.php/monitor/lists'), 'location');
+			return;
+		}
+		$data['list_id'] = $list_id;
+		$data['listprefix'] = $this->lists->get_list_name($list_id);
+		$data['problem_id'] = $problem_id;
+		$pro = $this->problems->get_data_for_problem($problem_id);
+		
+		$data['problem_num'] = $pro['numero'];
+		$data['specs'] = $step == 'specs' ? $this->input->post('specs') : $pro['enunciado'];
+		$data['title'] = $step == 'specs' ? $this->input->post('title') : $pro['nome'];
+		$data['in_format'] = $step == 'specs' ? $this->input->post('in_format') : $pro['descricao_entrada'];
+		$data['out_format'] = $step == 'specs' ? $this->input->post('out_format') : $pro['descricao_saida'];
+		$data['in_sample'] = $step == 'samples' ? $this->input->post('in_sample') : $pro['entrada_exemplo'];
+		$data['out_sample'] = $step == 'samples' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
+		
+		if (!$step) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_edit_problem', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		$question = $data['listprefix'].'Q'.$data['problem_num'];
+		
+		if ($step == 'add_answer') {
+			
+		}
+		else if ($step == 'specs') {
+			$this->problems->update_problem_specs($problem_id, $data['title'], $data['specs'], $data['in_format'], $data['out_format']);
+		}
+		else if ($step == 'samples') {
+			$this->problems->update_problem_samples($problem_id, $data['in_sample'], $data['out_sample']);
+		}
+		
+		$this->session->set_flashdata('notice', "Questão $question foi atualizada com sucesso.");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+		return;
+	}
+	
 	
 	
 	
