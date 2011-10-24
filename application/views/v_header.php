@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>IF672 [CIn-UFPE]</title>
 
 	<link href="<?=base_url('/css/style.css')?>" rel="stylesheet" type="text/css"/>
 
