@@ -327,6 +327,44 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
+	function add_problem($list_id=0)
+	{
+		if (!$list_id || !$this->lists->has_list_id($list_id)) {
+			redirect(base_url('/index.php/monitor/lists'), 'location');
+			return;
+		}
+		$data['listprefix'] = $this->lists->get_list_name($list_id);
+		$data['list_id'] = $list_id;
+		$data['problem_num'] = $this->input->post('problem_num');
+		
+		if (!$data['problem_num']) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_add_problem', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		$problem_num = 0;
+		if (!is_numeric($data['problem_num']))
+			$error = 'Você deve passar um número inteiro positivo.';
+		else if (($problem_num = intval($data['problem_num'])) <= 0)
+			$error = 'Você deve passar um número inteiro positivo. Zero ou números negativos são inválidos.';
+		else if ($this->problems->has_problem_num($list_id, $problem_num))
+			$error = "Uma questão com número $problem_num já existe. Escolha outro.";
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_admin_add_problem', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->problems->create_problem_num($list_id, $problem_num);
+		$this->session->set_flashdata('notice', "Questão #$problem_num criada com sucesso!");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+	}
+	
 	
 	
 	
