@@ -9,7 +9,7 @@
 
 <a href="<?=base_url('/index.php/monitor/lists')?>">Listas de Exercícios</a> - criar, editar ou remover listas e suas respectivas questões.
 
-<a href="oi">Clarifications</a> - listar clarifications pendentes e respondê-los.
+<a href="<?=base_url('/index.php/monitor/clarifications')?>">Clarifications</a> - listar clarifications pendentes e respondê-los.
 
 <a href="oi">Revisões</a> - listar revisões solicitadas e analisá-las.
 

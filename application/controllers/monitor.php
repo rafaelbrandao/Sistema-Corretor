@@ -13,6 +13,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('lists','', TRUE);
 		$this->load->model('problems','', TRUE);
 		$this->load->model('judge','', TRUE);
+		$this->load->model('clarifications','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -438,6 +439,49 @@ class Monitor extends CI_Controller {
 		return;
 	}
 	
+	function clarifications()
+	{
+		$notice = $this->session->flashdata('notice');
+		$data['requests'] = $this->clarifications->get_pending();
+		
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+		$this->load->view('v_admin_clarifications', $data);
+		$this->load->view('v_footer');
+	}
+	
+	function answer_clarification($problem_id=0, $login_request='', $time_request=0, $handle='')
+	{
+		if (!$problem_id || !$login_request || !$time_request) {
+			redirect(base_url('/index.php/monitor/clarifications'), 'location');
+			return;
+		}
+		
+		$data['problem_id'] = $problem_id;
+		$data['login_request'] = $login_request;
+		$data['time_request'] = $time_request;
+		$data['request'] = $this->clarifications->get_data($problem_id, $login_request, $time_request);
+		if (!$data['request']) {
+			redirect(base_url('/index.php/monitor/clarifications'), 'location');
+			return;		
+		}
+		if ($handle != '')
+			$data['answer'] = $this->input->post('answer');
+		
+		if ($handle == '') {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_answer_clarification', $data);
+			$this->load->view('v_footer');
+			return;
+		} else if ($handle == 'confirm') {
+			$this->clarifications->update_data($problem_id, $login_request, $time_request, $data['answer'], 'respondido');
+			$this->session->set_flashdata('notice', 'Clarification respondido com sucesso.');
+		} else if ($handle == 'reject') {
+			$this->clarifications->update_data($problem_id, $login_request, $time_request, $data['answer'], 'desconsiderado');
+			$this->session->set_flashdata('notice', 'Clarification respondido com sucesso.');
+		}
+		redirect(base_url('/index.php/monitor/clarifications'), 'location');
+	}
+	
 	
 	
 	
@@ -460,6 +504,7 @@ class Monitor extends CI_Controller {
 	{
 		$this->load->view('view_monitor_criar_questao');
 	}
+	
 	
 	public function remover_questao()
 	{

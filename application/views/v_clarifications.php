@@ -10,9 +10,9 @@ $question = $list['nome_lista'].'Q'.$problem['numero'];
 
 <h1><strong><?=$question?></strong> - Clarifications Confirmados</h1>
 <pre>Nesta seção, todos os clarifications já confirmados serão listados aqui.
+
 <? foreach ($confirmed as $item) { ?>
-<strong>[<?=$this->datahandler->translate_date_format($item['data_pedido'])?>]</strong> <?=$item['descricao_pedido']?>
-<strong>Resposta:</strong> <?=$item['resposta']?>
+<strong>[<?=$this->datahandler->translate_date_format($item['data_pedido'])?>]</strong> <?=$item['descricao_pedido']?> <strong>R:</strong> <?=$item['resposta']?>
 
 <? } ?>
 </pre>

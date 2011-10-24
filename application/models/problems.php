@@ -42,6 +42,13 @@ class Problems extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row_array() : array();
     }
     
+    function get_num_for_problem($id=0)
+    {
+    	if (!$id) return 0;
+    	$query = $this->db->query("SELECT numero FROM Questao WHERE id_questao='$id'");
+    	return $query->num_rows() > 0 ? $query->row()->numero : 0;
+    }
+    
     function create_problem_num($list_id=0, $num=0)
     {
     	if (!$list_id || !$num) return FALSE;
