@@ -14,6 +14,7 @@ class Home extends CI_Controller {
 		$this->load->model('problems','', TRUE);
 		$this->load->model('judge','', TRUE);
 		$this->load->model('clarifications','', TRUE);
+		$this->load->model('submissions','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -181,6 +182,43 @@ class Home extends CI_Controller {
 		$this->session->set_flashdata('notice', "Clarification enviado com sucesso.");
 		redirect(base_url('/index.php/home/clarifications/'.$problem_id), 'location');
 		return;		
+	}
+	
+	function submit($problem_id=0)
+	{
+		if (!$problem_id || !$this->logged) {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		$data['logged'] = $this->logged;
+		$data['problem_id'] = $problem_id;
+		$data['src'] = $this->input->post('src');
+		$data['lang'] = $this->input->post('lang');
+		$confirm_pwd = $this->input->post('pwd');
+		$notice = $this->session->flashdata('notice');
+		
+		if (!$data['src'] || !$data['lang']) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+			$this->load->view('v_submit', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		if (!$this->user->is_pwd_correct($this->logged,$confirm_pwd))
+			$error = 'Senha incorreta.';
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_submit', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], '');
+		$this->session->set_flashdata('notice', "Submissão realizada com sucesso.");
+		redirect(base_url('/index.php/home/submit/'.$problem_id), 'location');
+		return;
 	}
 	
 	
