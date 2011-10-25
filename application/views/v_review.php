@@ -40,7 +40,7 @@ if ($last) {
 </ul>
 <pre>A seguir, o código fonte da sua solução (em <strong><?=$last['linguagem']?></strong>), enviado por você em <strong><?=$this->datahandler->translate_date_format($last['data_submissao'])?></strong>:
 
-<div style="border-left: solid 2px #ddd; padding-left: 10px;"><?=$last['codigo_fonte']?>
+<div style="border-left: solid 2px #ddd; padding-left: 10px;"><?=htmlspecialchars($last['codigo_fonte'])?>
 </div>
 <? } ?>
 </pre>
