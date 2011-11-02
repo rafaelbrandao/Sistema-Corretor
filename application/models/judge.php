@@ -32,7 +32,7 @@ class Judge extends CI_Model {
 		if($column_name != 'saida' && $column_name != 'entrada') return '';
 		$query = $this->db->query("SELECT $column_name FROM Material_Correcao WHERE id_correcao='$input_id'");
 		$resultado = $query->result_array();
-		return $resultado[$column_name];
+		return $resultado[0][$column_name];
 	}
 
 }
