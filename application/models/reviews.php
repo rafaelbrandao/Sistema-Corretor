@@ -27,4 +27,11 @@ class Reviews extends CI_Model {
     	return TRUE;
     }
     
+    function get_pending_reviews()
+    {
+    	$result = array();
+    	$query = $this->db->query("SELECT id_questao, login_usuario, data_pedido FROM Pedido_Revisao WHERE estado_pedido='pendente' ORDER BY id_questao, data_pedido");
+    	return $query->result_array();
+    }
+    
 }

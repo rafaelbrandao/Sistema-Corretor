@@ -83,5 +83,16 @@ class Problems extends CI_Model {
 		$query = $this->db->query("SELECT q.".$column_name." as ".$column_name.", l.nome_lista as nome_lista, q.numero as questao_numero FROM Questao q, Lista_Exercicios l WHERE q.id_questao='$id_problem' AND q.id_lista = l.id_lista");
 		return $query->result_array();
 	}
+	
+	function get_problem_repr($id_problem=0)
+	{
+		if (!$id_problem)
+			return "";
+		$query = $this->db->query("SELECT l.nome_lista as nome_lista, q.numero as numero FROM Questao q, Lista_Exercicios l WHERE q.id_questao='$id_problem' AND q.id_lista = l.id_lista");
+		if ($query->num_rows() == 0)
+			return "";
+		$row = $query->row_array();
+		return $query->row()->nome_lista . 'Q' . $query->row()->numero;
+	}
     
 }

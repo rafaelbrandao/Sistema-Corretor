@@ -14,6 +14,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('problems','', TRUE);
 		$this->load->model('judge','', TRUE);
 		$this->load->model('clarifications','', TRUE);
+		$this->load->model('reviews','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -506,6 +507,15 @@ class Monitor extends CI_Controller {
 		header('Content-Disposition: attachment; filename="' .$file_name. '.' .$extension.'"');
 		echo( $this->judge->get_file_for_inputs($material_id, $column_name) );
 		
+	}
+	
+	
+	function reviews()
+	{
+		$reviews = $this->reviews->get_pending_reviews();
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_admin_pending_reviews', array('reviews'=>$reviews));
+		$this->load->view('v_footer');
 	}
 	
 	public function listas()

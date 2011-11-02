@@ -11,7 +11,7 @@
 
 <a href="<?=base_url('/index.php/monitor/clarifications')?>">Clarifications</a> - listar clarifications pendentes e respondê-los.
 
-<a href="oi">Revisões</a> - listar revisões solicitadas e analisá-las.
+<a href="<?=base_url('/index.php/monitor/reviews')?>">Revisões</a> - listar revisões solicitadas e analisá-las.
 
 <a href="oi">Corretor</a> - executa correção de listas ou de questões de alunos.
 
