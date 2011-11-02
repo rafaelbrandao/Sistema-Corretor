@@ -269,7 +269,29 @@ class Home extends CI_Controller {
 		redirect(base_url('/index.php/home/review/'.$problem_id), 'location');
 	}
 	
+	public function download_input($problem_id){
+		$this->download_example($problem_id, 'in', 'entrada_exemplo');
+	}
 	
+	public function download_output($problem_id){
+		$this->download_example($problem_id, 'out', 'saida_exemplo');
+	}
+	
+	private function download_example($problem_id, $extension, $column_name){
+		if(!$problem_id) {
+			redirect(base_url('/index.php'), 'location');
+			return;
+		}
+		$infos = $this->problems->get_problem_sample($problem_id, $column_name);
+		if (!$infos) {
+			redirect(base_url('/index.php'), 'location');
+			return;
+		}
+		$file_name = $infos[0]["nome_lista"]."Q".$infos[0]["questao_numero"];
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="' .$file_name. '.' .$extension.'"');
+		echo($infos[0][$column_name]);
+	}
 	
 	
 	public function cadastro() {

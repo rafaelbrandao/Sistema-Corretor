@@ -36,12 +36,12 @@ $question = $list['nome_lista'].'Q'.$problem['numero'];
 <h2>Exemplos</h2>
 <div class="questao_ex_in_out">
 <div class="questao_input">
-<pre>Entrada (<strong>download</strong>):
+<pre>Entrada (<a href="<?=base_url('/index.php/home/download_input/'.$problem_id)?>"><strong>download</strong></a>):
 
 <?=$problem['entrada_exemplo']?></pre>
 </div>
 <div class="questao_output">
-<pre>Saída (<strong>download</strong>):
+<pre>Saída (<a href="<?=base_url('/index.php/home/download_output/'.$problem_id)?>"><strong>download</strong></a>):
 
 <?=$problem['saida_exemplo']?>
 </pre>

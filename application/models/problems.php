@@ -77,5 +77,11 @@ class Problems extends CI_Model {
     	$this->db->update('Questao', $data);
     	return TRUE;
     }
+
+	function get_problem_sample($id_problem=0, $column_name=''){
+		if(!$id_problem || !$column_name) return array();
+		$query = $this->db->query("SELECT q.".$column_name." as ".$column_name.", l.nome_lista as nome_lista, q.numero as questao_numero FROM Questao q, Lista_Exercicios l WHERE q.id_questao='$id_problem' AND q.id_lista = l.id_lista");
+		return $query->result_array();
+	}
     
 }

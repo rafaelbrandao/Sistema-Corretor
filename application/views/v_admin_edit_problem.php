@@ -57,12 +57,13 @@ Saída para download (opcional): <input type="file" name="out_sample_file" style
 $inputs = $this->judge->get_inputs_for_problem($problem_id);
 $it = 0;
 foreach ($inputs as $input) { ++$it;
+$input_name=$listprefix.'Q'.$problem_num.'E'.$it;
 ?>
 	<?=$listprefix.'Q'.$problem_num?>E<strong><?=$it?></strong> [ <a href="<?=base_url('/index.php/monitor/rem_answer/'.$input['id_correcao'])?>">excluir</a> ]:
 		Peso: <strong><?=$input["peso_correcao"]?></strong>
 		Tempo: <strong><?=$input["max_tempo_execucao"]?></strong> segundo(s)
-		Entrada: <a href="<?=base_url('/index.php/monitor/download_input/'.$input['id_correcao'])?>">download</a>
-		Saida: <a href="<?=base_url('/index.php/monitor/download_output/'.$input['id_correcao'])?>">download</a>
+		Entrada: <a href="<?=base_url('/index.php/monitor/download_input/'.$input['id_correcao'].'/'.$input_name)?>">download</a>
+		Saida: <a href="<?=base_url('/index.php/monitor/download_output/'.$input['id_correcao'].'/'.$input_name)?>">download</a>
 		
 <? } ?>
 		
