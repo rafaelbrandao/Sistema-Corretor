@@ -34,4 +34,53 @@ class Reviews extends CI_Model {
     	return $query->result_array();
     }
     
+    function get_request($problem_id=0, $login='', $time=0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return '';
+    	$data = array(
+    		'data_pedido' => date("Y-m-d H:i:s", $time),
+    		'login_usuario' => $login,
+    		'id_questao' => $problem_id
+    	);
+    	$this->db->where($data);
+    	$this->db->select('descricao_pedido');
+    	$query = $this->db->get('Pedido_Revisao');
+    	return $query->num_rows() > 0 ? $query->row()->descricao_pedido : '';
+    }
+    
+    function has_request($problem_id=0, $login='', $time=0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return FALSE;
+    	$data = array(
+    		'data_pedido' => date("Y-m-d H:i:s", $time),
+    		'login_usuario' => $login,
+    		'id_questao' => $problem_id
+    	);
+    	$this->db->where($data);
+    	$this->db->select('id_questao');
+    	$query = $this->db->get('Pedido_Revisao');
+    	return $query->num_rows() > 0;
+    }
+    
+    function reject_request($problem_id=0, $login='', $time=0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return FALSE;
+    	
+    	$where = array(
+    		'data_pedido' => date("Y-m-d H:i:s", $time),
+    		'login_usuario' => $login,
+    		'id_questao' => $problem_id
+    	);
+    	
+    	$data = array(
+    		'estado_pedido' => 'desconsiderado'
+    	);
+    	
+    	$this->db->where($where);
+    	$this->db->update('Pedido_Revisao', $data);
+    }
+    
 }

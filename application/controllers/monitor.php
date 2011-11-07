@@ -15,6 +15,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('judge','', TRUE);
 		$this->load->model('clarifications','', TRUE);
 		$this->load->model('reviews','', TRUE);
+		$this->load->model('submissions','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -512,10 +513,77 @@ class Monitor extends CI_Controller {
 	
 	function reviews()
 	{
+		$notice = $this->session->flashdata('notice');
 		$reviews = $this->reviews->get_pending_reviews();
-		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 		$this->load->view('v_admin_pending_reviews', array('reviews'=>$reviews));
 		$this->load->view('v_footer');
+	}
+	
+	function download_review($login_request='', $problem_id=0, $time_request=0, $judge='')
+	{
+		$request_content = '';
+		if (!$problem_id || !$login_request || !$time_request
+			|| !($request_content = $this->reviews->get_request($problem_id,$login_request,$time_request))) {
+			redirect(base_url('/index.php/monitor/reviews'), 'location');
+			return;
+		}
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="'.$this->problems->get_problem_repr($problem_id).'.revisao"');
+		echo $request_content;
+	}
+	
+	function review($login_request='', $problem_id=0, $time_request=0, $judge='')
+	{
+		$last_submission = array();
+		if (!$problem_id || !$login_request || !$time_request
+			|| !$this->reviews->has_request($problem_id,$login_request,$time_request)
+			|| !($last_submission = $this->submissions->last_submission($problem_id, $login_request))) {
+			redirect(base_url('/index.php/monitor/reviews'), 'location');
+			return;
+		}
+		$data = array(
+			'review_date' => $this->datahandler->translate_date_format(date("Y-m-d H:i:s", $time_request)),
+			'problem_id' => $problem_id,
+			'login' => $login_request,
+			'review_time' => $time_request,
+			'submit_time' => strtotime($last_submission['data_submissao'])
+		);
+		$lang = $last_submission['linguagem'];
+		switch ($lang) {
+			case 'java':
+				$data['submit_extension'] = 'java';
+				break;
+			case 'c++':
+				$data['submit_extension'] = 'cpp';
+				break;
+			case 'c':
+				$data['submit_extension'] = 'c';
+				break;
+			default:
+				$data['submit_extension'] = 'unknown';
+		}
+		
+		$error = '';
+		
+		if ($judge == 'accept') {
+			
+		} else if ($judge == 'reject') {
+			$reason = $this->input->post('reason');
+			if ($reason) {		
+				$this->reviews->reject_request($problem_id, $login_request, $time_request);
+				$this->session->set_flashdata('notice', 'Pedido de revisão de '.$login_request.' foi recusado com sucesso.');
+				redirect(base_url('/index.php/monitor/reviews'), 'location');
+				return;
+			}
+			else
+				$error = 'Preencha o motivo da recusa do pedido de revisão.';
+		}
+		
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+		$this->load->view('v_admin_review', $data);
+		$this->load->view('v_footer');
+		
 	}
 	
 	public function listas()
