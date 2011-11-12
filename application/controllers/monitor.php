@@ -520,6 +520,22 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
+	function download_src($problem_id=0, $login='', $time=0)
+	{
+		$submit = $this->submissions->get($problem_id, $login, $time);
+		if (!$submit) {
+			redirect(base_url('/index.php/monitor'), 'location');
+			return;
+		}
+		
+		$filename = $this->problems->get_problem_repr($problem_id);
+		$ext = $this->datahandler->file_extension_for_language($submit['linguagem']);
+		
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="'.$filename.'.'.$ext.'"');
+		echo $submit['codigo_fonte'];
+	}
+	
 	function download_review($login_request='', $problem_id=0, $time_request=0, $judge='')
 	{
 		$request_content = '';
@@ -550,28 +566,36 @@ class Monitor extends CI_Controller {
 			'submit_time' => strtotime($last_submission['data_submissao'])
 		);
 		$lang = $last_submission['linguagem'];
-		switch ($lang) {
-			case 'java':
-				$data['submit_extension'] = 'java';
-				break;
-			case 'c++':
-				$data['submit_extension'] = 'cpp';
-				break;
-			case 'c':
-				$data['submit_extension'] = 'c';
-				break;
-			default:
-				$data['submit_extension'] = 'unknown';
-		}
+		$data['submit_extension'] = $this->datahandler->file_extension_for_language($lang);
+		
 		
 		$error = '';
 		
 		if ($judge == 'accept') {
+			$src = $this->input->post('sourcecode');
+			$rejudge = $this->input->post('rejudge');
+			if (!$src) 
+				$error = 'Você precisa colocar as alterações do código antes de confirmar o pedido.';
+			else {
+				$this->reviews->accept_request($problem_id, $login_request, $time_request);
+				$this->submissions->create($problem_id, $login_request, $lang, $src);
+				if ($rejudge) {
+					// FIXME: rejudge the new submission as requested, or mark it
+					// to be analised as soon as possible. For now, this is ignored.
+				}
+				// FIXME: submit an email to let user know his request was accepted.
+				
+				$this->session->set_flashdata('notice', 'Pedido de revisão de '.$login_request.' foi aceito com sucesso.');
+				redirect(base_url('/index.php/monitor/reviews'), 'location');
+				return;
+			}
 			
 		} else if ($judge == 'reject') {
 			$reason = $this->input->post('reason');
 			if ($reason) {		
 				$this->reviews->reject_request($problem_id, $login_request, $time_request);
+				// FIXME: submit an email to let user know his request was rejected.
+				
 				$this->session->set_flashdata('notice', 'Pedido de revisão de '.$login_request.' foi recusado com sucesso.');
 				redirect(base_url('/index.php/monitor/reviews'), 'location');
 				return;

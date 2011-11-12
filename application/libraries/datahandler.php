@@ -77,6 +77,20 @@ class DataHandler {
     	$now = time();
     	return $now >= strtotime($timebegin) && $now <= strtotime($timeend);
     }
+    
+    function file_extension_for_language($lang)
+    {
+		switch ($lang) {
+			case 'java':
+				return 'java';
+			case 'c++':
+				return 'cpp';
+			case 'c':
+				return 'c';
+			default:
+				return 'unknown';
+		}
+    }
 }
 
 /* End of file Someclass.php */

@@ -64,10 +64,10 @@ class Reviews extends CI_Model {
     	return $query->num_rows() > 0;
     }
     
-    function reject_request($problem_id=0, $login='', $time=0)
+    private function modify_request($problem_id=0, $login='', $time=0, $state='')
     {
-    	if (!$problem_id || !$login || !$time)
-    		return FALSE;
+    	if (!$problem_id || !$login || !$time || !$state)
+    		return;
     	
     	$where = array(
     		'data_pedido' => date("Y-m-d H:i:s", $time),
@@ -75,12 +75,26 @@ class Reviews extends CI_Model {
     		'id_questao' => $problem_id
     	);
     	
-    	$data = array(
-    		'estado_pedido' => 'desconsiderado'
-    	);
+    	$data = array('estado_pedido' => $state);
     	
     	$this->db->where($where);
     	$this->db->update('Pedido_Revisao', $data);
+    }
+    
+    function reject_request($problem_id=0, $login='', $time=0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return FALSE;
+    	
+    	$this->modify_request($problem_id, $login, $time, 'desconsiderado');
+    }
+    
+    function accept_request($problem_id=0, $login='', $time=0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return FALSE;
+    	
+    	$this->modify_request($problem_id, $login, $time, 'respondido');
     }
     
 }

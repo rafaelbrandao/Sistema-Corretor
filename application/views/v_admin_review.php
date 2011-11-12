@@ -18,7 +18,7 @@ $question = $this->problems->get_problem_repr($problem_id);
 <h1>Analisar Revisão</h1>
 O processo de revisão é feito manualmente. Você faz o download da solicitação de revisão que deve estar no formato proposto na disciplina, faz o download do código fonte do aluno na questão, aplica as alterações no código, e depois submete o novo código ao confirmar. Ao rejeitar o pedido você pode opcionalmente colocar uma mensagem que será recebida pelo aluno por email. 
 
-<h2><strong><?=$question?></strong> - Enviado por <strong><?=$login?></strong> em <strong><?=$review_date?></strong></h2>Download [ <a href="<?=base_url('/index.php/monitor/download_src/'.$problem_id.'/'.$login)?>"><?=$question?>.<?=$submit_extension?></a> / <a href="<?=base_url('/index.php/monitor/download_review/'.$login.'/'.$problem_id.'/'.$review_time)?>"><?=$question?>.revisao</a> ]
+<h2><strong><?=$question?></strong> - Enviado por <strong><?=$login?></strong> em <strong><?=$review_date?></strong></h2>Download [ <a href="<?=base_url('/index.php/monitor/download_src/'.$problem_id.'/'.$login.'/'.$submit_time)?>"><?=$question?>.<?=$submit_extension?></a> / <a href="<?=base_url('/index.php/monitor/download_review/'.$login.'/'.$problem_id.'/'.$review_time)?>"><?=$question?>.revisao</a> ]
 
 <h2>Confirmar Pedido</h2>Cole o novo código fonte, após aplicada as alterações solicitadas neste pedido revisão.
 
