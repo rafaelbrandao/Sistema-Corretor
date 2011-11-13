@@ -610,6 +610,20 @@ class Monitor extends CI_Controller {
 		
 	}
 	
+	public function list_submissions($problem_id = 0)
+	{
+		if (!$problem_id || !($list_id = $this->problems->get_list_id_for_problem($problem_id))) {
+			redirect(base_url('/index.php/monitor'), 'location');
+			return;
+		}
+		
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
+		$this->load->view('v_admin_list_submissions', array('problem_id' => $problem_id));
+		$this->load->view('v_footer');
+	}
+	
+	
+	
 	public function listas()
 	{
 		$this->load->view('view_monitor_listas');

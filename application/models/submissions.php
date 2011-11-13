@@ -30,6 +30,12 @@ class Submissions extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row_array() : array();
     }
     
+    function last_submission_basic_data($problem_id=0, $login='')
+    {
+    	$query = $this->db->query("SELECT data_submissao, linguagem FROM Submissao WHERE login='$login' AND id_questao='$problem_id' ORDER BY data_submissao DESC LIMIT 1");
+    	return $query->num_rows() > 0 ? $query->row_array() : array();
+    }
+    
     function get($problem_id = 0, $login = '', $time = 0)
     {
     	if (!$problem_id || !$login || !$time)
@@ -43,6 +49,18 @@ class Submissions extends CI_Model {
     	$this->db->where($where);
     	$query = $this->db->get('Submissao');
     	return $query->num_rows() > 0 ? $query->row_array() : array();
+    }
+    
+    function logins_for_problem($problem_id=0)
+    {
+    	if (!$problem_id)
+    		return;
+    	$query = $this->db->query("SELECT login FROM Submissao WHERE id_questao='$problem_id' GROUP BY login");
+    	$query_result = $query->result_array();
+    	$ret = array();
+    	foreach ($query_result as $row)
+    		$ret[] = $row['login'];
+    	return $ret;
     }
     
 
