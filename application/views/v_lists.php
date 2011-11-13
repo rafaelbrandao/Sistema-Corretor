@@ -18,6 +18,8 @@ foreach ($lists as $list) {
 <ul class="lista_menu">
 	<li>Prazo: <strong><?=($running ? $this->datahandler->translate_date_format($list['data_finalizacao']) : 'encerrado')?></strong></li>
 	<? if ($running) { ?><li>Horário atual: <strong><?=$this->datahandler->translate_date_format(date("Y-m-d H:i:s"))?></strong></li><li>Clarifications</li><? } ?>
+	
+	<li onclick="window.location='<?=base_url('/index.php/home/score/'.$list['id_lista'])?>'">Notas <strong></li>
 </ul>
 <?
 	$problems = $this->problems->get_problems_from_list($list['id_lista']);

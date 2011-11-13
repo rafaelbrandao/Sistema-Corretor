@@ -16,6 +16,7 @@ class Home extends CI_Controller {
 		$this->load->model('clarifications','', TRUE);
 		$this->load->model('submissions','', TRUE);
 		$this->load->model('reviews','', TRUE);
+		$this->load->model('score', '', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -332,6 +333,20 @@ class Home extends CI_Controller {
 	
 	public function pedir_revisao() {
 		$this->load->view('view_pedir_revisao');
+	}
+	
+	public function score()
+	{
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_score_list');
+		$this->load->view('v_footer');
+	}
+	
+	public function score_detail()
+	{
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$this->load->view('v_score_detail');
+		$this->load->view('v_footer');
 	}
 	
 	
