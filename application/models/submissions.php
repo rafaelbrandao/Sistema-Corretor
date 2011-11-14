@@ -54,13 +54,32 @@ class Submissions extends CI_Model {
     function logins_for_problem($problem_id=0)
     {
     	if (!$problem_id)
-    		return;
+    		return array();
     	$query = $this->db->query("SELECT login FROM Submissao WHERE id_questao='$problem_id' GROUP BY login");
     	$query_result = $query->result_array();
     	$ret = array();
     	foreach ($query_result as $row)
     		$ret[] = $row['login'];
     	return $ret;
+    }
+    
+    function flag_submission($problem_id = 0, $login = '', $time = 0, $flag = 0)
+    {
+    	if (!$problem_id || !$login || !$time)
+    		return array();
+    	
+    	$where = array(
+    		'login' => $login,
+    		'id_questao' => $problem_id,
+    		'data_submissao' => date("Y-m-d H:i:s", $time)
+    	);
+    	
+    	$data = array(
+    		'submissao_zerada' => $flag
+    	);
+    	
+    	$this->db->where($where);
+    	$this->db->update('Submissao', $data);
     }
     
 

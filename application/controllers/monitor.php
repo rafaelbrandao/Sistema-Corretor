@@ -622,6 +622,36 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
+	public function edit_submission($problem_id = 0, $login_submit = '', $time_submit = 0, $opt = '')
+	{
+		$submit = $this->submissions->get($problem_id, $login_submit, $time_submit);
+		if (!$submit) {
+			redirect(base_url('/index.php/monitor'), 'location');
+			return;
+		}
+		$data = array(
+			'problem_id' => $problem_id,
+			'login_submit' => $login_submit,
+			'time_submit' => $time_submit,
+			'date_submit' => $submit['data_submissao'],
+			'lang_submit' => $submit['linguagem'],
+			'banned_submit' => $submit['submissao_zerada'] ? 1 : 0,
+			'compile_submit' => $submit['compilacao_erro']
+		);
+		
+		if ($opt == 'edit') {
+			$banned = $this->input->post("banned") ? 1 : 0;
+			$this->submissions->flag_submission($problem_id, $login_submit, $time_submit, $banned);
+			$this->session->set_flashdata('notice', 'Submissão de '.$login_submit.' foi editada com sucesso.');
+			redirect(base_url('/index.php/monitor/list_submissions/'.$problem_id), 'location');
+			return;
+		}
+		
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
+		$this->load->view('v_admin_edit_submission', $data);
+		$this->load->view('v_footer');
+	}
+	
 	
 	
 	public function listas()
