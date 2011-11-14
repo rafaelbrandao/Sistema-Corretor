@@ -170,13 +170,12 @@ class Home extends CI_Controller {
 		$problem = $this->problems->get_data_for_problem($problem_id);
 		
 		$confirmed = $this->clarifications->get_confirmed_for_problem($problem_id);
-		$pending = $this->clarifications->get_pending_for_problem($problem_id);
 		$ask = $this->input->post('ask');
 		$notice = $this->session->flashdata('notice');
 		
 		if (!$task || !$ask || !$this->logged) {
 			$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
-			$this->load->view('v_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'pending'=>$pending, 'problem'=>$problem, 'list'=>$list, 'problem_id'=>$problem_id) );
+			$this->load->view('v_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'problem'=>$problem, 'list'=>$list, 'problem_id'=>$problem_id) );
 			$this->load->view('v_footer');
 			return;
 		}
