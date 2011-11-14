@@ -617,7 +617,9 @@ class Monitor extends CI_Controller {
 			return;
 		}
 		
-		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
+		$notice = $this->session->flashdata('notice');
+		
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin, 'notice' => $notice));
 		$this->load->view('v_admin_list_submissions', array('problem_id' => $problem_id));
 		$this->load->view('v_footer');
 	}
