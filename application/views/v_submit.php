@@ -24,9 +24,9 @@ $question = $listprefix.'Q'.$num;
 
 <?=form_open(base_url('/index.php/home/submit/'.$problem_id))?>
 Linguagem: <select name='lang'>
-<option value="c" <?=($lang == 'c' ? 'selected' : '')?>>c</option>
-<option value="c++" <?=($lang == 'c++' ? 'selected' : '')?>>c++</option>
 <option value="java" <?=($lang == 'java' ? 'selected' : '')?>>java</option>
+<option value="c++" <?=($lang == 'c++' ? 'selected' : '')?>>c++</option>
+<option value="c" <?=($lang == 'c' ? 'selected' : '')?>>c</option>
 </select>
 Código fonte:
 <textarea name='src' rows="3" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$src?></textarea>

@@ -35,4 +35,11 @@ class Judge extends CI_Model {
 		return $resultado[0][$column_name];
 	}
 
+	function get_corrector_submissions(){
+		$query = $this->db->query("SELECT l.nome_lista as nome_lista, c.id_corretor as id_corretor, c.estado as estado, c.data_pedido as data_pedido FROM Lista_Exercicios l, Corretor c WHERE c.id_lista AND l.id_lista = c.id_lista ORDER BY data_pedido");
+		$resultado = $query->result_array();
+		return $resultado;
+	}
+	
+	
 }

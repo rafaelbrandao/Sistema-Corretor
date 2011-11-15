@@ -655,6 +655,21 @@ class Monitor extends CI_Controller {
 	}
 	
 	
+	public function corrector(){
+		$oi = "xixi";
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin, 'oi' => $oi));
+		$this->load->view('v_admin_corrector');
+		$this->load->view('v_footer');
+	}
+	
+	public function submit_correct_request(){
+		
+		$data['src'] = $this->input->post('src');
+		$data['lang'] = $this->input->post('lang');
+		$confirm_pwd = $this->input->post('pwd');
+		
+	}
+	
 	
 	public function listas()
 	{

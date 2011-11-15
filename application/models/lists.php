@@ -57,6 +57,12 @@ class Lists extends CI_Model {
     	$query = $this->db->query("SELECT * FROM Lista_Exercicios");
     	return $query->result_array();
     }
+
+	function get_all_lists_idnames()
+	{
+		$query = $this->db->query("SELECT id_lista, nome_lista FROM Lista_Exercicios");
+		return $query->result_array();
+	}
     
     function get_list_data($id=0)
     {
