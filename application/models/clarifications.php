@@ -10,7 +10,7 @@ class Clarifications extends CI_Model {
     function get_confirmed_for_problem($problem_id=0) {
     	if (!$problem_id)
     		return array();
-    	$query = $this->db->query("SELECT data_pedido, login_usuario, descricao_pedido, resposta FROM Pedido_Clarification WHERE estado_pedido='respondido' ORDER BY data_pedido");
+    	$query = $this->db->query("SELECT data_pedido, login_usuario, descricao_pedido, resposta FROM Pedido_Clarification WHERE estado_pedido='respondido' and id_questao='$problem_id' ORDER BY data_pedido");
     	return $query->result_array();
     }
     

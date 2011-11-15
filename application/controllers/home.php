@@ -181,8 +181,45 @@ class Home extends CI_Controller {
 		}
 		
 		$this->clarifications->create($problem_id, $this->logged, $ask);
-		$this->session->set_flashdata('notice', "Clarification enviado com sucesso.");
+		$this->session->set_flashdata('notice', "Pedido de clarification enviado com sucesso.");
 		redirect(base_url('/index.php/home/clarifications/'.$problem_id), 'location');
+		return;		
+	}
+	
+	function list_clarifications($list_id=0) {
+		$list = $this->lists->get_list_data($list_id);
+		if (!$list || $list['estado_lista'] == 'preparacao')  {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		$problems = $this->problems->get_problems_from_list($list_id);
+		$notice = $this->session->flashdata('notice');
+		$confirmed = array();
+		$problem_num = 0;
+		$ask_problem = $this->input->post('question');
+		if ($ask_problem)
+			$ask_problem = intval($ask_problem);
+			
+		foreach ($problems as $problem) {
+			$num = $problem['numero'];
+			$id = $problem['id_questao'];
+			$confirmed[$num] = $this->clarifications->get_confirmed_for_problem($id);
+			if ($id == $ask_problem)
+				$problem_num = $num;
+		}
+		
+		$ask = $this->input->post('ask');
+		
+		if (!$ask_problem || ($ask_problem && !$ask) || !$problem_num) {
+			$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+			$this->load->view('v_list_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'list'=>$list, 'problems'=>$problems) );
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->clarifications->create($ask_problem, $this->logged, $ask);
+		$this->session->set_flashdata('notice', "Pedido de clarification enviado com sucesso.");
+		redirect(base_url('/index.php/home/list_clarifications/'.$list_id), 'location');
 		return;		
 	}
 	
