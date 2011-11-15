@@ -20,11 +20,26 @@ class Judge extends CI_Model {
     	$this->db->insert('Material_Correcao', $data);
     }
     
+    function rem_input($input_id = 0)
+    {
+    	if (!$input_id)
+    		return;
+    	$this->db->delete('Material_Correcao', array('id_Correcao' => $input_id));
+    }
+    
     function get_inputs_for_problem($problem_id=0)
     {
     	if (!$problem_id) return array();
     	$query = $this->db->query("SELECT id_Correcao as id_correcao, max_tempo_execucao, peso_correcao FROM Material_Correcao WHERE id_Questao='$problem_id'");
     	return $query->result_array();
+    }
+    
+    function get_input_basic_data($input_id = 0)
+    {
+    	if (!$input_id)
+    		return array();
+    	$query = $this->db->query("SELECT id_Questao as id_questao, id_Correcao as id_correcao, max_tempo_execucao, peso_correcao FROM Material_Correcao WHERE id_Correcao='$input_id'");
+    	return $query->num_rows() > 0 ? $query->row_array() : array();
     }
 
 	function get_file_for_inputs($input_id=0, $column_name=''){

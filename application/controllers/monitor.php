@@ -438,7 +438,58 @@ class Monitor extends CI_Controller {
 		
 		$this->session->set_flashdata('notice', "Questão $question foi atualizada com sucesso.");
 		redirect(base_url('/index.php/monitor/lists'), 'location');
-		return;
+	}
+	
+	function rem_answer($input_id = 0, $opt='')
+	{
+		$judge_input = $this->judge->get_input_basic_data($input_id);
+		if (!$judge_input) {
+			redirect(base_url('/index.php/monitor'), 'location');
+			return;
+		}
+		
+		$problem_id = $judge_input['id_questao'];
+		$input_num = 0;
+		$inputs = $this->judge->get_inputs_for_problem($problem_id);
+		$at = 0;
+		foreach ($inputs as $input) {
+			++$at;
+			if ($input['id_correcao'] == $input_id) {
+				$input_num = $at;
+				break;
+			}
+		}
+		
+		$list_id = $this->problems->get_list_id_for_problem($problem_id);
+		$data['list'] = $this->lists->get_list_data($list_id);
+		$data['judge_input'] = $judge_input;
+		$data['input_num'] = $input_num;
+		$data['filename'] = $this->problems->get_problem_repr($problem_id);
+		
+		if (!$opt) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_rem_answer', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		$pwd = $this->input->post('pwd');
+		if (!$pwd)
+			$error = 'Você precisa especificar sua senha para remover.';
+		else if (!$this->user->is_pwd_correct($this->logged, $pwd))
+			$error = 'Senha incorreta.';
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error' => $error));
+			$this->load->view('v_admin_rem_answer', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->judge->rem_input($input_id);
+		$this->session->set_flashdata('notice', 'Entrada do corretor removida com sucesso.');
+		redirect(base_url('/index.php/monitor/edit_problem/'.$problem_id), 'location');
 	}
 	
 	function clarifications()
