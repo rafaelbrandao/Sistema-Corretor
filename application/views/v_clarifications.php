@@ -1,5 +1,6 @@
 <?
 if (!isset($logged)) $logged = '';
+if (!isset($running)) $running = FALSE;
 $question = $list['nome_lista'].'Q'.$problem['numero'];
 ?>
 <ul id="browse">
@@ -17,7 +18,7 @@ $question = $list['nome_lista'].'Q'.$problem['numero'];
 <? } ?>
 </pre>
 
-<? if ($logged) { ?>
+<? if ($logged && $running) { ?>
 <?=form_open(base_url('/index.php/home/clarifications/'.$problem_id.'/submit'))?>
 <h1><strong><?=$question?></strong> - Solicitar Clarification</h1>
 <pre>Antes de solicitar um novo clarification, faça a releitura da questão e verifique se alguém já solicitou algum clarification relacionado e que foi confirmado, para evitar repetição de perguntas que já foram respondidas.

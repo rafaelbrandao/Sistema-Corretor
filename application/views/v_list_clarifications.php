@@ -2,6 +2,7 @@
 if (!isset($logged)) $logged = '';
 if (!isset($problems)) $problems = array();
 if (!isset($confirmed)) $confirmed = array();
+if (!isset($running)) $running = FALSE;
 if (!isset($list)) {
 	$list = array();
 	$list_name = '';
@@ -29,7 +30,7 @@ if (!isset($list)) {
 <? } ?>
 </pre>
 
-<? if ($logged) { ?>
+<? if ($logged && $running) { ?>
 <?=form_open(base_url('/index.php/home/list_clarifications/'.$list['id_lista']))?>
 <h1><strong><?=$list_name?></strong> - Solicitar Clarification</h1>
 <pre>Antes de solicitar um novo clarification, faça a releitura da questão e verifique se alguém já solicitou algum clarification relacionado e que foi confirmado, para evitar repetição de perguntas que já foram respondidas.

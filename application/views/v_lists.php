@@ -17,7 +17,6 @@ foreach ($lists as $list) {
 <h1>Lista <strong><?=$list['nome_lista']?></strong></h1>
 <ul class="lista_menu">
 	<li>Prazo: <strong><?=($running ? $this->datahandler->translate_date_format($list['data_finalizacao']) : 'encerrado')?></strong></li>
-	<? if ($running) { ?><li>Horário atual: <strong><?=$this->datahandler->translate_date_format(date("Y-m-d H:i:s"))?></strong></li><li>Clarifications</li><? } ?>
 	
 	<li onclick="window.location='<?=base_url('/index.php/home/list_clarifications/'.$list['id_lista'])?>'">Clarifications</li>
 	<li onclick="window.location='<?=base_url('/index.php/home/score/'.$list['id_lista'])?>'">Notas</li>

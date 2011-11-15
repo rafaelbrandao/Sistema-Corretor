@@ -167,15 +167,16 @@ class Home extends CI_Controller {
 			redirect(base_url('/'), 'location');
 			return;			
 		}
+		$running = $this->datahandler->is_now_between_time($list['data_lancamento'], $list['data_finalizacao']);
 		$problem = $this->problems->get_data_for_problem($problem_id);
 		
 		$confirmed = $this->clarifications->get_confirmed_for_problem($problem_id);
 		$ask = $this->input->post('ask');
 		$notice = $this->session->flashdata('notice');
 		
-		if (!$task || !$ask || !$this->logged) {
+		if (!$task || !$ask || !$this->logged || !$running) {
 			$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
-			$this->load->view('v_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'problem'=>$problem, 'list'=>$list, 'problem_id'=>$problem_id) );
+			$this->load->view('v_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'problem'=>$problem, 'list'=>$list, 'problem_id'=>$problem_id, 'running' => $running) );
 			$this->load->view('v_footer');
 			return;
 		}
@@ -209,10 +210,11 @@ class Home extends CI_Controller {
 		}
 		
 		$ask = $this->input->post('ask');
+		$running = $this->datahandler->is_now_between_time($list['data_lancamento'], $list['data_finalizacao']);
 		
-		if (!$ask_problem || ($ask_problem && !$ask) || !$problem_num) {
+		if (!$ask_problem || ($ask_problem && !$ask) || !$problem_num || !$running) {
 			$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
-			$this->load->view('v_list_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'list'=>$list, 'problems'=>$problems) );
+			$this->load->view('v_list_clarifications', array('logged'=>$this->logged, 'confirmed'=>$confirmed, 'list'=>$list, 'problems'=>$problems, 'running' => $running) );
 			$this->load->view('v_footer');
 			return;
 		}
