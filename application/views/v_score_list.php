@@ -77,13 +77,35 @@ $score_final = $score_final/sizeof($problems);
 <h2>Respostas (entradas e saídas usadas na correção)</h2>
 <pre>
 Clique no nome do arquivo de entrada e de saída para fazer seu download. A sua nota da questão é calculada a partir da média ponderada das notas em cada entrada, e cada uma tem um peso associado. Tempo é o limite de execução.
+
 </pre>
 
 <table class='campos'><tr><td class='login'></td><td class='campo'>entrada</td><td class='campo'>saida</td><td class='campo'>peso</td><td class='campo'>tempo</td></tr></table>
 
-<table class='score'><tr><td class='login'>L0Q1</td><td class='nota'><a href='./L0Q1E1.in'>E1.in</a></td><td class='nota'><a href='./L0Q1E1.out'>E1.out</a></td><td class='nota avg'>3</td><td class='nota acc'>3 sec</td></tr><tr><td class='login'></td><td class='nota'><a href='./L0Q1E2.in'>E2.in</a></td><td class='nota'><a href='./L0Q1E2.out'>E2.out</a></td><td class='nota avg'>4</td><td class='nota acc'>2 sec</td></tr></table>
-<table class='score'><tr><td class='login'>L0Q2</td><td class='nota'><a href='./L0Q2E1.in'>E1.in</a></td><td class='nota'><a href='./L0Q2E1.out'>E1.out</a></td><td class='nota avg'>5</td><td class='nota acc'>2 sec</td></tr><tr><td class='login'></td><td class='nota'><a href='./L0Q2E2.in'>E2.in</a></td><td class='nota'><a href='./L0Q2E2.out'>E2.out</a></td><td class='nota avg'>15</td><td class='nota acc'>2 sec</td></tr></table>
-</tr></table>
+<?
 
-[Implementar essa parte]
+	foreach($problems as $problem){
+		$solutions = $this->score->get_peso_tempo($problem['id_questao']);
+		$i=0;
+		
+?>
+<table class='score'><tr>
 
+<?
+		foreach($solutions as $solution){
+			$i++;
+			$name = $list_name.'Q'.$problem['numero'].'E'.$i
+
+?>
+
+<td class='login'><?=$i ==1 ? $list_name.'Q'.$problem['numero'] : ''?></td><td class='nota'><a href="<?=base_url('/index.php/home/download_inputs/'.$solution['id'].'/'.$name)?>"><?='E'.$i.'.in'?></a></td><td class='nota'><a href="<?=base_url('/index.php/home/download_outputs/'.$solution['id'].'/'.$name)?>"><?='E'.$i.'.out'?></a></td><td class='nota avg'><?=$solution['peso']?></td><td class='nota acc'><?=$solution['tempo'].' sec'?></td></tr><tr>
+
+<?
+		}
+?>
+
+</table>
+
+<?
+	}
+?>

@@ -36,6 +36,13 @@ class Score extends CI_Model {
     	return $ret;
     	
     	
-    } 
+    }
+    
+    function get_peso_tempo($problem=0)
+    {
+    	$query = $this->db->query("SELECT id_Correcao as id, peso_correcao as peso, max_tempo_execucao as tempo FROM Material_Correcao WHERE id_Questao = '$problem' ORDER BY id_correcao");
+    	return $query->result_array();
+    	
+    }
 }
 

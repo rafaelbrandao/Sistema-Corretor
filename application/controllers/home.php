@@ -338,6 +338,31 @@ class Home extends CI_Controller {
 		echo($infos[0][$column_name]);
 	}
 	
+	function download_inputs($material_id=0, $input_name=''){
+		$this->download($material_id, $input_name, 'in');
+	}
+	
+	function download_outputs($material_id=0, $input_name=''){
+		$this->download($material_id, $input_name, 'out');
+	}
+
+	private function download($material_id=0, $file_name='', $extension=''){
+		if (!$material_id) {
+			redirect(base_url('/index.php'), 'location');
+			return;
+		}
+		if (!$file_name) {
+			$file_name = $material_id;
+		}
+		$column_name = '';
+		if($extension == 'out') $column_name = 'saida';
+		else $column_name = 'entrada';
+		
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="' .$file_name. '.' .$extension.'"');
+		echo( $this->judge->get_file_for_inputs($material_id, $column_name) );
+		
+	}
 	
 	public function cadastro() {
 		$this->load->view('view_cadastro');
