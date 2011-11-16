@@ -24,7 +24,3 @@ A seguir os detalhes da nota da questão <strong><?=$problem_string?></strong> f
 Cada entrada é executada separadamente, e o cálculo final da nota na questão é o resultado da média ponderada dessas notas. O peso de cada entrada é apresentado na página das <strong>Notas</strong> e você pode baixar cada entrada e saída esperada para testar na sua máquina, com seu código enviado e descobrir a razão da falha (se houver).
 </pre>
 
-
-
-</body>
-

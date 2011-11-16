@@ -96,7 +96,7 @@ class User extends CI_Model {
     
     function retrieve_list_students_order() {
 		$query = $this->db->query('SELECT login FROM Usuario WHERE tipo_permissao="aluno" ORDER BY nome');
-    	return $query->result_array();
+    		return $query->result_array();
     }
     
     function retrieve_list_admins() {
