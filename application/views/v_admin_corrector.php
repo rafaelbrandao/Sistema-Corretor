@@ -1,20 +1,28 @@
+<?
+if (!isset($listas)) $listas = array();
+if (!isset($correcoes)) $correcoes = array();
+?>
 
 <ul id="browse">
 	<li>Administrador</li>
-	<li>Sistema Corretor</li>
+	<li>Corretor</li>
 </ul>
 
 <div id="corretor_escolha">
 	<pre>
 	Para corrigir uma lista, selecione-a no combobox e aperte em Corrigir. A correção poderá levar vários minutos, atualize a página para saber se já foi concluída. Apenas inicie uma correção após se certificar de que todos os dados estão corretos, pois não será possível interromper a correção, e um novo pedido só entrará em andamento após o anterior ter sido concluído.
 	</pre>
-	<?=form_open(base_url('/index.php/monitor/submit/'.$oi))?>
-Corrigir Lista: <select name='corrigirLista'>
-<option value="3" >L4</option>
-<option value="1" >L2</option>
-<option value="2" >L3</option>
-</select>
-		 <input type="submit" value="Corrigir" style="margin-left: 40px; width: 60px;"/></form>	
+	<?=form_open(base_url('/index.php/monitor/submit_correct_request'))?>
+	Corrigir Lista: <select name='corrigirLista'>
+		<?
+			foreach ($listas as $lista) {
+		?>
+			<option value="<?= $lista['id_lista'] ?>" ><?= $lista['nome_lista'] ?></option>
+		<?
+			}
+		?>
+	</select>
+	 <input type="submit" value="Corrigir" style="margin-left: 40px; width: 60px;"/></form>	
 </div>
 	
 <table>
@@ -27,17 +35,28 @@ Corrigir Lista: <select name='corrigirLista'>
 			<td class="item" style="width:150px;">Pega-Cópias</td>
 		</tr>
 		
-		<tr class="corretor_pedido">
-			<td class="item" style="width:230px; height:100%;">12-10-2011 10:10:10</td>
-			<td class="item" style="width:150px;"> L2 </td>
-			<td class="item" style="width:150px;"> Em Andamento </td>
-			<td class="item" style="width:150px;">relatorio.txt</td>
+		<?
+			foreach ($correcoes as $cor) {
+				$classFeito = '';
+				$mensagemStatus = 'Em Andamento';
+				if($cor['estado'] == 'Feito') {
+					$classFeito = '_feito';
+					$mensagemStatus = 'Corrigido';
+				}
+		?>
+				<tr class="corretor_pedido<?= $classFeito ?>">
+				<td class="item" style="width:230px; height:100%;"><?= $cor['data_pedido'] ?></td>
+				<td class="item" style="width:150px;"> <?= $cor['nome_lista'] ?> </td>
+				<td class="item" style="width:150px;"> <?= $mensagemStatus ?> </td>
+				<td class="item" style="width:150px;"> <?
+				if($cor['estado'] == 'Feito'){ ?>
+					<a href="<?=base_url('/index.php/monitor/get_copycatch_report/'.$cor['id_corretor'])?>">
+					relatorio.txt</a>
+				<? } else { ?>
+					relatorio.txt
+				<? } ?>
+			</td>
 		</tr>
-		<tr class="corretor_pedido_feito">
-			<td class="item" style="width:230px;  height:100%;">12-10-2011 10:10:10</td>
-			<td class="item" style="width:150px;"> L1 </td>
-			<td class="item" style="width:150px;"> Corrigido </td>
-			<td class="item" style="width:150px;"> <a href="oi.txt">relatorio.txt </a> </td>
-		</tr>
+		<? } ?>
 	</tbody>
 </table>

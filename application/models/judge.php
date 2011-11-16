@@ -51,10 +51,18 @@ class Judge extends CI_Model {
 	}
 
 	function get_corrector_submissions(){
-		$query = $this->db->query("SELECT l.nome_lista as nome_lista, c.id_corretor as id_corretor, c.estado as estado, c.data_pedido as data_pedido FROM Lista_Exercicios l, Corretor c WHERE c.id_lista AND l.id_lista = c.id_lista ORDER BY data_pedido");
+		$query = $this->db->query("SELECT l.nome_lista as nome_lista, c.id_corretor as id_corretor, c.estado as estado, c.data_pedido as data_pedido FROM Lista_Exercicios l, Corretor c WHERE c.id_lista AND l.id_lista = c.id_lista ORDER BY data_pedido DESC");
 		$resultado = $query->result_array();
 		return $resultado;
 	}
 	
+	function add_corrector_request($data){
+		$this->db->insert('Corretor', $data);
+	}
+	
+	function get_copy_report($id_corretor){
+		$query = $this->db->query("SELECT relatorio_pcopia as relatorio, l.nome_lista as nome_lista FROM Corretor c, Lista_Exercicios l WHERE l.id_lista=c.id_lista AND id_corretor = $id_corretor");
+		return $query->num_rows() > 0 ? $query->row() : array();
+	}
 	
 }

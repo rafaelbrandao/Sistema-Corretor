@@ -631,6 +631,12 @@ class Monitor extends CI_Controller {
 				$this->reviews->accept_request($problem_id, $login_request, $time_request);
 				$this->submissions->create($problem_id, $login_request, $lang, $src);
 				if ($rejudge) {
+					$dataForCorrector = array();
+					
+					$dataForCorrector['id_revisao'] = 2;
+					$dataForCorrector['estado'] = 'Correcao';
+					$dataForCorrector['data_pedido'] = date("Y-m-d h:i:s", time());
+					$this->judge->add_corrector_request($dataForCorrector);
 					// FIXME: rejudge the new submission as requested, or mark it
 					// to be analised as soon as possible. For now, this is ignored.
 				}
@@ -707,18 +713,34 @@ class Monitor extends CI_Controller {
 	
 	
 	public function corrector(){
-		$oi = "xixi";
-		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin, 'oi' => $oi));
+		$correcoes = $this->judge->get_corrector_submissions();
+		$listas = $this->lists->get_all_lists_idnames();
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin,
+		 					'correcoes' => $correcoes, 'listas' => $listas));
 		$this->load->view('v_admin_corrector');
 		$this->load->view('v_footer');
 	}
 	
 	public function submit_correct_request(){
+		$data = array();
+		$data['id_lista'] = $this->input->post('corrigirLista');
+		$data['estado'] = 'Correcao';
+		$data['data_pedido'] = date("Y-m-d h:i:s", time());
+		$this->judge->add_corrector_request($data);
+		redirect(base_url('/index.php/monitor/corrector'), 'location');
+	}
+	
+	public function get_copycatch_report($id_corretor){
 		
-		$data['src'] = $this->input->post('src');
-		$data['lang'] = $this->input->post('lang');
-		$confirm_pwd = $this->input->post('pwd');
-		
+		if(!$id_corretor) return;
+		$arquivo = $this->judge->get_copy_report($id_corretor);
+		if(!$arquivo->relatorio || !$arquivo->nome_lista){
+			redirect(base_url('/index.php'), 'location');
+			return;
+		}
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="relatorio_' . $arquivo->nome_lista . '.txt"');
+		echo( $arquivo->relatorio );
 	}
 	
 	
