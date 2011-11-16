@@ -58,7 +58,7 @@ $score_final=0;
 	foreach($problems as $problem){
 		$user_score = $this->score->score_user_problem($problem['id_questao'], $user['login']);
 		$problem_weight = $this->score->sum_weights_problem($problem['id_questao']);
-		$score_pro = ($user_score/$problem_weight)*10;
+		$score_pro = ($user_score/$problem_weight)/10;
 		$score_final += $score_pro;
 ?>
 
@@ -86,7 +86,4 @@ Clique no nome do arquivo de entrada e de saída para fazer seu download. A sua 
 </tr></table>
 
 [Implementar essa parte]
-
-
-</body>
 
