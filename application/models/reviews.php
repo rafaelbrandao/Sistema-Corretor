@@ -96,5 +96,16 @@ class Reviews extends CI_Model {
     	
     	$this->modify_request($problem_id, $login, $time, 'respondido');
     }
-    
+	
+	function get_review_id($login_request='', $problem_id=0, $time_request=0){
+		$where = array(
+    		'data_pedido' => date("Y-m-d H:i:s", $time_request),
+    		'login_usuario' => $login,
+    		'id_questao' => $problem_id
+    	);
+		$this->db->where($where);
+    	$this->db->select('id_revisao');
+    	$query = $this->db->get('Pedido_Revisao');
+		return $query->row()->id_revisao;
+	}
 }

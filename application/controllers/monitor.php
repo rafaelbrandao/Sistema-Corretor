@@ -16,6 +16,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('clarifications','', TRUE);
 		$this->load->model('reviews','', TRUE);
 		$this->load->model('submissions','', TRUE);
+		$this->load->model('emailsender','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -94,9 +95,11 @@ class Monitor extends CI_Controller {
 		$this->email->message('Testing the email class, '.$user['login']);	
 		$this->email->send();
 		*/
+		$this->emailsender->send_email_request_accepted($user['email'], $user['nome'], $login);
 		$this->user->register_confirm($login);
 		redirect(base_url('/index.php/monitor/pending_registers'), 'location');
 	}
+	
 	
 	function register_reject($login='')
 	{
@@ -631,12 +634,13 @@ class Monitor extends CI_Controller {
 				$this->reviews->accept_request($problem_id, $login_request, $time_request);
 				$this->submissions->create($problem_id, $login_request, $lang, $src);
 				if ($rejudge) {
-					$dataForCorrector = array();
-					
-					$dataForCorrector['id_revisao'] = 2;
-					$dataForCorrector['estado'] = 'Correcao';
+				/*	$dataForCorrector = array();
+					$dataForCorrector['id_revisao'] = $this->reviews->get_review_id($problem_id, $login_request, $time_request);
+					$dataForCorrector['estado'] = 'Revisao';
 					$dataForCorrector['data_pedido'] = date("Y-m-d h:i:s", time());
 					$this->judge->add_corrector_request($dataForCorrector);
+					*/
+					// FIXME: ask only one rejudge, by now the user is going to need to ask list rejudge
 					// FIXME: rejudge the new submission as requested, or mark it
 					// to be analised as soon as possible. For now, this is ignored.
 				}
