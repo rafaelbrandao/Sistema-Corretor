@@ -44,5 +44,12 @@ class Score extends CI_Model {
     	return $query->result_array();
     	
     }
+    
+    function get_nota_user($problem=0, $user="", $id)
+    {
+    	$query = $this->db->query("SELECT valor_nota as nota FROM Nota_Lista WHERE id_questao = '$problem' AND login = '$user' AND id_correcao = '$id' ORDER BY id_correcao");
+    	return $query->result_array();
+    
+    }
 }
 
