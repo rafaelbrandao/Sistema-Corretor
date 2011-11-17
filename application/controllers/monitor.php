@@ -921,7 +921,7 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	//FIXME Essa funcao esta duplicada na view v_admin_notas
-	public function download_notas()
+	public function download_notas($file="notas")
 	{
 		echo "<table><tr><td>Nome</td><td>login</td>";
 		$students = $this->user->retrieve_list_students_order();
@@ -960,9 +960,7 @@ class Monitor extends CI_Controller {
 
 		echo "</tr></table>";
 		header("Content-type: application/octet-stream");
-
-		# replace excelfile.xls with whatever you want the filename to default to
-		header("Content-Disposition: attachment; filename=excelfile.xls");
+		header("Content-Disposition: attachment; filename=".$file.".xls");
 		header("Pragma: no-cache");
 		header("Expires: 0");
 	}
