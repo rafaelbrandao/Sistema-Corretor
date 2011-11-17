@@ -9,6 +9,7 @@ class Backup extends CI_Model {
 
 	function make_backup(){
 		ini_set('display_errors', 'Off');
+		error_reporting(0);
 		return $this->backup_tables($this->db->hostname, $this->db->username,
 			$this->db->password, $this->db->database);
 	}
