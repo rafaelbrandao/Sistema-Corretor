@@ -26,6 +26,21 @@ class EmailSender extends CI_Model {
 		$this->send_email($to, $nome, $subject, $message);
 	}
 	
+	public function send_email_clarification_accepted($to = '', $name = '', $filename = '') {
+		$subject = 'Clarification aceito para questão '.$filename;
+		$message = 'Olá '. $name . ',<br/> Seu pedido de clarification foi analisado e confirmado.<br/>' .
+			'Confira na página os clarifications confirmados dessa questão e fique a vontade para fazer um novo pedido, caso necessário.';
+		$this->send_email($to, $name, $subject, $message);
+	}
+	
+	public function send_email_clarification_rejected($to = '', $name = '', $filename = '', $reason = '') {
+		$subject = 'Clarification rejeitado para questão '.$filename;
+		$message = 'Olá '. $name . ',<br/> Seu pedido de clarification foi analisado e rejeitado.<br/>' .
+			($reason ? 'A justificativa para a recusa deste pedido foi: "'. $reason .'"<br/>' : '') .
+			'Confira na página os clarifications confirmados dessa questão e fique a vontade para fazer um novo pedido, caso necessário.';
+		$this->send_email($to, $name, $subject, $message);
+	}
+	
 	private function send_email($to = '', $nome='', $subject='', $message=''){
 		// multiple recipients
 		//$to  = 'aca3@cin.ufpe.br' . ', '; // note the comma

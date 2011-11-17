@@ -569,12 +569,18 @@ class Monitor extends CI_Controller {
 			$this->load->view('v_admin_answer_clarification', $data);
 			$this->load->view('v_footer');
 			return;
-		} else if ($handle == 'confirm') {
+		}
+		
+		$user = $this->user->retrieve_info($login_request);
+		$filename = $this->problems->get_problem_repr($problem_id);
+		if ($handle == 'confirm') {
 			$this->clarifications->update_data($problem_id, $login_request, $time_request, $data['answer'], 'respondido');
 			$this->session->set_flashdata('notice', 'Clarification respondido com sucesso.');
+			$this->emailsender->send_email_clarification_accepted($user['email'], $user['nome'], $filename);
 		} else if ($handle == 'reject') {
 			$this->clarifications->update_data($problem_id, $login_request, $time_request, $data['answer'], 'desconsiderado');
 			$this->session->set_flashdata('notice', 'Clarification respondido com sucesso.');
+			$this->emailsender->send_email_clarification_rejected($user['email'], $user['nome'], $filename, $data['answer']);
 		}
 		redirect(base_url('/index.php/monitor/clarifications'), 'location');
 	}
