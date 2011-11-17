@@ -529,7 +529,7 @@ class Monitor extends CI_Controller {
 		}
 		
 		$this->problems->rem_problem($problem_id);
-		$this->session->set_flashdata('notice', "Questão $filename apagada com sucesso.");
+		$this->session->set_flashdata('notice', "Questão ".$data['filename']." apagada com sucesso.");
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
