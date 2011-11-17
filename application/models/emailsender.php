@@ -41,6 +41,21 @@ class EmailSender extends CI_Model {
 		$this->send_email($to, $name, $subject, $message);
 	}
 	
+	public function send_email_review_accepted($to = '', $name = '', $filename = '') {
+		$subject = 'Revisão aceita para questão '.$filename;
+		$message = 'Olá '. $name . ',<br/> Seu pedido de revisão foi analisado e confirmado.<br/>' .
+			'Confira depois na página de notas o resultado após sua revisão ter sido aplicada.';
+		$this->send_email($to, $name, $subject, $message);
+	}
+	
+	public function send_email_review_rejected($to = '', $name = '', $filename = '', $reason = '') {
+		$subject = 'Revisão rejeitada para questão '.$filename;
+		$message = 'Olá '. $name . ',<br/> Seu pedido de revisão foi analisado e rejeitado.<br/>' .
+			($reason ? 'A justificativa para a recusa deste pedido foi: "'. $reason .'"<br/>' : '') .
+			'Confira depois na página de notas o resultado após sua revisão ter sido aplicada.';
+		$this->send_email($to, $name, $subject, $message);
+	}
+	
 	private function send_email($to = '', $nome='', $subject='', $message=''){
 		// multiple recipients
 		//$to  = 'aca3@cin.ufpe.br' . ', '; // note the comma
