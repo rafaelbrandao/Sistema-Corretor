@@ -810,7 +810,6 @@ class Monitor extends CI_Controller {
 		echo( $this->backup->make_backup() );
 	}
 	
-	
 	public function listas()
 	{
 		$this->load->view('view_monitor_listas');
@@ -920,9 +919,19 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_admin_notas');
 		$this->load->view('v_footer');
 	}
+	
 	//FIXME Essa funcao esta duplicada na view v_admin_notas
 	public function download_notas($file="notas")
 	{
+		
+		
+		ini_set('display_errors', 'Off');
+		error_reporting(0);
+		header("Content-type: application/octet-stream");
+		header("Content-Disposition: attachment; filename=".$file.".xls");
+		header("Pragma: no-cache");
+		header("Expires: 0");
+
 		echo "<table><tr><td>Nome</td><td>login</td>";
 		$students = $this->user->retrieve_list_students_order();
 		$lists = $this->lists->get_all_available_lists();
@@ -946,10 +955,9 @@ class Monitor extends CI_Controller {
 					$score_pro = $problem_weight != 0 ? ($user_score/$problem_weight)/10 : 0;
 					$score_final += $score_pro;
 				}
-				$score_final = $score_final/sizeof($problems);
-
-
-
+				if(sizeof($problems) == 0) $score_final = 0;
+				else $score_final = $score_final/sizeof($problems);
+				
 				echo "<td>".sprintf("%.2f", $score_final/10)."</td>";
 
 
@@ -959,10 +967,5 @@ class Monitor extends CI_Controller {
 
 
 
-		
-		header("Content-type: application/octet-stream");
-		header("Content-Disposition: attachment; filename=".$file.".xls");
-		header("Pragma: no-cache");
-		header("Expires: 0");
 	}
 }

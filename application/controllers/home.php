@@ -407,9 +407,11 @@ class Home extends CI_Controller {
 	public function score($list_id = 0)
 	{
 		$list = $this->lists->get_list_data($list_id);
-		if (!$list || ($list['estado_lista'] != 'revisao' && $list['estado_lista'] != 'finalizada')) {
-			redirect(base_url('/index.php/home/lists'), 'location');
-			return;
+		if(!$this->is_admin){
+			if (!$list || ($list['estado_lista'] != 'revisao' && $list['estado_lista'] != 'finalizada')) {
+				redirect(base_url('/index.php/home/lists'), 'location');
+				return;
+			}
 		}
 		
 		$data['list'] = $list;
