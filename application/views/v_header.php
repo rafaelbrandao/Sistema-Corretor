@@ -5,6 +5,7 @@
 	<title>IF672 [CIn-UFPE]</title>
 
 	<link href="<?=base_url('/css/style.css')?>" rel="stylesheet" type="text/css"/>
+	<link href="<?=base_url('/css/notas.css')?>" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
