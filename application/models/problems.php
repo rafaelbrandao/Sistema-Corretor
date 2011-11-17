@@ -94,5 +94,12 @@ class Problems extends CI_Model {
 		$row = $query->row_array();
 		return $query->row()->nome_lista . 'Q' . $query->row()->numero;
 	}
+	
+    function rem_problem($problem_id = 0)
+    {
+    	if (!$problem_id)
+    		return;
+    	$this->db->delete('Questao', array('id_questao' => $problem_id));
+    }
     
 }
