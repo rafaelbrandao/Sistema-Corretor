@@ -430,4 +430,20 @@ class Home extends CI_Controller {
 	}
 	
 	
+ 	public function pages($pagina='' ){
+
+//		if( !file_exists(base_url('/pages/'.$pagina))){
+//			redirect(base_url('/index.php'), 'location');
+//			return;
+//		}
+		
+		$saida = file_get_contents(base_url('/pages/'.$pagina));
+		
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));	
+		echo('<div id="content">');
+		echo($saida);
+		echo('</div>');
+		$this->load->view('v_footer');
+	}
+	
 }
