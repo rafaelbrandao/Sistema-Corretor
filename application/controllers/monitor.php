@@ -17,6 +17,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('reviews','', TRUE);
 		$this->load->model('submissions','', TRUE);
 		$this->load->model('emailsender','', TRUE);
+		$this->load->model('score','', TRUE);
 		
 		$this->load->model('backup','', TRUE);
 		
@@ -498,6 +499,43 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/edit_problem/'.$problem_id), 'location');
 	}
 	
+	function rem_problem($problem_id = 0, $opt = '')
+	{
+		$list_id = 0;
+		if (!$problem_id || !($list_id = $this->problems->get_list_id_for_problem($problem_id))) {
+			redirect(base_url('/index.php/monitor/lists'), 'location');
+			return;		
+		}
+		
+		$data['list'] = $this->lists->get_list_data($list_id);
+		$data['filename'] = $this->problems->get_problem_repr($problem_id);
+		$data['problem_id'] = $problem_id;
+		if ($opt != 'confirm') {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_admin_rem_problem', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		$pwd = $this->input->post('pwd');
+		if (!$pwd)
+			$error = 'Você precisa especificar sua senha para remover.';
+		else if (!$this->user->is_pwd_correct($this->logged, $pwd))
+			$error = 'Senha incorreta.';
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error' => $error));
+			$this->load->view('v_admin_rem_problem', $data);
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->problems->rem_problem($problem_id);
+		$this->session->set_flashdata('notice', "Questão ".$data['filename']." apagada com sucesso.");
+		redirect(base_url('/index.php/monitor/lists'), 'location');
+	}
+	
 	function clarifications()
 	{
 		$notice = $this->session->flashdata('notice');
@@ -878,6 +916,8 @@ class Monitor extends CI_Controller {
 	
 	public function notas_semestre()
 	{
-		$this->load->view('view_monitor_notas_semestre');
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
+		$this->load->view('v_admin_notas');
+		$this->load->view('v_footer');
 	}
 }

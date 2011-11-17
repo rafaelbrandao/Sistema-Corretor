@@ -58,11 +58,11 @@ class Lists extends CI_Model {
     	return $query->result_array();
     }
 
-	function get_all_lists_idnames()
-	{
-		$query = $this->db->query("SELECT id_lista, nome_lista FROM Lista_Exercicios ORDER BY nome_lista DESC");
-		return $query->result_array();
-	}
+    function get_all_lists_idnames()
+    {
+        $query = $this->db->query("SELECT id_lista, nome_lista FROM Lista_Exercicios ORDER BY nome_lista DESC");
+        return $query->result_array();
+    }
     
     function get_list_data($id=0)
     {

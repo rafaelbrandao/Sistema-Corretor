@@ -404,10 +404,21 @@ class Home extends CI_Controller {
 		$this->load->view('view_pedir_revisao');
 	}
 	
-	public function score()
+	public function score($list_id = 0)
 	{
+		$list = $this->lists->get_list_data($list_id);
+		if (!$list || ($list['estado_lista'] != 'revisao' && $list['estado_lista'] != 'finalizada')) {
+			redirect(base_url('/index.php/home/lists'), 'location');
+			return;
+		}
+		
+		$data['list'] = $list;
+		$data['problems'] = $this->problems->get_problems_from_list($list_id);
+		$data['students'] = $this->user->retrieve_list_students_order();
+		$data['list_id'] = $list_id;
+		
 		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
-		$this->load->view('v_score_list');
+		$this->load->view('v_score_list', $data);
 		$this->load->view('v_footer');
 	}
 	
