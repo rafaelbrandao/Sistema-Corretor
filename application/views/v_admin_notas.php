@@ -19,7 +19,7 @@
 	
 <h1>Notas do Semestre (Listas de Exercícios)</h1>
 
-<pre>Aqui você tem acesso às notas de todas as listas, de todos os alunos cadastrados no sistema. Você pode também exportar para alguma planilha de texto, clicando <a href="oi">aqui</a>. À medida que novas listas forem criadas e finalizadas, elas vão aparecer aqui.
+<pre>Aqui você tem acesso às notas de todas as listas, de todos os alunos cadastrados no sistema. Você pode também exportar para alguma planilha de texto, clicando <a href="download_notas">aqui</a>. À medida que novas listas forem criadas e finalizadas, elas vão aparecer aqui.
 
 </pre>
 

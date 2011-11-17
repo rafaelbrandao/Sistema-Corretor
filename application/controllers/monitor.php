@@ -920,4 +920,50 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_admin_notas');
 		$this->load->view('v_footer');
 	}
+	//FIXME Essa funcao esta duplicada na view v_admin_notas
+	public function download_notas()
+	{
+		echo "<table><tr><td>Nome</td><td>login</td>";
+		$students = $this->user->retrieve_list_students_order();
+		$lists = $this->lists->get_all_available_lists();
+		foreach($lists as $lista)
+			echo "<td>".$lista['nome_lista']."</td>";
+
+
+		echo "</tr></table>";
+		foreach($students as $user)
+		{
+			echo "<table><tr><td>".$user['nome']."</td><td>".$user['login']."</td>";
+			foreach($lists as $lista)
+			{
+				$score_final=0;
+				$list_name = $lista['nome_lista'];
+				$problems = $this->problems->get_problems_from_list($lista['id_lista']);
+				foreach($problems as $problem)
+				{
+					$user_score = $this->score->score_user_problem($problem['id_questao'], $user['login']);
+					$problem_weight = $this->score->sum_weights_problem($problem['id_questao']);
+					$score_pro = $problem_weight != 0 ? ($user_score/$problem_weight)/10 : 0;
+					$score_final += $score_pro;
+				}
+				$score_final = $score_final/sizeof($problems);
+
+
+
+				echo "<td>".sprintf("%.2f", $score_final/10)."</td>";
+
+
+    			}
+    		}
+
+
+
+		echo "</tr></table>";
+		header("Content-type: application/octet-stream");
+
+		# replace excelfile.xls with whatever you want the filename to default to
+		header("Content-Disposition: attachment; filename=excelfile.xls");
+		header("Pragma: no-cache");
+		header("Expires: 0");
+	}
 }
