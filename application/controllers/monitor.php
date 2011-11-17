@@ -17,6 +17,7 @@ class Monitor extends CI_Controller {
 		$this->load->model('reviews','', TRUE);
 		$this->load->model('submissions','', TRUE);
 		$this->load->model('emailsender','', TRUE);
+		$this->load->model('score','', TRUE);
 		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
@@ -853,6 +854,8 @@ class Monitor extends CI_Controller {
 	
 	public function notas_semestre()
 	{
-		$this->load->view('view_monitor_notas_semestre');
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
+		$this->load->view('v_admin_notas');
+		$this->load->view('v_footer');
 	}
 }
