@@ -72,11 +72,15 @@ foreach($students as $user)
 
 <?
 	}
-}
-
+	
 ?>
 
 </tr></table>
+
+<?
+}
+
+?>
 
 
 </div>

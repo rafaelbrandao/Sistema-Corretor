@@ -954,11 +954,12 @@ class Monitor extends CI_Controller {
 
 
     			}
+    			echo "</tr></table>";
     		}
 
 
 
-		echo "</tr></table>";
+		
 		header("Content-type: application/octet-stream");
 		header("Content-Disposition: attachment; filename=".$file.".xls");
 		header("Pragma: no-cache");
