@@ -44,3 +44,4 @@ class EmailSender extends CI_Model {
 		mail($to, $subject, $message, $headers);
 	}
 }
+

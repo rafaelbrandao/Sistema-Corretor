@@ -18,6 +18,9 @@ class Monitor extends CI_Controller {
 		$this->load->model('submissions','', TRUE);
 		$this->load->model('emailsender','', TRUE);
 		
+		$this->load->model('backup','', TRUE);
+		
+		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
 			$this->is_admin = $this->user->is_user_admin($this->logged);
@@ -745,6 +748,28 @@ class Monitor extends CI_Controller {
 		header('Content-type: application/text');
 		header('Content-Disposition: attachment; filename="relatorio_' . $arquivo->nome_lista . '.txt"');
 		echo( $arquivo->relatorio );
+	}
+	
+	public function semester_filing($error = ''){
+			
+		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin, 'error' => $error));
+		$this->load->view('v_admin_backup_system');
+		$this->load->view('v_footer');
+	}
+	
+	public function generate_backup(){
+		$confirm_pwd = $this->input->post('confirm_pwd');
+		$error = '';
+		if (!$this->user->is_pwd_correct($this->logged,$confirm_pwd)){
+			$error = 'Senha incorreta.';
+			$this->semester_filing($error);
+			return;
+		}
+		
+		
+		header('Content-type: application/text');
+		header('Content-Disposition: attachment; filename="backup-monitoria' . date('Y-m-d h-i-s', time()) . '.sql"');
+		echo( $this->backup->make_backup() );
 	}
 	
 	

@@ -23,5 +23,6 @@
 
 <a href="oi">Notas do Semestre</a> - ver a lista de notas dos alunos nas listas.
 
+<a href="<?=base_url('/index.php/monitor/semester_filing')?>">Arquivamento e Reset do Sistema</a> - salvar estado do sistema, limpar o sistema para novo semestre.
 
 </pre>
