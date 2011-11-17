@@ -64,7 +64,8 @@ foreach($students as $user)
 			$score_pro = $problem_weight != 0 ? ($user_score/$problem_weight)/10 : 0;
 			$score_final += $score_pro;
 		}
-		$score_final = $score_final/sizeof($problems);
+		if(sizeof($problems) == 0) $score_final = 0;
+		else $score_final = $score_final/sizeof($problems);
 
 ?>
 

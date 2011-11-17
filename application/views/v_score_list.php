@@ -42,7 +42,10 @@ Para fazer seu pedido de revisão, abra a página que contém o formato de entra
 <td class="<?=$this->score->get_css_type($score_pro)?>" onclick="window.location='<?=base_url('/index.php/home/score_detail/'.$list_id.'/'.$problem['id_questao'].'/'.$user['login'])?>'"> <?=sprintf("%.2f", $score_pro)?>% </td>
 <?
 	}
-	$score_final = $score_final/sizeof($problems);
+	if(sizeof($problems) == 0)
+		$score_final = 0;
+	else
+		$score_final = $score_final/sizeof($problems);
 ?>	
 <td class=' <?=$this->score->get_css_type($score_final)?>'><?=sprintf("%.2f", $score_final)?>%</td></tr></table>
 <? } ?>
