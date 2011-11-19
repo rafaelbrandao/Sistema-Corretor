@@ -57,6 +57,7 @@ class Judge extends CI_Model {
 	}
 	
 	function add_corrector_request($data){
+		$data['data_pedido'] = date("Y-m-d H:i:s", time());
 		$this->db->insert('Corretor', $data);
 	}
 	

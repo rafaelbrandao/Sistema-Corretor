@@ -781,7 +781,6 @@ class Monitor extends CI_Controller {
 		$data = array();
 		$data['id_lista'] = $this->input->post('corrigirLista');
 		$data['estado'] = 'Correcao';
-		$data['data_pedido'] = date("Y-m-d h:i:s", time());
 		$this->judge->add_corrector_request($data);
 		redirect(base_url('/index.php/monitor/corrector'), 'location');
 	}
