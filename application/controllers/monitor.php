@@ -383,6 +383,7 @@ class Monitor extends CI_Controller {
 			redirect(base_url('/index.php/monitor/lists'), 'location');
 			return;
 		}
+		$notice = $this->session->flashdata('notice');
 		$data['list_id'] = $list_id;
 		$data['listprefix'] = $this->lists->get_list_name($list_id);
 		$data['problem_id'] = $problem_id;
@@ -397,7 +398,7 @@ class Monitor extends CI_Controller {
 		$data['out_sample'] = $step == 'samples' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
 		
 		if (!$step) {
-			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 			$this->load->view('v_admin_edit_problem', $data);
 			$this->load->view('v_footer');
 			return;
@@ -429,22 +430,20 @@ class Monitor extends CI_Controller {
 				$error = 'Você deve passar um número inteiro positivo como peso. Zero ou números negativos são inválidos.';
 			
 			if ($error) {
-				$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+				$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error, 'notice'=>$notice));
 				$this->load->view('v_admin_edit_problem', $data);
 				$this->load->view('v_footer');
 				return;
 			}
 			$this->judge->add_input_for_problem($problem_id, $data['new_input'], $data['new_output'], $timelimit, $weight);
 		}
-		else if ($step == 'specs') {
+		else if ($step == 'specs' || $step == 'samples') {
 			$this->problems->update_problem_specs($problem_id, $data['title'], $data['specs'], $data['in_format'], $data['out_format']);
-		}
-		else if ($step == 'samples') {
 			$this->problems->update_problem_samples($problem_id, $data['in_sample'], $data['out_sample']);
 		}
 		
 		$this->session->set_flashdata('notice', "Questão $question foi atualizada com sucesso.");
-		redirect(base_url('/index.php/monitor/lists'), 'location');
+		redirect(base_url('/index.php/monitor/edit_problem/'.$problem_id), 'location');
 	}
 	
 	function rem_answer($input_id = 0, $opt='')

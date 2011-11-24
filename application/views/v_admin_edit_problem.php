@@ -21,7 +21,8 @@ if (!isset($timelimit)) $timelimit = 1;
 	<li>Corretor IN/OUT</li>
 </ul>
 <pre>
-<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Editar questão (enunciado)</h1>
+<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Editar questão (enunciado)</h1><strong>Atenção</strong>: Ao confirmar as alterações aqui, você também estará modificando entrada e saída padrão dessa questão (exibido a seguir) e ignorando mudanças nas entradas e saídas do corretor (no fim desta página).
+
 <?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/specs'))?>
 Título: <input name="title" value="<?=$title?>" type="text" style="width: 200px;" />
 
@@ -37,7 +38,8 @@ Formato de saída:
 <input type="submit" value="Salvar alterações" /></form>
 
 <?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/samples'))?>
-<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Exemplos de entrada e de saída</h1>
+<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Exemplos de entrada e de saída</h1><strong>Atenção</strong>: Ao confirmar as alterações aqui, você também estará modificando a especificação da questão (exibido anteriormente) e ignorando mudanças nas entradas e saídas do corretor (no fim desta página).
+
 Exemplo de entrada:
 <textarea name="in_sample" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$in_sample?></textarea>
 
@@ -67,7 +69,8 @@ $input_name=$listprefix.'Q'.$problem_num.'E'.$it;
 		
 <? } ?>
 		
-<h2>Enviar nova entrada e saída para o corretor</h2><!--Entrada #: <input type="text" style="width: 20px;" />-->
+<h2>Enviar nova entrada e saída para o corretor</h2><strong>Atenção</strong>: Ao enviar uma nova entrada, as alterações feitas em outros campos serão perdidas. Sugestão: deixe para adicionar/remover entradas quando o resto da lista não for modificado.
+
 Peso (para média): <input name="weight" value="<?=$weight?>" type="text" style="width: 30px;" />
 Tempo (em segundos): <input name="timelimit" value="<?=$timelimit?>" type="text" style="width: 30px;" />
 Entrada:
