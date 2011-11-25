@@ -21,7 +21,7 @@ if (!isset($timelimit)) $timelimit = 1;
 	<li>Corretor IN/OUT</li>
 </ul>
 <pre>
-<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Editar questão (enunciado)</h1><strong>Atenção</strong>: Ao confirmar as alterações aqui, você também estará modificando entrada e saída padrão dessa questão (exibido a seguir) e ignorando mudanças nas entradas e saídas do corretor (no fim desta página).
+<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Editar questão (enunciado)</h1><strong>Atenção</strong>: Ao confirmar as alterações aqui, você também estará ignorando mudanças nas entradas e saídas do corretor (no fim desta página).
 
 <?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/specs'))?>
 Título: <input name="title" value="<?=$title?>" type="text" style="width: 200px;" />
@@ -35,21 +35,12 @@ Formato de entrada:
 Formato de saída:
 <textarea name="out_format" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$out_format?></textarea>
 
-<input type="submit" value="Salvar alterações" /></form>
-
-<?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/samples'))?>
-<h1><strong><?=$listprefix.'Q'.$problem_num?></strong> - Exemplos de entrada e de saída</h1><strong>Atenção</strong>: Ao confirmar as alterações aqui, você também estará modificando a especificação da questão (exibido anteriormente) e ignorando mudanças nas entradas e saídas do corretor (no fim desta página).
-
 Exemplo de entrada:
 <textarea name="in_sample" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$in_sample?></textarea>
 
 Exemplo de saída:
 <textarea name="out_sample" rows="6" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$out_sample?></textarea>
 
-<!--Entrada para download (opcional): <input type="file" name="in_sample_file" style="width: 200px;" text="selecionar" />
-
-Saída para download (opcional): <input type="file" name="out_sample_file" style="width: 200px;" text="selecionar" />
--->
 <input type="submit" value="Salvar alterações" /></form>
 
 <?=form_open(base_url('/index.php/monitor/edit_problem/'.$problem_id.'/add_answer'))?>

@@ -394,8 +394,8 @@ class Monitor extends CI_Controller {
 		$data['title'] = $step == 'specs' ? $this->input->post('title') : $pro['nome'];
 		$data['in_format'] = $step == 'specs' ? $this->input->post('in_format') : $pro['descricao_entrada'];
 		$data['out_format'] = $step == 'specs' ? $this->input->post('out_format') : $pro['descricao_saida'];
-		$data['in_sample'] = $step == 'samples' ? $this->input->post('in_sample') : $pro['entrada_exemplo'];
-		$data['out_sample'] = $step == 'samples' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
+		$data['in_sample'] = $step == 'specs' ? $this->input->post('in_sample') : $pro['entrada_exemplo'];
+		$data['out_sample'] = $step == 'specs' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
 		
 		if (!$step) {
 			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
@@ -437,7 +437,7 @@ class Monitor extends CI_Controller {
 			}
 			$this->judge->add_input_for_problem($problem_id, $data['new_input'], $data['new_output'], $timelimit, $weight);
 		}
-		else if ($step == 'specs' || $step == 'samples') {
+		else if ($step == 'specs') {
 			$this->problems->update_problem_specs($problem_id, $data['title'], $data['specs'], $data['in_format'], $data['out_format']);
 			$this->problems->update_problem_samples($problem_id, $data['in_sample'], $data['out_sample']);
 		}
@@ -941,7 +941,7 @@ class Monitor extends CI_Controller {
 		header("Pragma: no-cache");
 		header("Expires: 0");
 
-		echo "<table><tr><td>Nome</td><td>login</td>";
+		echo "<table><tr><td>Nome</td><td>Login</td>";
 		$students = $this->user->retrieve_list_students_order();
 		$lists = $this->lists->get_all_available_lists_asc();
 		foreach($lists as $lista)
