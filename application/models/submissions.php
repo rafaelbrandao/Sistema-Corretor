@@ -82,6 +82,10 @@ class Submissions extends CI_Model {
     	$this->db->update('Submissao', $data);
     }
     
-
+	function get_days_bonus($list = 0, $question = 0, $login = '')
+	{
+		$query = $this->db->query("SELECT DATEDIFF(l.data_finalizacao ,s.data_submissao) FROM Lista_Exercicios l, Submissao s WHERE l.id_lista = $list AND s.login = '$login' AND s.id_questao = $question ORDER BY s.data_submissao DESC");
+		return $query->result_array()->row();
+	}
     
 }

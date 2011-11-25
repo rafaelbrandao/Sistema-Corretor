@@ -28,7 +28,7 @@
 <?
 
 $students = $this->user->retrieve_list_students_order();
-$lists = $this->lists->get_all_available_lists();
+$lists = $this->lists->get_all_available_lists_asc();
 
 foreach($lists as $lista)
 {

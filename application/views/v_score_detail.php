@@ -7,6 +7,9 @@ $user = $this->uri->segment(5);
 $problem_string = $list_name.'Q'.$problem['numero'];
 $solutions = $this->score->get_peso_tempo($problem_number);
 $i=1;
+$days_bonus = $this->submissions->get_days_bonus($list_number, $problem_number, $user);
+$bonus = 
+
 
 ?>
 
@@ -38,7 +41,7 @@ Cada entrada é executada separadamente, e o cálculo final da nota na questão 
 ?>
 
 <strong><?='E'.$i++?></strong>:
-	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>.
+	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong>10%</strong>: <strong>10.00</strong>.
 	Observação: <strong><?=$msg?></strong>.
 <?
 	}

@@ -943,7 +943,7 @@ class Monitor extends CI_Controller {
 
 		echo "<table><tr><td>Nome</td><td>login</td>";
 		$students = $this->user->retrieve_list_students_order();
-		$lists = $this->lists->get_all_available_lists();
+		$lists = $this->lists->get_all_available_lists_asc();
 		foreach($lists as $lista)
 			echo "<td>".$lista['nome_lista']."</td>";
 

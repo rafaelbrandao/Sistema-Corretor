@@ -51,6 +51,12 @@ class Lists extends CI_Model {
     	$query = $this->db->query("SELECT * FROM Lista_Exercicios WHERE estado_lista != 'preparacao' ORDER BY data_finalizacao DESC");
     	return $query->result_array();
     }
+
+	function get_all_available_lists_asc()
+    {
+    	$query = $this->db->query("SELECT * FROM Lista_Exercicios WHERE estado_lista != 'preparacao' ORDER BY data_finalizacao");
+    	return $query->result_array();
+    }
     
     function get_all_lists_data()
     {
