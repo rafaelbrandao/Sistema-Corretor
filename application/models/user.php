@@ -13,9 +13,10 @@ class User extends CI_Model {
     function init_default_user()
     {
     	$query = $this->db->query('SELECT login, senha FROM Usuario WHERE login = "admin"');
-    	if ($query->num_rows() > 0) return;
+    	if ($query->num_rows() > 0) return FALSE;
     	else {
 			$this->db->query('INSERT INTO Usuario (nome, tipo_permissao, email, login, senha, data_confirmacao) VALUES ("admin", "administrador", "admin@nomail", "admin", "admin", "'.date("Y-m-d H:i:s").'")');
+			return TRUE;
     	}
     }
     
