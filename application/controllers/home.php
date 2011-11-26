@@ -270,12 +270,12 @@ class Home extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
-	//	ini_set('display_errors', 'On');
-	//	error_reporting(E_ALL);
-		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], '');
 		$formato = $this->input->post('formatoQuestao');
-	//	$resultadoCompilacao = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato);
-		$resultadoCompilacao = 0;
+		$resultadoCompilacao = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato);
+	
+		
+		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], $resultadoCompilacao);
+	
 		if( $resultadoCompilacao != 0){
 			$error = 'Submissão realizada com erro compilação.';
 			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));

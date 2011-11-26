@@ -23,13 +23,15 @@ $question = $listprefix.'Q'.$num;
 <pre>Cole no campo '<strong>Código fonte</strong>' sua solução e digite sua senha. Antes de enviar, verifique os nomes dos arquivos de <strong>entrada</strong> e de <strong>saída</strong>. Lembre-se também de escolher a linguagem de programação correta.
 
 <?=form_open(base_url('/index.php/home/submit/'.$problem_id))?>
+<input type="hidden" name="formatoQuestao" value=<?= $question ?> />
 Linguagem: <select name='lang'>
 <option value="java" <?=($lang == 'java' ? 'selected' : '')?>>java</option>
 <option value="c++" <?=($lang == 'c++' ? 'selected' : '')?>>c++</option>
 <option value="c" <?=($lang == 'c' ? 'selected' : '')?>>c</option>
 </select>
+
 Código fonte:
-<textarea name='src' rows="3" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"><?=$src?></textarea>
+<textarea name='src' rows="3" style="width: 600px; height:300px; border: solid 2px #CCC; border-radius: 4px;"><?=$src?></textarea>
 Senha:   <input name='pwd' type="password" name="senha" style="width: 200px;" />
 		 <input type="submit" value="Enviar" style="margin-left: 132px; width: 60px;"/></form>
 </pre>
