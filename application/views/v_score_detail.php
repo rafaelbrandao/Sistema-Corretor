@@ -8,7 +8,9 @@ $problem_string = $list_name.'Q'.$problem['numero'];
 $solutions = $this->score->get_peso_tempo($problem_number);
 $i=1;
 $days_bonus = $this->submissions->get_days_bonus($list_number, $problem_number, $user);
-$bonus = 
+$days_bonus = max(0, $days_bonus);
+$days_bonus = min(5, $days_bonus);
+$bonus = $days_bonus*0.03;
 
 
 ?>
@@ -41,7 +43,7 @@ Cada entrada é executada separadamente, e o cálculo final da nota na questão 
 ?>
 
 <strong><?='E'.$i++?></strong>:
-	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong>10%</strong>: <strong>10.00</strong>.
+	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong><?=$bonus*100?>%</strong>: <strong><?=sprintf("%.2f", $nota/100*($bonus + 1))?></strong>.
 	Observação: <strong><?=$msg?></strong>.
 <?
 	}

@@ -5,7 +5,8 @@ class Home extends CI_Controller {
 	var $logged = '';
 	var $is_admin = FALSE;
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->helper(array('url','form'));
 		$this->load->library(array('datahandler','session','input'));
@@ -26,13 +27,17 @@ class Home extends CI_Controller {
 			$this->is_admin = $this->user->is_user_admin($this->logged);
 	}
 	
-	function logout() {
+	function logout()
+	{
 		$this->session->sess_destroy();
 		redirect(base_url('/'), 'location');
 	}
 	
-	function teste() {
-		$this->session->set_userdata('logged', 'admin');
+	function startup()
+	{
+		if ($this->user->init_default_user())
+			$this->session->set_flashdata('notice', 'Usuário padrão cadastrado com sucesso.');
+		redirect(base_url('/'), 'location');
 	}
 
 	function index()
@@ -43,7 +48,8 @@ class Home extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
-	function login() {
+	function login()
+	{
 		if ($this->logged) {
 			redirect(base_url('/'), 'location');
 			return;
@@ -78,7 +84,8 @@ class Home extends CI_Controller {
 		
 	}
 	
-	function register() {
+	function register()
+	{
 		if ($this->logged) {
 			redirect(base_url('/'), 'location');
 			return;
@@ -115,7 +122,7 @@ class Home extends CI_Controller {
 		}
 		
 		$this->session->set_flashdata('notice','Cadastro solicitado com sucesso. Seu pedido será analisado pelos monitores. Por favor, aguarde confirmação por email.');
-		$this->emailsender->send_email_request_received($login.'@cin.ufpe.br', $nome);
+		$this->emailsender->send_email_register_requested($login.'@cin.ufpe.br', $nome);
 
 		redirect(base_url('/'), 'location');
 	}
@@ -330,15 +337,18 @@ class Home extends CI_Controller {
 		redirect(base_url('/index.php/home/review/'.$problem_id), 'location');
 	}
 	
-	public function download_input($problem_id){
+	public function download_input($problem_id)
+	{
 		$this->download_example($problem_id, 'in', 'entrada_exemplo');
 	}
 	
-	public function download_output($problem_id){
+	public function download_output($problem_id)
+	{
 		$this->download_example($problem_id, 'out', 'saida_exemplo');
 	}
 	
-	private function download_example($problem_id, $extension, $column_name){
+	private function download_example($problem_id, $extension, $column_name)
+	{
 		if(!$problem_id) {
 			redirect(base_url('/index.php'), 'location');
 			return;
@@ -354,15 +364,18 @@ class Home extends CI_Controller {
 		echo($infos[0][$column_name]);
 	}
 	
-	function download_inputs($material_id=0, $input_name=''){
+	function download_inputs($material_id=0, $input_name='')
+	{
 		$this->download($material_id, $input_name, 'in');
 	}
 	
-	function download_outputs($material_id=0, $input_name=''){
+	function download_outputs($material_id=0, $input_name='')
+	{
 		$this->download($material_id, $input_name, 'out');
 	}
 
-	private function download($material_id=0, $file_name='', $extension=''){
+	private function download($material_id=0, $file_name='', $extension='')
+	{
 		if (!$material_id) {
 			redirect(base_url('/index.php'), 'location');
 			return;
@@ -378,46 +391,6 @@ class Home extends CI_Controller {
 		header('Content-Disposition: attachment; filename="' .$file_name. '.' .$extension.'"');
 		echo( $this->judge->get_file_for_inputs($material_id, $column_name) );
 		
-	}
-	
-	public function cadastro() {
-		$this->load->view('view_cadastro');
-	}
-
-	public function listas() {
-		$this->load->view('view_listas');	
-	}
-	
-	public function questao() {
-		$this->load->view('view_questao');	
-	}
-	
-	public function questao_clarifications() {
-		$this->load->view('view_questao_clarifications');
-	}
-	
-	public function _clarifications() {
-		$this->load->view('view_clarifications');
-	}
-	
-	public function submissao() {
-		$this->load->view('view_submissao');
-	}
-	
-	public function notas_lista() {
-		$this->load->view('view_notas_lista');
-	}
-	
-	public function notas_questao() {
-		$this->load->view('view_notas_questao');
-	}
-	
-	public function questao_revisao() {
-		$this->load->view('view_questao_revisao');
-	}
-	
-	public function pedir_revisao() {
-		$this->load->view('view_pedir_revisao');
 	}
 	
 	public function score($list_id = 0)
@@ -448,13 +421,8 @@ class Home extends CI_Controller {
 	}
 	
 	
- 	public function pages($pagina='' ){
-
-//		if( !file_exists(base_url('/pages/'.$pagina))){
-//			redirect(base_url('/index.php'), 'location');
-//			return;
-//		}
-		
+ 	public function pages($pagina='')
+ 	{
 		$saida = file_get_contents(base_url('/pages/'.$pagina));
 		
 		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));	
