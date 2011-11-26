@@ -120,7 +120,7 @@ class Home extends CI_Controller {
 		}
 		
 		$this->session->set_flashdata('notice','Cadastro solicitado com sucesso. Seu pedido será analisado pelos monitores. Por favor, aguarde confirmação por email.');
-		$this->emailsender->send_email_request_received($login.'@cin.ufpe.br', $nome);
+		$this->emailsender->send_email_register_requested($login.'@cin.ufpe.br', $nome);
 
 		redirect(base_url('/'), 'location');
 	}

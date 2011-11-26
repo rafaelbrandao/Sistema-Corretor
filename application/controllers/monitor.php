@@ -80,7 +80,8 @@ class Monitor extends CI_Controller {
 	
 	function pending_registers()
 	{
-		$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
+		$notice = $this->session->flashdata('notice');
+		$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 		$this->load->view('v_admin_pending_registers', array('pending_list'=>$this->user->retrieve_pending_registers()));
 		$this->load->view('v_footer');
 	}
@@ -88,15 +89,18 @@ class Monitor extends CI_Controller {
 	function register_confirm($login='')
 	{
 		$user = $this->user->retrieve_info($login);
-		$this->emailsender->send_email_request_accepted($user['email'], $user['nome'], $login);
 		$this->user->register_confirm($login);
+		$this->emailsender->send_email_register_accepted($user['email'], $user['nome'], $login);
+		$this->session->set_flashdata('notice','Cadastro do login '.$login.' foi aceito com sucesso.');
 		redirect(base_url('/index.php/monitor/pending_registers'), 'location');
 	}
 	
-	
 	function register_reject($login='')
 	{
+		$user = $this->user->retrieve_info($login);
 		$this->user->register_reject($login);
+		$this->emailsender->send_email_register_rejected($user['email'], $user['nome'], $login);
+		$this->session->set_flashdata('notice','Cadastro do login '.$login.' foi rejeitado com sucesso.');
 		redirect(base_url('/index.php/monitor/pending_registers'), 'location');
 	}
 	

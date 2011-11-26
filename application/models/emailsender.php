@@ -5,24 +5,31 @@ class EmailSender extends CI_Model {
 	function __construct()
     {
         parent::__construct();
+        $this->load->helper(array('url'));
     }
-
-
 	
-	public function send_email_request_received($to = '', $nome=''){
+	public function send_email_register_requested($to = '', $nome=''){
 		$subject='Solicitação de Cadastro';
- 		$message='Olá '. $nome . ',<br/>O seu pedido de cadastro no site da disciplina de algoritmos foi '.
+ 		$message='Olá '. $nome . ',<br/>O seu pedido de cadastro no site '.base_url('/').' foi '.
  			'recebido com êxito, e em breve será analisado por um dos monitores.<br/>Quando o cadastro ' .
 			'for confirmado, você irá receber um email informando que o seu login já está liberado.<br/>' .
-			'Para mais informações, visite www.cin.ufpe.br/~if672cc ou entre em contato com um dos monitores.';
+			'Para mais informações, visite '.base_url('/').' ou entre em contato com um dos monitores.';
 		$this->send_email($to, $nome, $subject, $message);
 	}
 	
-	public function send_email_request_accepted($to = '', $nome='', $login=''){
+	public function send_email_register_accepted($to = '', $nome='', $login=''){
 		$subject='Cadastro feito com Sucesso';
- 		$message= 'Olá '. $nome.',<br/>O seu cadastro no site da disciplina de algoritmos foi confirmado.<br/>' .
+ 		$message= 'Olá '. $nome.',<br/>O seu cadastro no site '.base_url('/').' foi confirmado.<br/>' .
 			'<br/>Para submeter questões das listas, será necessário logar-se com seu login ('. $login .') através da página '.
-			'www.cin.ufpe.br/~if672cc/.<br/>Mantenha este email para referências futuras caso venha a esquecer sua senha.';
+			base_url('/').'.<br/>Mantenha este email para referências futuras caso venha a esquecer sua senha.';
+		$this->send_email($to, $nome, $subject, $message);
+	}
+	
+	public function send_email_register_rejected($to = '', $nome='', $login=''){
+		$subject='Cadastro recusado';
+ 		$message= 'Olá '. $nome.',<br/>O seu cadastro no site '.base_url('/').' foi recusado.<br/>' .
+			'<br/>Se estiver em dúvida sobre o que possa ter acontecido, entre em contato com a monitoria.<br/><br/>'.
+			'Se você não solicitou este cadastro, então por favor desconsidere esta mensagem.';
 		$this->send_email($to, $nome, $subject, $message);
 	}
 	
@@ -57,20 +64,12 @@ class EmailSender extends CI_Model {
 	}
 	
 	private function send_email($to = '', $nome='', $subject='', $message=''){
-		// multiple recipients
-		//$to  = 'aca3@cin.ufpe.br' . ', '; // note the comma
-		//$to .= 'alfl@cin.ufpe.br';
-
-		// To send HTML mail, the Content-type header must be set
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-		// Additional headers
-		//$headers .= 'To: Arthur Alem <aca3@cin.ufpe.br>, Adriana Liborio <alfl@cin.ufpe.br>' . "\r\n";
 		$headers .= 'To: '. $nome .' <'. $to .'>' . "\r\n";
 		$headers .= 'From: Monitoria Algoritmos if672 <if672@googlegroups.com>' . "\r\n";
 
-		// Mail it
 		mail($to, $subject, $message, $headers);
 	}
 }
