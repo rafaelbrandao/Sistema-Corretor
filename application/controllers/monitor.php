@@ -5,7 +5,8 @@ class Monitor extends CI_Controller {
 	var $logged = '';
 	var $is_admin = FALSE;
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->helper(array('url','form'));
 		$this->load->library(array('datahandler','session','input'));
@@ -37,7 +38,6 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 		$this->load->view('v_admin_profile', $this->user->retrieve_info($this->logged));
 		$this->load->view('v_footer');
-		//$this->load->view('view_monitor_perfil');
 	}
 	
 	function register_user()
@@ -83,22 +83,11 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_header',array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
 		$this->load->view('v_admin_pending_registers', array('pending_list'=>$this->user->retrieve_pending_registers()));
 		$this->load->view('v_footer');
-		
-		//$this->load->view('view_monitor_listar_cadastros');
 	}
 	
 	function register_confirm($login='')
 	{
 		$user = $this->user->retrieve_info($login);
-		/* SENDS EMAIL TO USER
-		
-		$this->load->library('email');
-		$this->email->from('your@example.com', 'Your Name');
-		$this->email->to($user['email']); 
-		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class, '.$user['login']);	
-		$this->email->send();
-		*/
 		$this->emailsender->send_email_request_accepted($user['email'], $user['nome'], $login);
 		$this->user->register_confirm($login);
 		redirect(base_url('/index.php/monitor/pending_registers'), 'location');
@@ -610,7 +599,6 @@ class Monitor extends CI_Controller {
 		
 	}
 	
-	
 	function reviews()
 	{
 		$notice = $this->session->flashdata('notice');
@@ -767,7 +755,8 @@ class Monitor extends CI_Controller {
 	}
 	
 	
-	public function corrector(){
+	public function corrector()
+	{
 		$correcoes = $this->judge->get_corrector_submissions();
 		$listas = $this->lists->get_all_lists_idnames();
 		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin,
@@ -776,7 +765,8 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
-	public function submit_correct_request(){
+	public function submit_correct_request()
+	{
 		$data = array();
 		$data['id_lista'] = $this->input->post('corrigirLista');
 		$data['estado'] = 'Correcao';
@@ -784,8 +774,8 @@ class Monitor extends CI_Controller {
 		redirect(base_url('/index.php/monitor/corrector'), 'location');
 	}
 	
-	public function get_copycatch_report($id_corretor){
-		
+	public function get_copycatch_report($id_corretor)
+	{
 		if(!$id_corretor) return;
 		$arquivo = $this->judge->get_copy_report($id_corretor);
 		if(!$arquivo->relatorio || !$arquivo->nome_lista){
@@ -797,14 +787,15 @@ class Monitor extends CI_Controller {
 		echo( $arquivo->relatorio );
 	}
 	
-	public function semester_filing($error = ''){
-			
+	public function semester_filing($error = '')
+	{			
 		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin, 'error' => $error));
 		$this->load->view('v_admin_backup_system');
 		$this->load->view('v_footer');
 	}
 	
-	public function generate_backup(){
+	public function generate_backup()
+	{
 		$confirm_pwd = $this->input->post('confirm_pwd');
 		$error = '';
 		if (!$this->user->is_pwd_correct($this->logged,$confirm_pwd)){
@@ -819,109 +810,6 @@ class Monitor extends CI_Controller {
 		echo( $this->backup->make_backup() );
 	}
 	
-	public function listas()
-	{
-		$this->load->view('view_monitor_listas');
-	}
-	
-	public function criar_lista()
-	{
-		$this->load->view('view_monitor_criar_lista');
-	}
-	
-	public function editar_questao()
-	{
-		$this->load->view('view_monitor_editar_questao');
-	}
-	
-	public function criar_questao()
-	{
-		$this->load->view('view_monitor_criar_questao');
-	}
-	
-	
-	public function remover_questao()
-	{
-		$this->load->view('view_monitor_remover_questao');
-	}
-	
-	public function remover_entrada_corretor()
-	{
-		$this->load->view('view_monitor_remover_entrada_corretor');
-	}
-
-	public function remover_lista()
-	{
-		$this->load->view('view_monitor_remover_lista');
-	}
-	
-	public function remover_cadastro()
-	{
-		$this->load->view('view_monitor_remover_cadastro');
-	}
-	
-	public function editar_lista()
-	{
-		$this->load->view('view_monitor_editar_lista');
-	}
-
-	public function cadastrar_aluno()
-	{
-		$this->load->view('view_monitor_cadastrar_aluno');
-	}
-	
-	public function editar_aluno()
-	{
-		$this->load->view('view_monitor_editar_aluno');
-	}
-	
-	public function listar_usuarios()
-	{
-		$this->load->view('view_monitor_listar_usuarios');
-	}	
-	
-
-
-	public function listar_clarifications()
-	{
-		$this->load->view('view_monitor_listar_clarifications');
-	}
-	
-	public function responder_clarification()
-	{
-		$this->load->view('view_monitor_responder_clarification');
-	}		
-	
-	public function listar_revisoes()
-	{
-		$this->load->view('view_monitor_listar_revisoes');
-	}
-	
-	public function analisar_revisao()
-	{
-		$this->load->view('view_monitor_analisar_revisao');
-	}
-	
-	public function listar_submissoes()
-	{
-		$this->load->view('view_monitor_listar_submissoes');
-	}
-	
-	public function editar_submissao()
-	{
-		$this->load->view('view_monitor_editar_submissao');
-	}
-	
-	public function corretor()
-	{
-		$this->load->view('view_monitor_corretor');
-	}
-	
-	public function pegacopia()
-	{
-		$this->load->view('view_monitor_pegacopia');
-	}
-	
 	public function notas_semestre()
 	{
 		$this->load->view('v_header', array('logged' => $this->logged, 'is_admin' => $this->is_admin));
@@ -932,8 +820,6 @@ class Monitor extends CI_Controller {
 	//FIXME Essa funcao esta duplicada na view v_admin_notas
 	public function download_notas($file="notas")
 	{
-		
-		
 		ini_set('display_errors', 'Off');
 		error_reporting(0);
 		header("Content-type: application/octet-stream");

@@ -9,6 +9,18 @@
 
 </head>
 <body>
+<script>
+$ = function(id) {
+	return document.getElementById(id);
+}
+hide_all_warnings = function () {
+	$('notice_box').style.opacity = 0.0;
+	$('error_box').style.opacity = 0.0;
+}
+window.onload = function() {
+	setTimeout("hide_all_warnings()", 5000);
+}
+</script>
 
 <?php
 if (!isset($tab)) $tab = FALSE;
@@ -17,9 +29,9 @@ if (!isset($error)) $error = FALSE;
 if (!isset($logged)) $logged = FALSE;
 if (!isset($is_admin)) $is_admin = FALSE;
 ?>
-<div id="notice_box" style="visibility: <?=($notice == FALSE ? 'hidden' : 'visible')?>;"><div class="warning_content" onclick="this.parentNode.style.visibility = 'hidden';"><?=($notice == FALSE ? '' : $notice)?></div></div>
+<div id="notice_box" style="opacity: <?=($notice == FALSE ? '0.0' : '1.0')?>;"><div class="warning_content" onclick="this.parentNode.style.opacity = 0.0;"><?=($notice == FALSE ? '' : $notice)?></div></div>
 
-<div id="error_box" style="visibility: <?=($error == FALSE ? 'hidden' : 'visible')?>;"><div class="warning_content" onclick="this.parentNode.style.visibility = 'hidden';"><?=($error == FALSE ? '' : $error)?></div></div>
+<div id="error_box" style="opacity: <?=($error == FALSE ? '0.0' : '1.0')?>;"><div class="warning_content" onclick="this.parentNode.style.opacity = 0.0;"><?=($error == FALSE ? '' : $error)?></div></div>
 
 <div id="navi">
 	<div id="navi_shadow"></div>
