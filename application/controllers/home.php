@@ -19,6 +19,8 @@ class Home extends CI_Controller {
 		$this->load->model('score', '', TRUE);
 		$this->load->model('emailsender', '', TRUE);
 		
+		$this->load->model('compilador', '', TRUE);
+		
 		$this->logged = $this->session->userdata('logged');
 		if ($this->logged) 
 			$this->is_admin = $this->user->is_user_admin($this->logged);
@@ -261,11 +263,25 @@ class Home extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
-		
+	//	ini_set('display_errors', 'On');
+	//	error_reporting(E_ALL);
 		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], '');
-		$this->session->set_flashdata('notice', "Submissão realizada com sucesso.");
+		$formato = $this->input->post('formatoQuestao');
+	//	$resultadoCompilacao = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato);
+		$resultadoCompilacao = 0;
+		if( $resultadoCompilacao != 0){
+			$error = 'Submissão realizada com erro compilação.';
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
+			$this->load->view('v_submit', $data);
+			$this->load->view('v_footer');
+			return;
+		} else {
+			$this->session->set_flashdata('notice', "Submissão realizada com sucesso.");
+		}
 		redirect(base_url('/index.php/home/submit/'.$problem_id), 'location');
 	}
+	
+	
 	
 	function review($problem_id=0)
 	{
