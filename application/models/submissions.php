@@ -7,7 +7,7 @@ class Submissions extends CI_Model {
         parent::__construct();
     }
     
-    function create($problem_id=0, $login='', $language='', $src='', $compile='')
+    function create($problem_id=0, $login='', $language='', $src='', &$compile='')
     {
     	if (!$problem_id || !$login || !$language || !$src)
     		return FALSE;

@@ -7,7 +7,7 @@ class Compilador extends CI_Model {
     }
 	
 	var $compilingDir = 'submissionsTest/';
-	function compilarCodigo($src = '', $lang = '', $formato = ''){
+	function compilarCodigo($src = '', $lang = '', $formato = '', &$returnText){
 		$pasta =  $this->compilingDir . rand();
 		mkdir($pasta);
 		$filedir = $pasta . '/' . $formato;
@@ -16,19 +16,23 @@ class Compilador extends CI_Model {
 			$handle = fopen($filedir . '.java' ,'w+');
 			fwrite($handle, $src);
 			fclose($handle);
-			$returnText = system('javac ' . $filedir . '.java', $retval);
+		 	exec('javac ' . $filedir . '.java 2>&1', $output, $retval);
 		} else if($lang == 'c++') {
 			$handle = fopen($filedir . '.cpp' ,'w+');
 			fwrite($handle, $src);
 			fclose($handle);
-			$returnText = system('g++ ' . $filedir . '.cpp -o ' . $filedir . '.a', $retval);
+			exec('g++ ' . $filedir . '.cpp -o ' . $filedir . '.a 2>&1', $output, $retval);
 		} else if ($lang == 'c') {
 			$handle = fopen($filedir . '.c' ,'w+');
 			fwrite($handle, $src);
 			fclose($handle);
-			$returnText = system('gcc '. $filedir . '.c -o ' . $filedir . '.a' , $retval);
+			exec('gcc '. $filedir . '.c -o ' . $filedir . '.a 2>&1', $output, $retval);
 		}
 		system('rm -r ' . $pasta);
+		$returnText = '';
+		foreach( $output as $outputline){
+			$returnText .= $outputline . "\n";
+		}
 		return $retval;
 	}
 

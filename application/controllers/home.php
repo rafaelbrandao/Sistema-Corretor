@@ -271,12 +271,12 @@ class Home extends CI_Controller {
 			return;
 		}
 		$formato = $this->input->post('formatoQuestao');
-		$resultadoCompilacao = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato);
-	
+		$codSaida = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato, $resultadoCompilacao);
 		
+	
 		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], $resultadoCompilacao);
 	
-		if( $resultadoCompilacao != 0){
+		if( $codSaida != 0){
 			$error = 'Submissão realizada com erro compilação.';
 			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));
 			$this->load->view('v_submit', $data);
