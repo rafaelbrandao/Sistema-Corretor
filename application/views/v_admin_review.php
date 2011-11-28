@@ -23,7 +23,7 @@ O processo de revisão é feito manualmente. Você faz o download da solicitaç�
 
 <?=form_open(base_url('/index.php/monitor/review/'.$login.'/'.$problem_id.'/'.$review_time.'/accept'))?>
 <textarea name="sourcecode" rows="10" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"></textarea>
-<input name="rejudge" type="checkbox" value="1"> Recorrigir esta questão após as alterações.
+<!-- <input name="rejudge" type="checkbox" value="1"> Recorrigir esta questão após as alterações. -->
 
 <input type="submit" value="Confirmar" />
 </form>
