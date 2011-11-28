@@ -376,6 +376,7 @@ class Monitor extends CI_Controller {
 			redirect(base_url('/index.php/monitor/lists'), 'location');
 			return;
 		}
+		$scroll = $this->session->flashdata('scroll');
 		$notice = $this->session->flashdata('notice');
 		$data['list_id'] = $list_id;
 		$data['listprefix'] = $this->lists->get_list_name($list_id);
@@ -391,7 +392,7 @@ class Monitor extends CI_Controller {
 		$data['out_sample'] = $step == 'specs' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
 		
 		if (!$step) {
-			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'scroll'=>$scroll));
 			$this->load->view('v_admin_edit_problem', $data);
 			$this->load->view('v_footer');
 			return;
@@ -423,12 +424,13 @@ class Monitor extends CI_Controller {
 				$error = 'Você deve passar um número inteiro positivo como peso. Zero ou números negativos são inválidos.';
 			
 			if ($error) {
-				$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error, 'notice'=>$notice));
+				$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error, 'notice'=>$notice, 'scroll'=>'judge'));
 				$this->load->view('v_admin_edit_problem', $data);
 				$this->load->view('v_footer');
 				return;
 			}
 			$this->judge->add_input_for_problem($problem_id, $data['new_input'], $data['new_output'], $timelimit, $weight);
+			$this->session->set_flashdata('scroll','judge');
 		}
 		else if ($step == 'specs') {
 			$this->problems->update_problem_specs($problem_id, $data['title'], $data['specs'], $data['in_format'], $data['out_format']);
