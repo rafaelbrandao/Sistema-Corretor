@@ -5,7 +5,7 @@
 <h1>Considerações Gerais</h1>
 <pre>As listas são <strong>individuais</strong>. É responsabilidade de cada aluno fazer os programas sozinho e preservar a sua solução em sigilo.
 
-Se estiver usando <strong>Java</strong> para as soluções das listas, leia este <a href="ok">link</a> com considerações sobre implementação. Faça também o download da classe Arquivo: <a href="ok">Arquivo.java</a>.
+Se estiver usando <strong>Java</strong> para as soluções das listas, leia as considerações sobre implementação na página de material de aulas de monitoria. Faça também o download da classe Arquivo: <a href="<?=base_url('/shared/Arquivo.java')?>">Arquivo.java</a>.
 
 </pre>
 
