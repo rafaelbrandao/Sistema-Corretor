@@ -191,11 +191,12 @@ class Monitor extends CI_Controller {
 	
 	function lists()
 	{
+		$scroll = $this->session->flashdata('scroll');
 		$notice = $this->session->flashdata('notice');
 		$error = $this->session->flashdata('error');
 		$lists_data = $this->lists->get_all_lists_data();
 	
-		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'error'=>$error));
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'error'=>$error, 'scroll'=>$scroll));
 		$this->load->view('v_admin_lists', array('lists_data'=>$lists_data));
 		$this->load->view('v_footer');
 	}
@@ -220,6 +221,8 @@ class Monitor extends CI_Controller {
 			$error = 'O formato da data de inicio deve ser DD/MM HH:mm. Veja o exemplo para esclarecimento.';
 		else if ($timeend && $timeend != '' && !$this->datahandler->validate_date_format($timeend))
 			$error = 'O formato da data de término deve ser DD/MM HH:mm. Veja o exemplo para esclarecimento.';
+			
+		$list_id = 0;
 		
 		if ($error == '') {
 			$_timebegin = $this->datahandler->convert_date_format($timebegin);
@@ -227,7 +230,7 @@ class Monitor extends CI_Controller {
 			
 			if ($_timebegin != '' && $_timeend != '' && strtotime($_timebegin) > strtotime($_timeend))
 				$error = 'O inicio da lista deve acontecer antes do fim da mesma.';
-			else if ($this->lists->create_list($listprefix, $_timebegin, $_timeend) == 0)
+			else if (!($list_id = $this->lists->create_list($listprefix, $_timebegin, $_timeend)))
 				$error = 'O prefixo escolhido para a lista já existe. Escolha outro.';
 		}
 		
@@ -238,6 +241,7 @@ class Monitor extends CI_Controller {
 			return;
 		}
 		
+		$this->session->set_flashdata('scroll', 'list_'.$list_id);
 		$this->session->set_flashdata('notice',"Lista '$listprefix' adicionada com sucesso.");
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
@@ -299,6 +303,7 @@ class Monitor extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
+		$this->session->set_flashdata('scroll', 'list_'.$list_id);
 		$this->session->set_flashdata('notice',"Lista '".$form['listprefix']."' modificada com sucesso.");
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
@@ -366,6 +371,7 @@ class Monitor extends CI_Controller {
 		
 		$this->problems->create_problem_num($list_id, $problem_num);
 		$this->session->set_flashdata('notice', "Questão #$problem_num criada com sucesso!");
+		$this->session->set_flashdata('scroll', 'list_'.$list_id);
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}
 	
@@ -526,6 +532,7 @@ class Monitor extends CI_Controller {
 		}
 		
 		$this->problems->rem_problem($problem_id);
+		$this->session->set_flashdata('scroll','list_'.$list_id);
 		$this->session->set_flashdata('notice', "Questão ".$data['filename']." apagada com sucesso.");
 		redirect(base_url('/index.php/monitor/lists'), 'location');
 	}

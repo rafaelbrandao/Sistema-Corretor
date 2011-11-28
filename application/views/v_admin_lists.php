@@ -3,8 +3,8 @@ if (!isset($lists_data)) $lists_data = array();
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/lists')?>'">Listas</li>
 </ul>
 
 <pre>
@@ -15,7 +15,7 @@ A seguir será listado todas as listas de exercícios que já foram terminadas, 
 	$id = $list['id_lista'];
 	$problems = $this->problems->get_problems_from_list($id);
 ?>
-<h2>Lista '<strong><?=$list['nome_lista']?></strong>'</h2>[ <a href="<?=base_url('/index.php/monitor/edit_list/'.$id)?>">editar</a> / <a href="<?=base_url('/index.php/monitor/add_problem/'.$id)?>">adicionar questão</a> / <a href="<?=base_url('/index.php/monitor/rem_list/'.$id)?>">excluir</a> ]
+<h2><a id="scroll_point_list_<?=$id?>"></a>Lista '<strong><?=$list['nome_lista']?></strong>'</h2>[ <a href="<?=base_url('/index.php/monitor/edit_list/'.$id)?>">editar</a> / <a href="<?=base_url('/index.php/monitor/add_problem/'.$id)?>">adicionar questão</a> / <a href="<?=base_url('/index.php/monitor/rem_list/'.$id)?>">excluir</a> ]
 
 	Status: <strong><?=$list['estado_lista']?></strong>
 <? if ($list['data_finalizacao']) { ?>	Prazo: <strong><?=$this->datahandler->translate_date_format($list['data_finalizacao'])?></strong><br/><? } ?>
@@ -34,45 +34,5 @@ A seguir será listado todas as listas de exercícios que já foram terminadas, 
    }
 }
 ?>
-<!--
-<h2>Lista #<strong>3</strong></h2>[ <a href="oi">editar</a> / <a href="oi">adicionar questão</a> / <a href="oi">excluir</a> ]
 
-	Status: <strong>em desenvolvimento</strong>
-	Questões:
-		#<strong>1</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>3</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-
-<h2>Lista #<strong>2</strong></h2>[ <a href="oi">editar</a> / <a href="oi">adicionar questão</a> / <a href="oi">excluir</a> ]
-
-	Status: <strong>em andamento</strong>
-	Prazo: <strong>13/09 14:00</strong>
-	Inicio: <strong>02/09 14:00</strong>
-	Revisao (prazo): <strong>17/09 14:00</strong>
-	Revisão (inicio): <strong>15/09 14:00</strong>
-	Questões:
-		#<strong>1</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>2</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>3</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>4</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-
-<h2>Lista #<strong>1</strong></h2>[ <a href="oi">editar</a> / <a href="oi">adicionar questão</a> / <a href="oi">excluir</a> ]
-
-	Status: <strong>finalizada</strong>
-	Prazo: <strong>22/08 14:00</strong>
-	Inicio: <strong>07/08 14:00</strong>
-	Revisao (prazo): <strong>27/08 14:00</strong>
-	Revisão (inicio): <strong>30/08 14:00</strong>
-	Questões:
-		#<strong>1</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>2</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>3</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
-		
-		#<strong>4</strong> [ <a href="oi">editar</a> / <a href="oi">submissões</a> / <a href="oi">excluir</a> ]
--->
 </pre>
