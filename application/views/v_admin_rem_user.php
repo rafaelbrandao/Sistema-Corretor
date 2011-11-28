@@ -2,8 +2,8 @@
 if (!isset($login)) $login='';
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Cadastro</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/list_users')?>'">Cadastrados</li>
 	<li>Remover</li>
 </ul>
 

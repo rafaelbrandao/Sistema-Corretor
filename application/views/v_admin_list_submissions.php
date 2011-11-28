@@ -5,7 +5,7 @@ $logins = $this->submissions->logins_for_problem($problem_id);
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 	<li>Submissões</li>
 </ul>
 <pre>

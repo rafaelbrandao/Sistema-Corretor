@@ -3,7 +3,7 @@ $question = $list['nome_lista'].'Q'.$problem['numero'];
 ?>
 
 <ul id="browse">
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
 	<li><?=$question?></li>
 </ul>
 	

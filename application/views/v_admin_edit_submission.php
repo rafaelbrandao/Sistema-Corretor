@@ -11,8 +11,8 @@ $ext = $this->datahandler->file_extension_for_language($lang_submit);
 
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Submissões</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/list_submissions/'.$problem_id)?>'">Submissões</li>
 	<li>Editar</li>
 </ul>
 	

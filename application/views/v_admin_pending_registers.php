@@ -2,7 +2,7 @@
 	if (!isset($pending_list)) $pending_list = array();
 ?>
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 	<li>Solicitações</li>
 </ul>
 <pre>

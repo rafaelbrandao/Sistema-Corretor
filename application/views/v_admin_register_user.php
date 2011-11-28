@@ -6,9 +6,8 @@ if (!isset($email)) $email='';
 if (!isset($grant_access)) $grant_access=FALSE;
 ?>
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 	<li>Cadastro</li>
-	<li>Aluno/Monitor</li>
 </ul>
 <pre>
 <h1>Cadastro de <strong>Aluno</strong> (ou <strong>Monitor</strong>)</h1>

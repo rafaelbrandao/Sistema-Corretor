@@ -8,8 +8,8 @@ if (!isset($rev_timebegin)) $rev_timebegin='';
 if (!isset($rev_timeend)) $rev_timeend='';
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/lists')?>'">Listas</li>
 	<li>Editar Lista</li>
 </ul>
 <pre>

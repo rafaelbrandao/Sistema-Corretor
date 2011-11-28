@@ -6,8 +6,8 @@ if (!isset($filename)) $filename = '';
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/lists')?>'">Listas</li>
 	<li>Remover Entrada</li>
 </ul>
 <pre>

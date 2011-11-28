@@ -6,8 +6,8 @@ if (!isset($problems)) $problems = array();
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Corretor</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/corrector')?>'">Corretor</li>
 	<li>Notas</li>
 </ul>
 

@@ -22,7 +22,9 @@ hide_all_warnings = function () {
 	$('error_box').style.opacity = 0.0;
 }
 scrolls_to = function(id) {
-	$('scroll_point_'+id).scrollIntoView();
+	var node = $('scroll_point_'+id);
+	if (node)
+		node.scrollIntoView();
 }
 window.onload = function() {
 	setTimeout("hide_all_warnings()", 5000);

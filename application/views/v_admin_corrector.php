@@ -4,7 +4,7 @@ if (!isset($correcoes)) $correcoes = array();
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 	<li>Corretor</li>
 </ul>
 

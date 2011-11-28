@@ -1,5 +1,5 @@
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 </ul>
 
 <pre>

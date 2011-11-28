@@ -6,9 +6,9 @@ if (!isset($problems)) $problems = array();
 ?>
 
 <ul id="browse">
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
 	<li>Notas</li>
-	<li>Respostas</li>
+	<li onclick="scrolls_to('answers');">Respostas</li>
 </ul>
 
 <h1><strong><?=$list['nome_lista']?></strong> - Notas</h1>
@@ -54,7 +54,7 @@ Para fazer seu pedido de revisão, abra a página que contém o formato de entra
 <td class=' <?=$this->score->get_css_type($score_final)?>'><?=sprintf("%.2f", $score_final)?>%</td></tr></table>
 <? } ?>
 
-<h2>Respostas (entradas e saídas usadas na correção)</h2>
+<h2><a id="scroll_point_answers"></a>Respostas (entradas e saídas usadas na correção)</h2>
 <pre>
 Clique no nome do arquivo de entrada e de saída para fazer seu download. A sua nota da questão é calculada a partir da média ponderada das notas em cada entrada, e cada uma tem um peso associado. Tempo é o limite de execução.
 

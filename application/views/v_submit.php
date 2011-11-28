@@ -10,8 +10,8 @@ $listprefix = $this->lists->get_list_name($list_id);
 $question = $listprefix.'Q'.$num;
 ?>
 <ul id="browse">
-	<li>Listas</li>
-	<li><?=$question?></li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/problem/'.$problem_id)?>'"><?=$question?></li>
 	<li>Submissão</li>
 </ul>
 	

@@ -2,7 +2,7 @@
 if (!isset($reviews)) $reviews = array();
 ?>
 <ul id="browse">
-	<li>Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
 	<li>Revisões</li>
 </ul>
 <pre>

@@ -11,8 +11,7 @@ if (!isset($list)) {
 }
 ?>
 <ul id="browse">
-	<li>Listas</li>
-	<li><?=$list_name?></li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
 	<li>Clarifications</li>
 </ul>
 

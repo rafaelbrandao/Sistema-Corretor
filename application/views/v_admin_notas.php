@@ -1,8 +1,7 @@
-
-	<ul id="browse">
-		<li>Administrador</li>
-		<li>Notas</li>
-	</ul>
+<ul id="browse">
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li>Notas</li>
+</ul>
 	
 <!DOCTYPE html>
 <html lang="en">

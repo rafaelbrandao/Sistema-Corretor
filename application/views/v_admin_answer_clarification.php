@@ -11,8 +11,8 @@ $questao = $listprefix.'Q'.$num;
 ?>
 
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Clarifications</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/clarifications')?>'">Clarifications</li>
 	<li>Responder</li>
 </ul>
 <pre>

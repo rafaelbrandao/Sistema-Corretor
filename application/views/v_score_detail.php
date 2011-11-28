@@ -15,11 +15,11 @@ $bonus = $days_bonus*0.03;
 
 ?>
 
-	<ul id="browse">
-		<li>Listas</li>
-		<li>Notas</li>
-		<li><?=$problem_string?></li>
-	</ul>
+<ul id="browse">
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/score/'.$list_number)?>'">Notas</li>
+	<li>Detalhes</li>
+</ul>
 	
 <body>
 

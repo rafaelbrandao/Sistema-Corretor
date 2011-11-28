@@ -2,8 +2,8 @@
 if (!isset($requests)) $requests = array();
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Clarifications</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/clarifications')?>'">Clarifications</li>
 </ul>
 <pre>
 <h1>Lista de Clarifications Pendentes</h1>

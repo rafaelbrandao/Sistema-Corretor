@@ -8,11 +8,10 @@ if (!isset($submit_extension)) $submit_extension='';
 $question = $this->problems->get_problem_repr($problem_id);
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Revisões</li>
-	<li>Analisar</li>
-	<li>Confirmar</li>
-	<li>Rejeitar</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/reviews')?>'">Revisões</li>
+	<li onclick="scrolls_to('confirm');">Confirmar</li>
+	<li onclick="scrolls_to('reject');">Rejeitar</li>
 </ul>
 <pre>
 <h1>Analisar Revisão</h1>
@@ -20,7 +19,7 @@ O processo de revisão é feito manualmente. Você faz o download da solicitaç�
 
 <h2><strong><?=$question?></strong> - Enviado por <strong><?=$login?></strong> em <strong><?=$review_date?></strong></h2>Download [ <a href="<?=base_url('/index.php/monitor/download_src/'.$problem_id.'/'.$login.'/'.$submit_time)?>"><?=$question?>.<?=$submit_extension?></a> / <a href="<?=base_url('/index.php/monitor/download_review/'.$login.'/'.$problem_id.'/'.$review_time)?>"><?=$question?>.revisao</a> ]
 
-<h2>Confirmar Pedido</h2>Cole o novo código fonte, após aplicada as alterações solicitadas neste pedido revisão.
+<h2><a id="scroll_point_confirm"></a>Confirmar Pedido</h2>Cole o novo código fonte, após aplicada as alterações solicitadas neste pedido revisão.
 
 <?=form_open(base_url('/index.php/monitor/review/'.$login.'/'.$problem_id.'/'.$review_time.'/accept'))?>
 <textarea name="sourcecode" rows="10" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"></textarea>
@@ -29,7 +28,7 @@ O processo de revisão é feito manualmente. Você faz o download da solicitaç�
 <input type="submit" value="Confirmar" />
 </form>
 
-<h2>Rejeitar Pedido</h2>Digite a sua justificativa por recusar este pedido de revisão (será enviado por email ao aluno).
+<h2><a id="scroll_point_reject"></a>Rejeitar Pedido</h2>Digite a sua justificativa por recusar este pedido de revisão (será enviado por email ao aluno).
 <?=form_open(base_url('/index.php/monitor/review/'.$login.'/'.$problem_id.'/'.$review_time.'/reject'))?>
 <textarea name="reason" rows="3" style="width: 600px; border: solid 2px #CCC; border-radius: 4px;"></textarea>
 <input type="submit" value="Rejeitar" />

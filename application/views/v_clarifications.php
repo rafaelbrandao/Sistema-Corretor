@@ -4,8 +4,8 @@ if (!isset($running)) $running = FALSE;
 $question = $list['nome_lista'].'Q'.$problem['numero'];
 ?>
 <ul id="browse">
-	<li>Listas</li>
-	<li><?=$question?></li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/problem/'.$problem_id)?>'"><?=$question?></li>
 	<li>Clarifications</li>
 </ul>
 

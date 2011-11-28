@@ -4,8 +4,8 @@ if (!isset($timebegin)) $timebegin = '';
 if (!isset($timeend)) $timeend = '';
 ?>
 <ul id="browse">
-	<li>Administrador</li>
-	<li>Listas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor')?>'">Administrador</li>
+	<li onclick="document.location = '<?=base_url('/index.php/monitor/lists')?>'">Listas</li>
 	<li>Criar Lista</li>
 </ul>
 <pre>
