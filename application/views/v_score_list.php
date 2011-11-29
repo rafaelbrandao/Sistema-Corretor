@@ -40,7 +40,7 @@ Para fazer seu pedido de revisão, abra a página que contém o formato de entra
 		$days_bonus = max(0, $days_bonus);
 		$days_bonus = min(5, $days_bonus);
 		$bonus = $days_bonus*0.03;
-		$score_pro = $problem_weight != 0 ? ($user_score/$problem_weight)/10*($bonus + 1) : 0;
+		$score_pro = $problem_weight != 0 ? min(($user_score/$problem_weight)/10*($bonus + 1),100) : 0;
 		$score_final += $score_pro;
 ?>
 <td class="<?=$this->score->get_css_type($score_pro)?>" onclick="window.location='<?=base_url('/index.php/home/score_detail/'.$list_id.'/'.$problem['id_questao'].'/'.$user['login'])?>'"> <?=sprintf("%.2f", $score_pro)?>% </td>

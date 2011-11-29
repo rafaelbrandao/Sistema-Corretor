@@ -64,7 +64,7 @@ foreach($students as $user)
 			$days_bonus = max(0, $days_bonus);
 			$days_bonus = min(5, $days_bonus);
 			$bonus = $days_bonus*0.03;
-			$score_pro = $problem_weight != 0 ? ($user_score/$problem_weight)/10*($bonus + 1) : 0;
+			$score_pro = $problem_weight != 0 ? min(($user_score/$problem_weight)/10*($bonus + 1),100) : 0;
 			$score_final += $score_pro;
 		}
 		if(sizeof($problems) == 0) $score_final = 0;

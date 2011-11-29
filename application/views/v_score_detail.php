@@ -43,7 +43,7 @@ Cada entrada é executada separadamente, e o cálculo final da nota na questão 
 ?>
 
 <strong><?='E'.$i++?></strong>:
-	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong><?=$bonus*100?>%</strong>: <strong><?=sprintf("%.2f", $nota/100*($bonus + 1))?></strong>.
+	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong><?=$bonus*100?>%</strong>: <strong><?=sprintf("%.2f",min($nota/100*($bonus + 1),10))?></strong>.
 	Observação: <strong><?=$msg?></strong>.
 <?
 	}
