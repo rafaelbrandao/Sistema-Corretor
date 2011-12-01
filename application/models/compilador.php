@@ -8,6 +8,7 @@ class Compilador extends CI_Model {
 	
 	var $compilingDir = 'submissionsTest/';
 	function compilarCodigo($src = '', $lang = '', $formato = '', &$returnText){
+		error_reporting(0);
 		$pasta =  $this->compilingDir . rand();
 		mkdir($pasta);
 		$filedir = $pasta . '/' . $formato;
