@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/Users/adrianalins/workspace/Corretor/libs/mysql-connector-java-5.1.18-bin.jar" sourcepath="/Users/adrianalins/Downloads/mysql-connector-java-5.1.18/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/adrianalins/Downloads/mysql-connector-java-5.1.18/docs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/commons-io-2.1.jar" sourcepath="libs/commons-io-2.1-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

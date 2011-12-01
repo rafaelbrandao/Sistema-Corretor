@@ -1,0 +1,14 @@
+USER_BD = "if672cc"
+URL_BD = "mysql.cin.ufpe.br/if672cc"
+SENHA_BD = "sL5QsNtUGWP6V94L"
+pastaCorrecao = "./ArquivosCorrecao/alunos"
+pastaMaterialCorrecao = "./ArquivosCorrecao/material"
+pastaExecucao = "./ArquivosCorrecao/execucao"
+endClasseArquivo = "./ArquivosAux"
+
+-- Nao coloque paths com espacos, e sempre coloque eles relativos a pasta em que o corretor esta rodando.
+-- Essas medidas sao para evitar problemas de paths de arquivos.
+-- Lembrar de colocar permissao total da pasta para o corretor, caso nao tenha sido o instalador a coloca-lo la
+-- O Endereco da classe Arquivo deve ser o diretorio onde ela esta, eh esperado que la tenha o Arquivo.java
+-- o comando java -jar Corretor.jar deve ser feito como esta ai, sempre na pasta em q o Corretor.jar esta,
+--  tambem para evitar problemas com paths
