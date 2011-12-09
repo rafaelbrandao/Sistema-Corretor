@@ -248,7 +248,7 @@ class Home extends CI_Controller {
 		}
 		$data['logged'] = $this->logged;
 		$data['problem_id'] = $problem_id;
-		$data['src'] = $this->input->post('src');
+		$data['src'] = isset($_REQUEST['src']) ? $_REQUEST['src'] : '';
 		$data['lang'] = $this->input->post('lang');
 		$confirm_pwd = $this->input->post('pwd');
 		$notice = $this->session->flashdata('notice');
@@ -270,9 +270,9 @@ class Home extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
+
 		$formato = $this->input->post('formatoQuestao');
-		$codSaida = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato, $resultadoCompilacao);
-		
+		$codSaida = $this->compilador->compilarCodigo($data['src'], $data['lang'], $formato, $resultadoCompilacao);		
 	
 		$this->submissions->create($problem_id, $this->logged, $data['lang'], $data['src'], $resultadoCompilacao);
 	
@@ -305,7 +305,7 @@ class Home extends CI_Controller {
 		}
 		
 		$notice = $this->session->flashdata('notice');
-		$data['request'] = $this->input->post('request');
+		$data['request'] = isset($_REQUEST['request']) ? $_REQUEST['request'] : '';
 		$data['problem_id'] = $problem_id;
 		$data['logged'] = $this->logged;
 		$confirm_pwd = $this->input->post('confirm_pwd');

@@ -390,12 +390,22 @@ class Monitor extends CI_Controller {
 		$pro = $this->problems->get_data_for_problem($problem_id);
 		
 		$data['problem_num'] = $pro['numero'];
-		$data['specs'] = $step == 'specs' ? $this->input->post('specs') : $pro['enunciado'];
-		$data['title'] = $step == 'specs' ? $this->input->post('title') : $pro['nome'];
-		$data['in_format'] = $step == 'specs' ? $this->input->post('in_format') : $pro['descricao_entrada'];
-		$data['out_format'] = $step == 'specs' ? $this->input->post('out_format') : $pro['descricao_saida'];
-		$data['in_sample'] = $step == 'specs' ? $this->input->post('in_sample') : $pro['entrada_exemplo'];
-		$data['out_sample'] = $step == 'specs' ? $this->input->post('out_sample') : $pro['saida_exemplo'];
+		
+		if ($step == 'specs') {
+			$data['specs'] = isset($_REQUEST['specs']) ? $_REQUEST['specs'] : '';
+			$data['title'] = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
+			$data['in_format'] = isset($_REQUEST['in_format']) ? $_REQUEST['in_format'] : '';
+			$data['out_format'] = isset($_REQUEST['out_format']) ? $_REQUEST['out_format'] : '';
+			$data['in_sample'] = isset($_REQUEST['in_sample']) ? $_REQUEST['in_sample'] : '';
+			$data['out_sample'] = isset($_REQUEST['out_sample']) ? $_REQUEST['out_sample'] : '';
+		} else {
+			$data['specs'] = $pro['enunciado'];
+			$data['title'] = $pro['nome'];
+			$data['in_format'] = $pro['descricao_entrada'];
+			$data['out_format'] = $pro['descricao_saida'];
+			$data['in_sample'] = $pro['entrada_exemplo'];
+			$data['out_sample'] = $pro['saida_exemplo'];
+		}
 		
 		if (!$step) {
 			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice, 'scroll'=>$scroll));
@@ -673,7 +683,7 @@ class Monitor extends CI_Controller {
 		$error = '';
 		
 		if ($judge == 'accept') {
-			$src = $this->input->post('sourcecode');
+			$src = isset($_REQUEST['sourcecode']) ? $_REQUEST['sourcecode'] : '';
 			$rejudge = $this->input->post('rejudge');
 			if (!$src) 
 				$error = 'Você precisa colocar as alterações do código antes de confirmar o pedido.';
