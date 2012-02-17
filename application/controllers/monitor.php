@@ -817,6 +817,18 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
+	public function reset_system(){
+		$confirm_pwd = $this->input->post('confirm_pwd');
+		$error = '';
+		if (!$this->user->is_pwd_correct($this->logged,$confirm_pwd)){
+			$error = 'Senha incorreta.';
+			$this->semester_filing($error);
+			return;
+		}
+		$this->backup->delete();
+		$this->semester_filing("Reset efetuado");
+	}
+	
 	public function generate_backup()
 	{
 		$confirm_pwd = $this->input->post('confirm_pwd');
@@ -826,7 +838,6 @@ class Monitor extends CI_Controller {
 			$this->semester_filing($error);
 			return;
 		}
-		
 		
 		header('Content-type: application/text');
 		header('Content-Disposition: attachment; filename="backup-monitoria' . date('Y-m-d h-i-s', time()) . '.sql"');

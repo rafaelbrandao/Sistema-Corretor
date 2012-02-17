@@ -1,7 +1,7 @@
 <?php
 
 class User extends CI_Model {
-
+	var $teacher_login = 'katiag';
     var $login = '';
     var $pwd = '';
 

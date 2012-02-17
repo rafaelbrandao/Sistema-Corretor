@@ -17,7 +17,7 @@ class Compilador extends CI_Model {
 			$handle = fopen($filedir . '.java' ,'w+');
 			fwrite($handle, $src);
 			fclose($handle);
-		 	exec('javac ' . $filedir . '.java 2>&1', $output, $retval);
+		 	exec('javac ' . $filedir . '.java 1>&1', $output, $retval);
 		} else if($lang == 'c++') {
 			$handle = fopen($filedir . '.cpp' ,'w+');
 			fwrite($handle, $src);

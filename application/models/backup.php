@@ -13,6 +13,30 @@ class Backup extends CI_Model {
 		return $this->backup_tables($this->db->hostname, $this->db->username,
 			$this->db->password, $this->db->database);
 	}
+	function delete(){
+		$this->delete_all($this->db->hostname, $this->db->username,
+			$this->db->password, $this->db->database);
+	}
+	function delete_all($host,$user,$pass,$name,$tables = '*'){
+		$link = mysql_connect($host,$user,$pass);
+		mysql_select_db($name,$link);
+
+		//get all of the tables
+		if($tables == '*') {
+			$tables = array();
+			$result = mysql_query('SHOW TABLES');
+			while($row = mysql_fetch_row($result)){
+				$tables[] = $row[0];
+			}
+		}
+		
+		foreach($tables as $table)
+		{
+			if( $table == 'Usuario' ) continue;
+			$result = mysql_query('DELETE FROM ' . $table . '');
+		}
+		
+	}
 
 
 	function backup_tables($host,$user,$pass,$name,$tables = '*') {
