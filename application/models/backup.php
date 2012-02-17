@@ -35,8 +35,7 @@ class Backup extends CI_Model {
 			if( $table == 'Usuario' ) continue;
 			$result = mysql_query('DELETE FROM ' . $table . '');
 		}
-		
-		$result = mysql_query('DELETE FROM Usuario WHERE login <> \'admin\'');
+		$result = mysql_query('DELETE FROM Usuario WHERE tipo_permissao <> \'administrador\'');
 		
 	}
 
