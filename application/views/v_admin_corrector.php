@@ -11,6 +11,7 @@ if (!isset($correcoes)) $correcoes = array();
 <div id="corretor_escolha">
 	<pre>
 	Para corrigir uma lista, selecione-a no combobox e aperte em Corrigir. A correção poderá levar vários minutos, atualize a página para saber se já foi concluída. Apenas inicie uma correção após se certificar de que todos os dados estão corretos, pois não será possível interromper a correção, e um novo pedido só entrará em andamento após o anterior ter sido concluído.
+	Se o estado da última correção permanecer mais do que 5 minutos em 'Aguardando Corretor', há a necessidade de iniciar o Corretor.jar, pois provavelmente ele não está em funcionamento.
 	</pre>
 	<?=form_open(base_url('/index.php/monitor/submit_correct_request'))?>
 	Corrigir Lista: <select name='corrigirLista'>
@@ -25,7 +26,7 @@ if (!isset($correcoes)) $correcoes = array();
 	 <input type="submit" value="Corrigir" style="margin-left: 40px; width: 60px;"/></form>	
 </div>
 	
-<table>
+<table style="position:absolute; top:220px;">
 	
 	<tbody >
 		<tr class="corretor_pedido_cabecalho">
@@ -38,10 +39,12 @@ if (!isset($correcoes)) $correcoes = array();
 		<?
 			foreach ($correcoes as $cor) {
 				$classFeito = '';
-				$mensagemStatus = 'Em Andamento';
+				$mensagemStatus = 'Aguardando Corretor';
 				if($cor['estado'] == 'Feito') {
 					$classFeito = '_feito';
 					$mensagemStatus = 'Corrigido';
+				} else if($cor['estado'] == 'Em Andamento'){
+					$mensagemStatus = 'Em Andamento';
 				}
 		?>
 				<tr class="corretor_pedido<?= $classFeito ?>">
