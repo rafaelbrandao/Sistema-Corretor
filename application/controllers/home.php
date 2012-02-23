@@ -433,4 +433,41 @@ class Home extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
+	function change_pass()
+	{
+		if (!$this->logged) {
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		
+		$current_pass = $this->input->post("current_pass");
+		$new_pass = $this->input->post("new_pass");
+		$confirm_pass = $this->input->post("confirm_pass");
+		
+		if (!$current_pass && !$new_pass && !$confirm_pass) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));	
+			$this->load->view('v_change_pass', array('is_admin'=>$this->is_admin));
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$error = '';
+		if (!$current_pass) $error = 'Especifique sua senha atual.';
+		else if (!$new_pass) $error = 'Especifique sua nova senha.';
+		else if (strlen($new_pass) < 4) $error = 'Sua nova senha deve conter no mínimo 4 digitos.';
+		else if ($confirm_pass != $new_pass) $error = 'Confirme sua nova senha digitando novamente no outro campo.';
+		else if (!$this->user->is_pwd_correct($this->logged,$current_pass)) $error = 'Senha atual incorreta.';
+		else if (!$this->user->change_pass($this->logged,$new_pass)) $error = 'Houve um erro durante a modificação da senha.';
+		
+		if ($error) {
+			$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'error'=>$error));	
+			$this->load->view('v_change_pass', array('is_admin'=>$this->is_admin));
+			$this->load->view('v_footer');
+			return;
+		}
+		
+		$this->session->set_flashdata('notice', "Senha alterada com sucesso.");
+		redirect(base_url('/'), 'location');
+	}
+	
 }

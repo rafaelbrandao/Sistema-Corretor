@@ -5,6 +5,9 @@
 <pre>
 <h1>Perfil</h1>Olá, <strong><?=$nome?></strong>, seu login é <strong><?=$login?></strong> e seu email, <strong><?=$email?></strong>.
 
+<h1>Usuário</h1>
+<a href="<?=base_url('/index.php/home/change_pass')?>">Mudar senha</a> - clique aqui para alterar sua senha no sistema.
+
 <h1>Administrador</h1>Você tem privilégios de administrador neste sistema.
 
 <a href="<?=base_url('/index.php/monitor/lists')?>">Listas de Exercícios</a> - criar, editar ou remover listas e suas respectivas questões.

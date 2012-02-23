@@ -47,6 +47,18 @@ class User extends CI_Model {
     	return $query->num_rows() > 0;
     }
     
+    function change_pass($login='', $pwd='')
+    {
+    	if (!$login || !$pwd) return FALSE;
+    	
+    	$where = array('login' => $login);
+    	$data = array('senha' => $pwd);
+    	
+    	$this->db->where($where);
+    	$this->db->update('Usuario', $data);
+    	return TRUE;
+    }
+    
     function add_user($login='', $pwd='', $nome='', $email='', $is_admin=FALSE, $skip_confirmation=FALSE)
     {
     	if (!$login || !$pwd || !$nome || !$email) return FALSE;
