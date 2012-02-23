@@ -259,6 +259,7 @@ class Home extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
+		$data['src'] = stripslashes($data['src']);
 		
 		$error = '';
 		if (!$this->user->is_pwd_correct($this->logged,$confirm_pwd))
