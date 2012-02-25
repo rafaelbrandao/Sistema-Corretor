@@ -34,6 +34,14 @@ class Problems extends CI_Model {
     	$query = $this->db->query("SELECT id_lista FROM Questao WHERE id_questao='$id'");
     	return $query->num_rows() > 0 ? $query->row()->id_lista : 0;
     }
+
+	
+	function get_list_dates_for_problem($id=0)
+    {
+    	if (!$id) return array();
+    	$query = $this->db->query("SELECT l.data_lancamento as data_lancamento, l.data_finalizacao as data_finalizacao FROM Lista_Exercicios l, Questao q WHERE q.id_questao='$id' AND l.id_lista=q.id_lista");
+    	return $query->row_array();    	
+    }
     
     function get_data_for_problem($id=0)
     {

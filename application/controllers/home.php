@@ -246,10 +246,16 @@ class Home extends CI_Controller {
 	
 	function submit($problem_id=0)
 	{
-		if (!$problem_id || !$this->logged) {
+		if (!$problem_id || !$this->logged ) {
 			redirect(base_url('/'), 'location');
 			return;
 		}
+		$list = $this->problems->get_list_dates_for_problem($problem_id);
+		if(!$this->datahandler->is_now_between_time($list['data_lancamento'], $list['data_finalizacao'])){
+			redirect(base_url('/'), 'location');
+			return;
+		}
+		
 		$data['logged'] = $this->logged;
 		$data['problem_id'] = $problem_id;
 		$data['src'] = isset($_REQUEST['src']) ? $_REQUEST['src'] : '';
@@ -263,6 +269,8 @@ class Home extends CI_Controller {
 			$this->load->view('v_footer');
 			return;
 		}
+		
+		
 		$data['src'] = stripslashes($data['src']);
 		
 		$error = '';
