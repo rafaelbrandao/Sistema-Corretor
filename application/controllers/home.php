@@ -42,9 +42,13 @@ class Home extends CI_Controller {
 
 	function index()
 	{
+		
 		$notice = $this->session->flashdata('notice');
 		$this->load->view('v_header', array('tab'=>'home', 'logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
-		$this->load->view('v_index');
+		$saida = file_get_contents(base_url('/pages/index.htm'));
+		echo('<div id="content">');
+		echo($saida);
+		echo('</div>');
 		$this->load->view('v_footer');
 	}
 	
