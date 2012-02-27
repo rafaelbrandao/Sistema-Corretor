@@ -11,7 +11,7 @@ if (!isset($correcoes)) $correcoes = array();
 <div id="corretor_escolha">
 	<pre>
 	Para corrigir uma lista, selecione-a no combobox e aperte em Corrigir. A correção poderá levar vários minutos, atualize a página para saber se já foi concluída. Apenas inicie uma correção após se certificar de que todos os dados estão corretos, pois não será possível interromper a correção, e um novo pedido só entrará em andamento após o anterior ter sido concluído.
-	Se o estado da última correção permanecer mais do que 5 minutos em 'Aguardando Corretor', há a necessidade de iniciar o Corretor.jar, pois provavelmente ele não está em funcionamento.
+	Se o estado da última correção permanecer mais do que 5 minutos em 'Aguardando Corretor' após apertar F5, há a necessidade de iniciar o Corretor.jar, pois provavelmente ele não está em funcionamento.
 	</pre>
 	<?=form_open(base_url('/index.php/monitor/submit_correct_request'))?>
 	Corrigir Lista: <select name='corrigirLista'>

@@ -46,10 +46,7 @@ class Home extends CI_Controller {
 		$notice = $this->session->flashdata('notice');
 		$this->load->view('v_header', array('tab'=>'home', 'logged'=>$this->logged, 'is_admin'=>$this->is_admin, 'notice'=>$notice));
 		$saida = file_get_contents(base_url('/pages/index.htm'));
-		echo('<div id="content">');
-		echo($saida);
-		echo('</div>');
-		$this->load->view('v_footer');
+		$this->load->view('v_footer', array('pagina_extra'=>$saida));
 	}
 	
 	function login()
@@ -436,13 +433,10 @@ class Home extends CI_Controller {
 	
  	public function pages($pagina='')
  	{
-		$saida = file_get_contents(base_url('/pages/'.$pagina));
 		
 		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));	
-		echo('<div id="content">');
-		echo($saida);
-		echo('</div>');
-		$this->load->view('v_footer');
+		$saida = file_get_contents(base_url('/pages/'.$pagina));
+		$this->load->view('v_footer', array('pagina_extra'=>$saida));
 	}
 	
 	function change_pass()
