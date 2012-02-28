@@ -49,10 +49,11 @@ if (!isset($is_admin)) $is_admin = FALSE;
 	<div id="navi_shadow"></div>
 	<ul id="navi_options">
 		<div id="logo_cin"></div>
-		<li <?=($tab == 'home' ? 'class="selected"' : '')?> onclick="window.location = '<?=base_url('/')?>';">Home</li>
+		<li <?=($tab == 'home' ? 'class="selected"' : '')?> onclick="window.location = '<?=base_url('/index.php')?>';">Home</li>
 		<li onclick="window.location = '<?=base_url('/index.php/home/pages/avisos.htm')?>';">Avisos</li>
 		<li onclick="window.location = '<?=base_url('/index.php/home/pages/programacao.htm')?>';">Cronograma</li>
 		<li onclick="window.location = '<?=base_url('/index.php/home/lists')?>';">Listas</li>
+		<li onclick="window.location = '<?=base_url('/index.php/home/pages/aulasPraticas.htm')?>';">Monitoria</li>
 		<li onclick="window.location = '<?=base_url('/index.php/home/pages/material.htm')?>';">Material</li>
 		<? if ($logged) { ?>
 			<div id="perfil_button" onclick="window.location = '<?=base_url('/index.php/home/perfil')?>';">perfil</div>

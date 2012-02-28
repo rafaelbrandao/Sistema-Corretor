@@ -315,7 +315,7 @@ class Home extends CI_Controller {
 		}
 		
 		$notice = $this->session->flashdata('notice');
-		$data['request'] = isset($_REQUEST['request']) ? $_REQUEST['request'] : '';
+		$data['request'] = isset($_REQUEST['request']) ? stripslashes($_REQUEST['request']) : '';
 		$data['problem_id'] = $problem_id;
 		$data['logged'] = $this->logged;
 		$confirm_pwd = $this->input->post('confirm_pwd');
@@ -433,10 +433,16 @@ class Home extends CI_Controller {
 	
  	public function pages($pagina='')
  	{
-		
-		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));	
+		if(!file_exists('pages/'.$pagina)){
+              	$saida = $this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin), true);
+			echo($saida);
+			echo ("<p>Arquivo nao encontrado, inserir link completo no href ao inves de abreviado</p>");
+		 	return;	
+		}
+		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
 		$saida = file_get_contents(base_url('/pages/'.$pagina));
 		$this->load->view('v_footer', array('pagina_extra'=>$saida));
+
 	}
 	
 	function change_pass()

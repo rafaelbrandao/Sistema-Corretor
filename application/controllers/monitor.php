@@ -392,12 +392,12 @@ class Monitor extends CI_Controller {
 		$data['problem_num'] = $pro['numero'];
 		
 		if ($step == 'specs') {
-			$data['specs'] = isset($_REQUEST['specs']) ? $_REQUEST['specs'] : '';
-			$data['title'] = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
-			$data['in_format'] = isset($_REQUEST['in_format']) ? $_REQUEST['in_format'] : '';
-			$data['out_format'] = isset($_REQUEST['out_format']) ? $_REQUEST['out_format'] : '';
-			$data['in_sample'] = isset($_REQUEST['in_sample']) ? $_REQUEST['in_sample'] : '';
-			$data['out_sample'] = isset($_REQUEST['out_sample']) ? $_REQUEST['out_sample'] : '';
+			$data['specs'] = isset($_REQUEST['specs']) ? stripslashes($_REQUEST['specs']) : '';
+			$data['title'] = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
+			$data['in_format'] = isset($_REQUEST['in_format']) ? stripslashes($_REQUEST['in_format']) : '';
+			$data['out_format'] = isset($_REQUEST['out_format']) ? stripslashes($_REQUEST['out_format']) : '';
+			$data['in_sample'] = isset($_REQUEST['in_sample']) ? stripslashes($_REQUEST['in_sample']) : '';
+			$data['out_sample'] = isset($_REQUEST['out_sample']) ? stripslashes($_REQUEST['out_sample']) : '';
 		} else {
 			$data['specs'] = $pro['enunciado'];
 			$data['title'] = $pro['nome'];
@@ -683,7 +683,7 @@ class Monitor extends CI_Controller {
 		$error = '';
 		
 		if ($judge == 'accept') {
-			$src = isset($_REQUEST['sourcecode']) ? $_REQUEST['sourcecode'] : '';
+			$src = isset($_REQUEST['sourcecode']) ? stripslashes($_REQUEST['sourcecode']) : '';
 			$rejudge = $this->input->post('rejudge');
 			if (!$src) 
 				$error = 'Você precisa colocar as alterações do código antes de confirmar o pedido.';

@@ -1,0 +1,269 @@
+<style>
+#content * {
+	font-weight: normal;
+	font: 12px Monospace, sans-serif, "Trebuchet MS", Arial, Helvetica;
+}
+
+BODY {
+	margin: 0 0;
+	text-align: center;
+}
+
+a, a:visited, a:hover {
+	color: #3e7add;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+p {
+	font-weight: bold;
+	color: #111;
+}
+
+H1 {
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	border-bottom: solid 1pt #111;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.PROGRAMACAO {
+	width: 600px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.AULA, .FERIADO, .PROVA, .PRATICA {
+	position: relative;
+	display: block;
+	width: 600px;
+	height: 58px;
+	padding: 1px;
+}
+
+
+
+.AULA:hover, .FERIADO:hover, .PROVA:hover, .PRATICA:hover {
+	background-color: #eee;
+}
+
+.NUMERO {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	margin-left: -35px;
+	margin-top: -15px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	font-size: 15px;
+	background-color: #777;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.FERIADO .NUMERO {
+	visibility: hidden;
+}
+
+.SEMANA {
+	position: absolute;
+	top: 42px;
+	left: 1px;
+	display: block;
+	background-color: #4e8aed;
+	border: solid 1px #4e8aed;
+	width: 40px;
+	text-align: center;
+	line-height: 16px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.CALENDARIO {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	display: block;
+	border: solid 1px #222;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	background-color: #111;
+	color: #fff;
+}
+
+.PROVA .CALENDARIO {
+	background-color: #f95035;
+	border: solid 1px #111;
+}
+
+.FERIADO .CALENDARIO {
+	background-color: #8fb546;
+	border: solid 1px #111;
+}
+
+.PRATICA .CALENDARIO {
+	background-color: #2c67b7;
+	border: solid 1px #111;
+}
+
+.DIA {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: block;
+	width: 40px;
+	height: 25px;
+	line-height: 25px;
+	font-size: 25px;
+	font-weight: bold;
+
+}
+
+.MES {
+	text-transform: uppercase;
+	position: absolute;
+	top: 25px;
+	left: 5px;
+	width: 30px;
+	height: 15px;
+	line-height: 15px;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.CONTEUDO {
+	position: absolute;
+	display: block;
+	top: 10px;
+	left: 50px;
+	line-height: 15px;
+	height: 35px;
+	width: 500px;
+}
+
+</style>
+<H1>AULAS PRÁTICAS 2011.2</H1>
+
+<div class="PROGRAMACAO">
+
+<p>Todas as aulas desta programação, exceto as que deixarem explicíto o contrário, ocorrerão no horário 12:00-13:00, no laboratório G4.</p>
+
+<div class="AULA">
+<div class="NUMERO">00</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">16</div><div class="MES">ago</div></div>
+<div class="CONTEUDO">
+Explicaremos como o sistema de submissões funciona. Importante que todos compareçam. Slides: <a href="./monitoria/Avisos_e_Ponteiros.ppt">Avisos e Ponteiros em Java</a>, <a href="./monitoria/EntradaSaidaJava.ppt">Arquivos em Java</a>. Download da classe <a href="./monitoria/Arquivo.java">Arquivo</a>. (Mais material: <a href="./monitoria/Ponteiros.ppt">Ponteiros</a>)
+</div>
+</div>
+
+<div class="PRATICA">
+<div class="NUMERO">01</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">23</div><div class="MES">ago</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/EstruturasDeDadosDinamicas.ppt">Estruturas de Dados Dinâmicas</a> (download <a href="./codigo/Exemplo.c">Exemplo.c</a> ou <a href="./codigo/Exemplo.java">Exemplo.java</a>).
+</div>
+</div>
+
+<div class="AULA">
+<div class="NUMERO">02</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">30</div><div class="MES">ago</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/ABBeArvoresBinarias.ppt">Árvores Binárias</a>, <a href="./monitoria/ArvoresAVL.ppt">Arvores AVL</a>.</div>
+</div>
+
+<div class="PRATICA">
+<div class="NUMERO">03</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">6</div><div class="MES">set</div></div>
+<div class="CONTEUDO"> <a href="./monitoria/ArvoresB.ppt">Arvores B</a>.</div>
+</div>
+
+<div class="AULA">
+<div class="NUMERO">04</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">13</div><div class="MES">set</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/Hashing.ppt">Hashing</a> e <a href="./monitoria/Heaps.ppt">Heaps</a>.
+</div>
+</div>
+
+
+<div class="PRATICA">
+<div class="NUMERO">04</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">20</div><div class="MES">set</div></div>
+<div class="CONTEUDO"><a href="./monitoria/Conjuntos.ppt">Conjuntos Disjuntos</a>
+</div>
+</div>
+
+<div class="AULA">
+<div class="NUMERO">05</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">27</div><div class="MES">set</div></div>
+<div class="CONTEUDO"> Revisão para a primeira prova.
+</div>
+</div>
+
+<div class="PRATICA">
+<div class="NUMERO">06</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">11</div><div class="MES">out</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/Ordenacao.ppt">Algoritmos de Ordena&ccedil;&atilde;o</a> <a href="./monitoria/qsort.html">Exemplo quicksort</a>
+</div>
+</div>
+
+<div class="AULA">
+<div class="NUMERO">07</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">18</div><div class="MES">out</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/Grafos.ppt">Grafos</a> e <a href="./monitoria/BuscaGrafos.ppt">Busca em Grafos</a>.
+</div>
+</div>
+
+<div class="PRATICA">
+<div class="NUMERO">08</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">25</div><div class="MES">out</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/BuscaGulosaGrafos.ppt">Busca Gulosa em Grafos</a>.
+</div>
+</div>
+
+<div class="AULA">
+<div class="NUMERO">09</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">01</div><div class="MES">nov</div></div>
+<div class="CONTEUDO">
+<a href="http://goo.gl/ztzyp">KMP</a>, <a href="./ppt/subset_sum.pptx">Subset Sum</a>.
+</div>
+</div>
+
+<div class="PRATICA">
+<div class="NUMERO">10</div>
+<div class="SEMANA">Ter</div>
+<div class="CALENDARIO"><div class="DIA">08</div><div class="MES">nov</div></div>
+<div class="CONTEUDO">
+<a href="./monitoria/PrProgramacaoDinamica2.ppt">Programacao Dinamica</a>, <a href="./monitoria/ProgDinamica.ppt">Programacao Dinamica(2)</a>, <a href="./monitoria/revisao_knapsack.pdf">Knapsack</a>, <a href="./monitoria/NP-Completude2.ppt">NP-Completude</a>, <a href="./monitoria/np-completude/observacao.htm">Observação sobre NP-Completude</a>, <a href="./monitoria/NP-Completude.docx">Resumo sobre NP-Completude</a>.
+</div>
+</div>
+
+
+
+</div>
+
