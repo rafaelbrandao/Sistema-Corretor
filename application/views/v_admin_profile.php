@@ -16,7 +16,7 @@
 
 <a href="<?=base_url('/index.php/monitor/reviews')?>">Revisões</a> - listar revisões solicitadas e analisá-las.
 
-<a href="<?=base_url('/index.php/monitor/corrector')?>">Corretor</a> - executa correção de listas e pega cópias ou de questões de alunos.
+<a href="<?=base_url('/index.php/monitor/corrector')?>">Corretor</a> - executa correção de listas e pega-cópias.
 
 <a href="<?=base_url('/index.php/monitor/pending_registers')?>">Cadastros Pendentes</a> - lista cadastros pendentes e efetua confirmação dos mesmos.
 
