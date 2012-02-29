@@ -11,7 +11,7 @@ if (!isset($problem_num)) $problem_num = '';
 </ul>
 <pre>
 <h1><strong>Lista '<?=$listprefix?>'</strong> - Criar Questão</h1>
-Para criar uma questão você só precisa especificar seu número. Uma vez com a questão criada, você pode editá-la da maneira que quiser. O número definido aqui servirá para ordenar as questões, assim a questão de número 3 poderá ser inserida antes da primeira sem influir na configuração final.
+Para criar uma questão você só precisa especificar seu número. Uma vez com a questão criada, você pode editá-la da maneira que quiser. O número definido aqui servirá para ordenar as questões, assim a questão de número 3 poderá ser inserida antes da primeira sem influir na configuração final. No entanto, ao final da criação das questões, espera-se que cada uma delas tenha um número distinto e que estejam numeradas de 1 a N, onde N é o número de questões.
 
 <?=form_open(base_url('/index.php/monitor/add_problem/'.$list_id))?>
 Número: <input name='problem_num' value="<?=$problem_num?>" type="text" style="width: 20px;" />
