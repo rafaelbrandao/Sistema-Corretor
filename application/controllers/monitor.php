@@ -851,7 +851,6 @@ class Monitor extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
-	//FIXME Essa funcao esta duplicada na view v_admin_notas
 	public function download_notas($file="notas")
 	{
 		ini_set('display_errors', 'Off');
@@ -864,41 +863,16 @@ class Monitor extends CI_Controller {
 		echo "<table><tr><td>Nome</td><td>Login</td>";
 		$students = $this->user->retrieve_list_students_order();
 		$lists = $this->lists->get_all_available_lists_asc();
-		foreach($lists as $lista)
-			echo "<td>".$lista['nome_lista']."</td>";
-
+		$graded_students = $this->score->final_scores_for_lists($lists, $students);
+		foreach($lists as $list)
+			echo "<td>".$list['nome_lista']."</td>";
 
 		echo "</tr></table>";
-		foreach($students as $user)
-		{
+		foreach($graded_students as $user) {
 			echo "<table><tr><td>".$user['nome']."</td><td>".$user['login']."</td>";
-			foreach($lists as $lista)
-			{
-				$score_final=0;
-				$list_name = $lista['nome_lista'];
-				$problems = $this->problems->get_problems_from_list($lista['id_lista']);
-				foreach($problems as $problem)
-				{
-					$user_score = $this->score->score_user_problem($problem['id_questao'], $user['login']);
-					$problem_weight = $this->score->sum_weights_problem($problem['id_questao']);
-					$days_bonus = $this->submissions->get_days_bonus($lista['id_lista'], $problem['id_questao'], $user['login']);
-					$days_bonus = max(0, $days_bonus);
-					$days_bonus = min(5, $days_bonus);
-					$bonus = $days_bonus*0.03;
-					$score_pro = $problem_weight != 0 ? min(($user_score/$problem_weight)/10*($bonus + 1),100) : 0;
-					$score_final += $score_pro;
-				}
-				if(sizeof($problems) == 0) $score_final = 0;
-				else $score_final = $score_final/sizeof($problems);
-				
-				echo "<td>".sprintf("%.2f", $score_final/10)."</td>";
-
-
-    			}
-    			echo "</tr></table>";
-    		}
-
-
-
+			foreach($lists as $list)
+				echo "<td>".sprintf("%.2f", $user['final_results'][ $list['id_lista'] ])."</td>";
+			echo "</tr></table>";
+		}
 	}
 }

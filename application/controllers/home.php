@@ -423,10 +423,10 @@ class Home extends CI_Controller {
 		$this->load->view('v_footer');
 	}
 	
-	public function score_detail()
+	public function score_detail($list_id = 0, $problem_id = 0, $user = '')
 	{
 		$this->load->view('v_header', array('logged'=>$this->logged, 'is_admin'=>$this->is_admin));
-		$this->load->view('v_score_detail');
+		$this->load->view('v_score_detail', array('list_id' => $list_id, 'problem_id' => $problem_id, 'user' => $user));
 		$this->load->view('v_footer');
 	}
 	

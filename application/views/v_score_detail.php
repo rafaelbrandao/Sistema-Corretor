@@ -1,23 +1,19 @@
 <?
-$list_number = $this->uri->segment(3);
-$list_name = $this->lists->get_list_name($list_number);
-$problem_number = $this->uri->segment(4);
-$problem = $this->problems->get_data_for_problem($problem_number);
-$user = $this->uri->segment(5);
+if (!isset($list_id)) $list_id = 0;
+if (!isset($problem_id)) $problem_id = 0;
+if (!isset($user)) $user = '';
+
+$list_name = $this->lists->get_list_name($list_id);
+$problem = $this->problems->get_data_for_problem($problem_id);
 $problem_string = $list_name.'Q'.$problem['numero'];
-$solutions = $this->score->get_peso_tempo($problem_number);
-$i=1;
-$days_bonus = $this->submissions->get_days_bonus($list_number, $problem_number, $user);
-$days_bonus = max(0, $days_bonus);
-$days_bonus = min(5, $days_bonus);
-$bonus = $days_bonus*0.03;
+$solutions = $this->score->get_peso_tempo($problem_id);
+$bonus = $this->score->get_bonus_modifier($problem_id, $user, $list_id);
 
-
+$i = 1;
 ?>
-
 <ul id="browse">
 	<li onclick="document.location = '<?=base_url('/index.php/home/lists')?>'">Listas</li>
-	<li onclick="document.location = '<?=base_url('/index.php/home/score/'.$list_number)?>'">Notas</li>
+	<li onclick="document.location = '<?=base_url('/index.php/home/score/'.$list_id)?>'">Notas</li>
 	<li>Detalhes</li>
 </ul>
 	
@@ -34,16 +30,16 @@ Cada entrada é executada separadamente, e o cálculo final da nota na questão 
 	foreach($solutions as $solution)
 	{
 		$msg = "nenhuma";
-		$nota_rows = $this->score->get_nota_user($problem_number, $user, $solution['id']);
+		$nota_rows = $this->score->get_nota_user($problem_id, $user, $solution['id']);
 		$nota = sizeof($nota_rows) > 0 ? $nota_rows[0]['nota'] : 0;
 		if(sizeof($nota_rows) == 0)
 			$msg = "Não Entregou";
-		
-
+		if ($nota < 0)
+			$msg = "Cópia.";
 ?>
 
 <strong><?='E'.$i++?></strong>:
-	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong><?=$bonus*100?>%</strong>: <strong><?=sprintf("%.2f",min($nota/100*($bonus + 1),10))?></strong>.
+	Nota:  <strong><?=sprintf("%.2f", $nota/100)?></strong>, com bônus <strong><?=($bonus-1.0)*100?>%</strong>: <strong><?=sprintf("%.2f",min(($nota*$bonus)/100.0, 10.0))?></strong>.
 	Observação: <strong><?=$msg?></strong>.
 <?
 	}

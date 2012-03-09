@@ -30,26 +30,20 @@ Para fazer seu pedido de revisão, abra a página que contém o formato de entra
 
 <td class='campo'>FINAL</td></tr></table>
 
-<? foreach($students as $user) { $score_final = 0; ?>
-<table class='score'><tr><td class='login'><?=$user['login']?></td>
-<?
-	foreach($problems as $problem){
-		$user_score = $this->score->score_user_problem($problem['id_questao'], $user['login']);
-		$problem_weight = $this->score->sum_weights_problem($problem['id_questao']);
-		$days_bonus = $this->submissions->get_days_bonus($list_id, $problem['id_questao'], $user['login']);
-		$days_bonus = max(0, $days_bonus);
-		$days_bonus = min(5, $days_bonus);
-		$bonus = $days_bonus*0.03;
-		$score_pro = $problem_weight != 0 ? min(($user_score/$problem_weight)/10*($bonus + 1),100) : 0;
-		$score_final += $score_pro;
-?>
-<td class="<?=$this->score->get_css_type($score_pro)?>" onclick="window.location='<?=base_url('/index.php/home/score_detail/'.$list_id.'/'.$problem['id_questao'].'/'.$user['login'])?>'"> <?=sprintf("%.2f", $score_pro)?>% </td>
-<?
-	}
-	if(sizeof($problems) == 0)
+<? 	foreach($students as $user) {
 		$score_final = 0;
+?>
+<table class='score'><tr><td class='login'><?=$user['login']?></td>
+	<? foreach ($problems as $problem) {
+			$score_pro = $this->score->partial_score_for_problem($problem['id_questao'], $user['login']);
+			$score_final += $score_pro;
+	?>
+	<td class="<?=$this->score->get_css_type($score_pro)?>" onclick="window.location='<?=base_url('/index.php/home/score_detail/'.$list_id.'/'.$problem['id_questao'].'/'.$user['login'])?>'"> <?=sprintf("%.2f", $score_pro)?>% </td>
+<?	}
+	if (!sizeof($problems))
+		$score_final = 0.0;
 	else
-		$score_final = $score_final/sizeof($problems);
+		$score_final = $score_final / sizeof($problems);
 ?>	
 <td class=' <?=$this->score->get_css_type($score_final)?>'><?=sprintf("%.2f", $score_final)?>%</td></tr></table>
 <? } ?>

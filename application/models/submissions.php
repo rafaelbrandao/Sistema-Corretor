@@ -30,6 +30,12 @@ class Submissions extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row_array() : array();
     }
     
+    function is_last_submission_invalid($problem_id=0, $login='')
+    {
+    	$query = $this->db->query("SELECT submissao_zerada FROM Submissao WHERE login='$login' AND id_questao='$problem_id' ORDER BY data_submissao DESC LIMIT 1");
+    	return $query->num_rows() > 0 ? $query->row()->submissao_zerada != 0 : false;
+    }
+    
     function last_submission_basic_data($problem_id=0, $login='')
     {
     	$query = $this->db->query("SELECT data_submissao, linguagem FROM Submissao WHERE login='$login' AND id_questao='$problem_id' ORDER BY data_submissao DESC LIMIT 1");
@@ -82,9 +88,14 @@ class Submissions extends CI_Model {
     	$this->db->update('Submissao', $data);
     }
     
-	function get_days_bonus($list = 0, $question = 0, $login = '')
+	function get_days_bonus($question = 0, $login = '', $list = 0)
 	{
-		$query = $this->db->query("SELECT DATEDIFF(l.data_finalizacao,s.data_submissao) as data FROM Lista_Exercicios l, Submissao s WHERE l.id_lista = $list AND s.login = '$login' AND s.id_questao = $question ORDER BY s.data_submissao DESC");
+		$query = $this->db->query("SELECT DATEDIFF(l.data_finalizacao,s.data_submissao) as data
+			FROM Lista_Exercicios l, Submissao s
+			WHERE l.id_lista = $list
+			AND s.login = '$login'
+			AND s.id_questao = $question
+			ORDER BY s.data_submissao DESC");
 		return $query->num_rows() > 0 ? $query->row()->data : -1;
 	}
     
