@@ -6,8 +6,9 @@
 <pre>As listas são <strong>individuais</strong>. É responsabilidade de cada aluno fazer os programas sozinho e preservar a sua solução em sigilo.
 
 Se estiver usando <strong>Java</strong> para as soluções das listas, leia as considerações sobre implementação na página de material de aulas de monitoria. Faça também o download da classe Arquivo: <a href="<?=base_url('/shared/Arquivo.java')?>">Arquivo.java</a>.
-
 </pre>
+<br/>
+<?php echo("<h2>Horário atual no servidor: <strong><u>".date("H:i:s")."</u></strong></h2>");?>
 
 <?
 $lists = $this->lists->get_all_available_lists();
