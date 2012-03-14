@@ -67,6 +67,7 @@ class Score extends CI_Model {
     
     	$ci =& get_instance();
     	$ci->load->model('problems','', TRUE);
+    	$ci->load->model('submissions','', TRUE);
     	
     	if (!$lists) {
     		$ci->load->model('lists','', TRUE);
@@ -88,8 +89,11 @@ class Score extends CI_Model {
     		foreach ($lists as &$list) {
     			$sum_scores = 0.0;
     			$filled_list = $list['problems'];
-    			foreach($filled_list as $problem)
-    				$sum_scores += $this->final_score_for_problem($problem['id_questao'], $user['login'], $list['id_lista']);
+    			$is_cheating = $this->submissions->has_invalid_for_problems($filled_list, $user['login']);
+    			if (!$is_cheating) {
+					foreach($filled_list as $problem)
+						$sum_scores += $this->final_score_for_problem($problem['id_questao'], $user['login'], $list['id_lista']);
+				}
 
     			$user['final_results'][ $list['id_lista'] ] = $list['num_problems'] == 0 ? 0.0 : ($sum_scores / $list['num_problems']);
     		}

@@ -34,8 +34,8 @@ Cada entrada é executada separadamente, e o cálculo final da nota na questão 
 		$nota = sizeof($nota_rows) > 0 ? $nota_rows[0]['nota'] : 0;
 		if(sizeof($nota_rows) == 0)
 			$msg = "Não Entregou";
-		if ($nota < 0)
-			$msg = "Cópia.";
+		if ($this->submissions->has_invalid_for_list($list_id, $user))
+			$msg = "Lista zerada";
 ?>
 
 <strong><?='E'.$i++?></strong>:

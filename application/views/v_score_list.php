@@ -34,8 +34,9 @@ Para fazer seu pedido de revisão, abra a página que contém o formato de entra
 		$score_final = 0;
 ?>
 <table class='score'><tr><td class='login'><?=$user['login']?></td>
-	<? foreach ($problems as $problem) {
-			$score_pro = $this->score->partial_score_for_problem($problem['id_questao'], $user['login']);
+	<?  $is_cheating = $this->submissions->has_invalid_for_problems($problems, $user['login']);
+		foreach ($problems as $problem) {
+			$score_pro = $is_cheating ? 0.0 : $this->score->final_score_for_problem($problem['id_questao'], $user['login']);
 			$score_final += $score_pro;
 	?>
 	<td class="<?=$this->score->get_css_type($score_pro)?>" onclick="window.location='<?=base_url('/index.php/home/score_detail/'.$list_id.'/'.$problem['id_questao'].'/'.$user['login'])?>'"> <?=sprintf("%.2f", $score_pro)?>% </td>

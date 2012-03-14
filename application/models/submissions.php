@@ -36,6 +36,22 @@ class Submissions extends CI_Model {
     	return $query->num_rows() > 0 ? $query->row()->submissao_zerada != 0 : false;
     }
     
+    function has_invalid_for_problems($problems, $login)
+    {
+    	foreach($problems as $problem) {
+    		if ($this->is_last_submission_invalid($problem['id_questao'], $login))
+    			return true;
+    	}
+    	return false;
+    }
+    
+    function has_invalid_for_list($list_id, $login) 
+    {
+    	$ci =& get_instance();
+    	$ci->load->model('problems','', TRUE);
+    	return $this->has_invalid_for_problems($ci->problems->get_problems_from_list($list_id), $login);
+    }
+    
     function last_submission_basic_data($problem_id=0, $login='')
     {
     	$query = $this->db->query("SELECT data_submissao, linguagem FROM Submissao WHERE login='$login' AND id_questao='$problem_id' ORDER BY data_submissao DESC LIMIT 1");
