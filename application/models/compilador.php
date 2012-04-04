@@ -1,14 +1,13 @@
 <?php
-
 class Compilador extends CI_Model {
 	function __construct()
     {
         parent::__construct();
     }
-	
 	var $compilingDir = 'submissionsTest/';
 	function compilarCodigo($src = '', $lang = '', $formato = '', &$returnText){
 		error_reporting(0);
+		$javaPath = 'javac ';
 		$pasta =  $this->compilingDir . rand();
 		mkdir($pasta);
 		$filedir = $pasta . '/' . $formato;
@@ -17,7 +16,7 @@ class Compilador extends CI_Model {
 			$handle = fopen($filedir . '.java' ,'w+');
 			fwrite($handle, $src);
 			fclose($handle);
-		 	exec('javac ' . $filedir . '.java 2>&1', $output, $retval);
+		 	exec($javaPath . ' ' . $filedir . '.java 2>&1', $output, $retval);
 		} else if($lang == 'c++') {
 			$handle = fopen($filedir . '.cpp' ,'w+');
 			fwrite($handle, $src);
@@ -34,6 +33,7 @@ class Compilador extends CI_Model {
 		foreach( $output as $outputline){
 			$returnText .= $outputline . "\n";
 		}
+		
 		return $retval;
 	}
 
